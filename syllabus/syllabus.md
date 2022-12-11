@@ -7,10 +7,8 @@ title: Biostat 203B
 
 ## Lecture
 
-Tue (lecture) 3pm-5:50pm @ Zoom <https://ucla.zoom.us/j/99440334928>   
-Thu (lab) 3pm-4:50pm @ Zoom <https://ucla.zoom.us/j/99440334928>   
-
-Starting Feb 15, 2022, lectures will be in-person at CHS 13-105A. 
+Tue (lecture) 3pm-4:50pm @ CHS 33-105A   
+Thu (lecture and lab) 3pm-4:50pm @ CHS 33-105A   
 
 ## Instructor
 
@@ -18,18 +16,18 @@ Starting Feb 15, 2022, lectures will be in-person at CHS 13-105A.
 Office: CHS 21-254A  
 Phone: (310)794-7835  
 Email: <huazhou@ucla.edu>  
-Office hours: Tue 6pm-7pm, Thu 5pm-6pm @ Zoom <https://ucla.zoom.us/j/99440334928>  
+Office hours: Tue, Thu 5pm-6pm @ Zoom <https://ucla.zoom.us/j/97364661679> and CHS 21-254A  
 
 ## Teaching Assistant
 
-Mitchell Schepps <maschepps@ucla.edu>   
-Office hours: Mon 5pm-6pm, Wed 10am-11am @ Zoom <https://ucla.zoom.us/j/99440334928>  
+TBA <???>   
+Office hours: TBA  
 
 ## Course Description
 
-Computing skills and software tools for handling potentially big public health data.
+Computing skills and software tools for handling potentially big medical and public health data.
 
-See the [schedule](https://ucla-biostat-203b.github.io/2022winter/schedule/schedule.html) page for a tentative list of topics.
+See the [schedule](https://ucla-biostat-203b.github.io/2023winter/schedule/schedule.html) page for a tentative list of topics.
 
 ## Prerequisites
 
@@ -37,7 +35,7 @@ The prerequisite for this course is _Biostat 203A: Introduction to Data Manageme
 
 ## Course Webpage
 
-[http://ucla-biostat-203b.com](http://ucla-biostat-203b.com) or [https://ucla-biostat-203b.github.io/2022winter](https://ucla-biostat-203b.github.io/2022winter)
+[http://ucla-biostat-203b.com](http://ucla-biostat-203b.com) or [https://ucla-biostat-203b.github.io/2023winter](https://ucla-biostat-203b.github.io/2023winter)
 
 ## Course Materials
 
