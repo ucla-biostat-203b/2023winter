@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Hua Zhou">
+
+<title>Git for Windows Tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="lab01_windows_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab01_windows_files/libs/quarto-html/quarto.js"></script>
+<script src="lab01_windows_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab01_windows_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab01_windows_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab01_windows_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab01_windows_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab01_windows_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab01_windows_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab01_windows_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Git for Windows Tutorial</h1>
+<p class="subtitle lead">Biostat 203B</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Hua Zhou </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<p>This tutorial is based on a previous note by Brendon Chau.</p>
+<section id="introduction-to-git-for-windows" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-git-for-windows">Introduction to Git for Windows</h2>
+<p>For Biostat 203B, a <em>hard</em> requirement is knowing how to work with version control using <code>git</code>, specifically using <code>git</code> over <code>SSH</code>. Ordinarily, this requires the installation of a <code>git</code> client on Windows (i.e.&nbsp;<a href="https://git-scm.com/download/win"><code>Git for Windows</code></a>) and then having to manage <code>SSH</code> keys on Windows using an external keygen. It turns out that <code>Git for Windows</code> ships with the <code>MinGW64</code> toolchain, which <em>completely avoids the issue of an external keygen</em>. This can be accessed by running <code>Git Bash</code> once <code>Git for Windows</code> is installed. The advantage of this is that <code>RStudio</code> on Windows supports and is integrated <code>Git for Windows</code>, making it easy to do version control. This tutorial will be a how to in <del>excessive</del> detail.</p>
+</section>
+<section id="installation-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="installation-instructions">Installation Instructions</h2>
+<section id="downloading-and-running-the-git-for-windows-binary-installer" class="level3">
+<h3 class="anchored" data-anchor-id="downloading-and-running-the-git-for-windows-binary-installer">Downloading and Running the <code>Git for Windows</code> Binary Installer</h3>
+<p>Simply navigate to <a href="https://git-scm.com/download/win"><code>Git for Windows</code></a> and download the appropriate version (for most of you, it will be <strong>64-bit Git for Windows Setup</strong>).</p>
+<section id="choosing-the-default-editor-used-by-git" class="level4">
+<h4 class="anchored" data-anchor-id="choosing-the-default-editor-used-by-git">Choosing the default editor used by Git</h4>
+<p>Go through the installation instructions as you would any other program, until you hit <strong>choosing the default editor used by Git</strong>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Git_install_editor_screen.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Make sure you know <a href="https://www.fusionbox.com/blog/detail/vim-survival-guide/609/">basic <code>vim</code> commands</a>, if you choose <code>vim</code>, or you can choose Notepad++.</p>
+</section>
+<section id="adjusting-your-path-environment" class="level4">
+<h4 class="anchored" data-anchor-id="adjusting-your-path-environment">Adjusting your PATH environment</h4>
+<p>Make sure to select the <strong>Git from the command line and also 3rd-party software</strong>, if this is not selected, RStudio <strong>will not find Git</strong>.</p>
+</section>
+<section id="choosing-https-transport-backend" class="level4">
+<h4 class="anchored" data-anchor-id="choosing-https-transport-backend">Choosing HTTPS transport backend</h4>
+<p>Leave the default option of <strong>Use the OpenSSL library</strong>.</p>
+</section>
+<section id="configuring-the-line-ending-conversions" class="level4">
+<h4 class="anchored" data-anchor-id="configuring-the-line-ending-conversions">Configuring the line-ending conversions</h4>
+<p>For historical reasons, Windows and Linux encode line-breaks differently, this occasionally causes problems for people unfamiliar. Choose the default option of <strong>Checkout Windows-style, commit Unix-style line endings</strong>.</p>
+</section>
+<section id="configuring-the-terminal-editor-to-use-with-git-bash" class="level4">
+<h4 class="anchored" data-anchor-id="configuring-the-terminal-editor-to-use-with-git-bash">Configuring the terminal editor to use with Git Bash</h4>
+<p>This option doesn’t matter, leave the default option <strong>Use MinTTY</strong></p>
+</section>
+<section id="configuring-extra-options" class="level4">
+<h4 class="anchored" data-anchor-id="configuring-extra-options">Configuring extra options</h4>
+<p>Leave these unchanged.</p>
+</section>
+<section id="configuring-experimental-options" class="level4">
+<h4 class="anchored" data-anchor-id="configuring-experimental-options">Configuring experimental options</h4>
+<p>Leave the default option (unselected).</p>
+<p>After configuring all of the options, continue with installation.</p>
+</section>
+</section>
+<section id="using-git-bash" class="level3">
+<h3 class="anchored" data-anchor-id="using-git-bash">Using <code>Git Bash</code></h3>
+<p>Conveniently, <code>Git Bash</code> ships with all of the tools needed for Biostat 203B (<code>grep</code>, <code>awk</code>, <code>sed</code> and <code>ssh</code>). For the text processing, the command are identical to lecture. For completeness sake, I will review SSH using <code>Git Bash</code>.</p>
+<section id="setting-up-ssh-keys-in-git-bash" class="level4">
+<h4 class="anchored" data-anchor-id="setting-up-ssh-keys-in-git-bash">Setting up SSH keys in <code>Git Bash</code></h4>
+<p>Open a <code>Git Bash</code> terminal to get to window like this:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Git_bash_empty_terminal.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We want to test whether or not we can SSH into the server, so simply run the command:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> USERNAME@server.ucla-biostat-203b.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You’ll have a prompt about adding the server to the list of known hosts, pass <code>yes</code>. Then, you should have a prompt for password, which is just your server password.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Git_ssh_connection.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now that we’ve confirmed that SSH works in <code>Git Bash</code>, the remaining instructions are identical to the rest of lecture instructions for SSH, so we will omit them.</p>
+</section>
+</section>
+<section id="configure-rstudio-to-use-git-for-windows" class="level3">
+<h3 class="anchored" data-anchor-id="configure-rstudio-to-use-git-for-windows">Configure <code>Rstudio</code> to use <code>Git for Windows</code></h3>
+<p>So long as you’ve installed to the default installation path, <code>Git for Windows</code> should be automatically detected by <code>Rstudio</code>.</p>
+<p>If not, go ahead and go to <code>Tools &gt; Global options...</code>and select the <strong>Git/SVN</strong> tab. If its configured correctly, it should look like this:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Rstudio_git_settings.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If it isn’t configured, you should point to the <code>Git executable</code> to wherever you’ve installed <code>Git</code> on your PC.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
