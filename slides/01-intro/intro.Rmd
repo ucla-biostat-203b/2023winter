@@ -1,0 +1,88 @@
+---
+title: "Course Introduction"
+author: "Dr. Hua Zhou @ UCLA"
+date: "Jan 4, 2022"
+output:
+  # ioslides_presentation: default
+  html_document:
+    toc: true
+    toc_depth: 4  
+subtitle: Biostat 203B
+bibliography: ../bib-HZ.bib
+csl: ../apa.csl
+---
+
+## Statistics and data science
+
+- Statistics, the science of _data analysis_, is the applied mathematics in the 21st century.
+
+- Data is increasing in [volume, velocity, and variety](http://www.forbes.com/sites/oreillymedia/2012/01/19/volume-velocity-variety-what-you-need-to-know-about-big-data/).
+
+- My favorite definition of a _data scientist_:
+
+> A data scientist is someone who is better at statistics than any software engineer and better at software engineering than any statistician.
+
+## Big data in 1990s
+
+@Huber94HugeData; -@Huber96MassiveData
+
+| Data Size | Bytes          | Storage Mode               |
+|-----------|----------------|----------------------------|
+| tiny      | $10^2$         | piece of paper             |
+| small     | $10^4$         | a few pieces of paper      |
+| medium    | $10^6$ (MB)    | a floppy disk              |
+| large     | $10^8$         | hard disk                  |
+| huge      | $10^9$ (GB)    | hard disk(s)               |
+| massive   | $10^{12}$ (TB) | hard disk(s); RAID storage |
+
+## Big data in 21st centry
+
+4V's of big data:
+
+<p align="center">
+  <img src="./4-Vs-of-big-data.jpg" height="450" width="700">
+</p>
+Source: [IBM](http://www.ibmbigdatahub.com/infographic/four-vs-big-data).
+
+## Who are hiring?
+
+Following tables is based on a survey of 403 students who earned a master’s degree in statistics, biostatistics, or a related field (actuarial science, data science, informatics, math with stats focus) during the
+2019–2020 academic year. 
+
+<p align="center">
+  <img src="./ms-employment-sector.png" width="500">
+</p>
+
+Source: [AmStat News (2021 Nov)](https://magazine.amstat.org/wp-content/uploads/2021/11/AmstatNewsNov2021-updated.pdf).
+
+> there were more than 109 unique—although similar—job titles. The most
+common were data scientist (20), biostatistician
+(18), data analyst (9), biostatistician I (7), and
+statistician (5). 
+
+## A typical data scientist on [LinkedIn](http://linkedin.com)
+
+A position posted by Genetech.
+<p align="center">
+  <img src="./genetech.png" height="450" width="700">
+</p>
+
+## Course description
+
+- This course introduces some computing skills and software tools for handling potentially big public health data.
+
+- Read [syllabus](https://ucla-biostat-203b.github.io/2022winter/syllabus/syllabus.html) and [schedule](https://ucla-biostat-203b.github.io/2022winter/schedule/schedule.html) for a tentative list of topics and course logistics.
+
+## Why R?
+
+<p align="center">
+  <img src="./ms-employment-software.png" width="500">
+</p>
+
+## More (free) UCLA resources for learning data science
+
+- IDRE workshops: <https://idre.ucla.edu/calendar>  
+
+- QCBio workshops: <https://qcb.ucla.edu/collaboratory/workshops/>
+
+## References

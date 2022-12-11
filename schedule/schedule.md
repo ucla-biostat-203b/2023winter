@@ -7,15 +7,14 @@ title: Biostat 203B
 
 BIOSTAT 203B tentative schedule and handouts (expect frequent updates)
 
-Mandatory daily symptom monitoring survey: <https://uclasurveys.co1.qualtrics.com/jfe/form/SV_3qRLtouCYKzBbH7>
+BruinLearn: <https://bruinlearn.ucla.edu/courses/153453>  
+Course announcements will be sent via BruinLearn. 
 
-Zoom link: <https://ucla.zoom.us/j/99440334928>
+Zoom link: <https://ucla.zoom.us/j/97364661679>  
+Office hours will be on Zoom.  
 
-From Feb 15, 2022, lectures will be in-person at CHS 13-105A (Tuesday) and CHS 23-105A (Thursday). 
-
-CCLE site: <https://ccle.ucla.edu/course/view/22W-BIOSTAT203B-1>
-
-Slack channel: <https://ucla.slack.com/archives/C02SLT81N8L>
+Slack channel: <https://uclabiostat20-upm3051.slack.com>  
+Invitation link: <https://join.slack.com/t/uclabiostat20-upm3051/shared_invite/zt-1lbqugiva-cM~EbB3wV5~5F8lgazK3Tg>
 
 Teaching server: <http://server.ucla-biostat-203b.com:8787>
 
@@ -31,13 +30,13 @@ Recommended readings:
 
 | Week | Tuesday | Thursday | Homework |
 |:-----------|:------------|:------------|:------------|
-| 1 | [1/4](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/04/week1-day1.html) introduction and course logistics \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/01-intro/intro.Rmd), [html](../slides/01-intro/intro.html)\], Linux basics \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/linux.Rmd), [html](../slides/02-linux/linux.html)\] | [1/6](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/06/week1-day2.html) Lab 1: MacOS \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/labs/lab01/lab01_macos.Rmd), [html](../labs/lab01/lab01_macos.html)\], Windows \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/labs/lab01/lab01_windows.Rmd), [html](../labs/lab01/lab01_windows.html)\] | HW1 \[[Rmd](https://github.com/ucla-biostat-203b/2022winter/raw/main/hw/hw1/hw1.Rmd), [html](../hw/hw1/hw1.html)\] |    
-| 2 | [1/11](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/11/week2-day1.html) reproducible research \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/03-repres/repres.Rmd), [html](../slides/03-repres/repres.html)\], Git/GitHub \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/04-git/git.Rmd), [html](../slides/04-git/git.html)\], [RStudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rstudio-ide.pdf), [RMarkdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf) | 1/13 Lab 2 | |    
-| 3 | [1/18](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/18/week3-day1.html) import and tidy data \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/05-tidy/tidy.Rmd), [html](../slides/05-tidy/tidy.html)\] | [1/20](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/20/week3-day2.html) data visualization with ggplot2 \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/06-vis/ggplot2.Rmd), [html](../slides/06-vis/ggplot2.html)\], visualizing longitudinal data \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/06-vis/brolgar.Rmd), [html](../slides/06-vis/brolgar.html)\] | HW2 \[[Rmd](https://github.com/ucla-biostat-203b/2022winter/raw/main/hw/hw2/hw2.Rmd), [html](../hw/hw2/hw2.html)\] |  
-| 4 | [1/25](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/25/week4-day1.html) data transformation with dplyr \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/07-dplyr/dplyr.Rmd), [html](../slides/07-dplyr/dplyr.html)\], date and time \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/08-datetime/datetime.Rmd), [html](../slides/08-datetime/datetime.html)\] | 1/27 Lab | |     
-| 5 | [2/1](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/01/week5-day1.html) strings and regex \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/09-strings/stringr.Rmd), [html](../slides/09-strings/stringr.html)\], web scraping \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/10-scraping/scraping.Rmd), [html](../slides/10-scraping/scraping.html)\] | [2/3](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/03/week5-day2.html) Lab | |  
-| 6 | [2/8](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/08/week6-day1.html) shiny for interactive graphics \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/11-shiny/shiny.Rmd)\] | [2/10](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/10/week6-day2.html)  databases intro. \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/12-dbplyr/dbintro.Rmd), [html](../slides/12-dbplyr/dbintro.html)\], dbplyr \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/12-dbplyr/dbplyr.Rmd), [html](../slides/12-dbplyr/dbplyr.html)\] | HW3 \[[Rmd](https://github.com/ucla-biostat-203b/2022winter/raw/main/hw/hw3/hw3.Rmd), [html](../hw/hw3/hw3.html)\] |    
-| 7 | [2/15](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/15/week7-day1.html) cloud computing with GCP \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/13-gcp/gcp.Rmd), [html](../slides/13-gcp/gcp.html)\] | 2/17 Lab | |   
-| 8 | [2/22](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/02/22/week8-day1.html) cluster computing at UCLA [tutorial](https://github.com/chris-german/Hoffman2Tutorials), neural network intro. \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/15-nn/nn1.Rmd), [html](../slides/15-nn/nn1.html)\] | 2/24 Lab (Zoom) | HW4 \[[Rmd](https://github.com/ucla-biostat-203b/2022winter/raw/main/hw/hw4/hw4.Rmd), [html](../hw/hw4/hw4.html)\] |    
-| 9 | [3/1](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/03/01/week9-day1.html) neural network examples \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/15-nn/nn2.Rmd), [html](../slides/15-nn/nn2.html)\] | [3/3](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/03/03/week9-day2.html) Lab | |   
-| 10 | 3/8 (Jianxiao Yang) R programming (benchmark, debug, profile) \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/16-advr/advr1.Rmd), [html](../slides/16-advr/advr1.html)\], Rcpp, parallel computing, R package \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/16-advr/advr2.Rmd), [html](../slides/16-advr/advr2.html)\], GPGPU in R \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/17-gpu/gpgpu.Rmd), [html](../slides/17-gpu/gpgpu.html)\]| 3/10 Lab (Zoom) | | 
+| 1 | [1/10](http://ucla-biostat-203b.github.io/2023winter/biostat203bwinter2023/2023/01/10/week1-day1.html) introduction and course logistics \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/01-intro/intro.Rmd), [html](../slides/01-intro/intro.html)\], Linux basics \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/linux.Rmd), [html](../slides/02-linux/linux.html)\] | [1/12](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/06/week1-day2.html) Lab: MacOS \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/labs/lab01/lab01_macos.Rmd), [html](../labs/lab01/lab01_macos.html)\], Windows \[slides: [Rmd](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/labs/lab01/lab01_windows.Rmd), [html](../labs/lab01/lab01_windows.html)\] | HW1 \[[Rmd](https://github.com/ucla-biostat-203b/2022winter/raw/main/hw/hw1/hw1.Rmd), [html](../hw/hw1/hw1.html)\] |    
+| 2 | 1/17 reproducible research, Git/GitHub | 1/19 Lab | |    
+| 3 | 1/24 data ingestion | 1/26 data visualization with ggplot2 | HW2 |  
+| 4 | 1/31 data transformation with dplyr, date and time | 2/2 Lab | |     
+| 5 | 2/7 strings and regex, web scraping | 2/9 Lab | |  
+| 6 | 2/14 shiny for interactive graphics | 2/16  databases intro., dbplyr | HW3 |    
+| 7 | 2/21 cloud computing with GCP | 2/23 Lab | |   
+| 8 | 2/28 cluster computing at UCLA, neural network intro. | 3/2 Lab | HW4 |    
+| 9 | 3/7 neural network examples | 3/9 Lab | |   
+| 10 | 3/14 R programming (benchmark, debug, profile), Rcpp, parallel computing, R package, GPGPU in R | 3/16 Lab | | 
