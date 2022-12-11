@@ -1,7 +1,7 @@
 ---
 title: "Course Introduction"
 author: "Dr. Hua Zhou @ UCLA"
-date: "Jan 4, 2022"
+date: "Jan 10, 2023"
 output:
   # ioslides_presentation: default
   html_document:
@@ -24,7 +24,7 @@ csl: ../apa.csl
 
 ## Big data in 1990s
 
-@Huber94HugeData; -@Huber96MassiveData
+@Huber94HugeData; @Huber96MassiveData
 
 | Data Size | Bytes          | Storage Mode               |
 |-----------|----------------|----------------------------|
@@ -71,7 +71,7 @@ A position posted by Genetech.
 
 - This course introduces some computing skills and software tools for handling potentially big public health data.
 
-- Read [syllabus](https://ucla-biostat-203b.github.io/2022winter/syllabus/syllabus.html) and [schedule](https://ucla-biostat-203b.github.io/2022winter/schedule/schedule.html) for a tentative list of topics and course logistics.
+- Read [syllabus](https://ucla-biostat-203b.github.io/2023winter/syllabus/syllabus.html) and [schedule](https://ucla-biostat-203b.github.io/2023winter/schedule/schedule.html) for a tentative list of topics and course logistics.
 
 ## Why R?
 

@@ -1,6 +1,6 @@
 ---
 title: "Lab 1: SSH, Keys, R/RStudio, and git clone on MacOS"
-author: "Hua Zhou"
+author: "Dr. Hua Zhou"
 date: "Jan 12, 2023"
 output: html_document
 ---
@@ -38,12 +38,12 @@ Replace `[USERNAME]` in the command by your actual user name (your email name in
 
 4. You can use git to obtain a copy of course materials:
     ```{bash, eval=F}
-    git clone https://github.com/ucla-biostat-203b/2022winter.git
+    git clone https://github.com/ucla-biostat-203b/2023winter.git
     ```
 
 # Install R and RStudio on your own machine. 
 
-1. Install R v4.2.2 or later. <https://cran.rstudio.com>
+1. Install R v4.1.2 or later. <https://cran.rstudio.com>
 
 2. Install RStudio Desktop (Open Source Edition). <https://rstudio.com/products/rstudio/#Desktop> 
 
@@ -57,7 +57,7 @@ Check whether `git` command is available in Terminal. If not, follow instruction
 ```{bash, eval=F}
 git clone https://github.com/ucla-biostat-203b/2023winter.git [<dir>]
 ```
-Replace `[<dir>]` by your preferred folder name, say `203b-2023winter`. 
+Replace `[<dir>]` by your preferred folder name, say `203b-2022winter`. 
 
 2. The Git repository <https://github.com/ucla-biostat-203b/2023winter.git> is frequently updated. To sync your git clone with the current repo., first enter your local repo directory
 ```{bash, eval=F}
@@ -69,7 +69,7 @@ git pull
 ```
 If you have made commits to the local repo, then the two commits need to be merged. 
 
-3. Besides command line, we can also use **RStudio** to perform git clone and many other git operations. To git clone a repository, in RStudio `File` -> `New Project...` -> `Version Control` -> `Git`, then copy the **git address** (not **HTTPS** address) `git@github.com:ucla-biostat-203b/2023winter.git` to the `Repository URL:`. 
+3. Besides command line, we can also use **RStudio** to perform git clone and many other git operations. To git clone a repository, in RStudio `File` -> `New Project...` -> `Version Control` -> `Git`, then copy the **git address** (not **HTTPS** address) `git@github.com:ucla-biostat-203b/2022winter.git` to the `Repository URL:`. 
 
 # Access RStudio on the teaching server
 

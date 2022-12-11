@@ -1,11 +1,10 @@
 ---
 title: "Git for Windows Tutorial"
-author: "Hua Zhou"
+author: "Dr. Hua Zhou"
 theme: flatly
 subtitle: Biostat 203B
 output:
   html_document: default
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
