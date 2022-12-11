@@ -54,6 +54,7 @@ grade_hw?.md
 tidy_files/
 ggplot2_files/
 dplyr_files/
+*_files/
 
 # SQLite databases
 .sqlite
