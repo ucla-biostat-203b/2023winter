@@ -27,6 +27,8 @@ Recommended readings:
 * [_R Packages_](http://r-pkgs.had.co.nz) by Hadley Wickham.  
 * [_Rcpp For Everyone_](https://teuder.github.io/rcpp4everyone_en/) by Masaki E. Tsuda.  
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ucla-biostat-203b/2023winter/master?urlpath=rstudio)
+
 | Week | Tuesday | Thursday | Homework |
 |:-----------|:------------|:------------|:------------|
 | 1 | [1/10](http://ucla-biostat-203b.github.io/2023winter/biostat203bwinter2023/2023/01/10/week1-day1.html) introduction and course logistics \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/01-intro/intro.qmd), [html](../slides/01-intro/intro.html)\], Linux basics \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/02-linux/linux.qmd), [html](../slides/02-linux/linux.html)\] | [1/12](http://ucla-biostat-203b.github.io/2022winter/biostat203bwinter2022/2022/01/06/week1-day2.html) Lab: MacOS \[slides: [qmd](), [html](../labs/lab01/lab01_macos.html)\], Windows \[slides: [qmd](), [html](../labs/lab01/lab01_windows.html)\] | HW1 \[[qmd](), [html](../hw/hw1/hw1.html)\] |    
