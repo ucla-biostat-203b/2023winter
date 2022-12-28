@@ -16,9 +16,10 @@ csl: "../apa.csl"
 knitr:
   opts_chunk: 
     fig.align: 'center'
-    fig.width: 4.5
-    fig.height: 3
+    fig.width: 6
+    fig.height: 4
     message: FALSE
+    cache: true
 ---
 
 A typical data science project:
