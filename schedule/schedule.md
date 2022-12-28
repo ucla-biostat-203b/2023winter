@@ -33,7 +33,7 @@ Recommended readings:
 | 2 | 1/17 reproducible research \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/03-repres/repres.qmd), [html](../slides/03-repres/repres.html)\], Git/GitHub \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/04-git/git.qmd), [html](../slides/04-git/git.html)\] | 1/19 Lab | |    
 | 3 | 1/24 data ingestion and tidying \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/tidy.qmd), [html](../slides/05-tidy/tidy.html)\] | 1/26 data visualization with ggplot2 \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/06-vis/ggplot2.qmd), [html](../slides/06-vis/ggplot2.html)\] | HW2 |  
 | 4 | 1/31 data transformation with dplyr \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/07-dplyr/dplyr.qmd), [html](../slides/07-dplyr/dplyr.html)\], date and time \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/08-datetime/datetime.qmd), [html](../slides/08-datetime/datetime.html)\] | 2/2 Lab | |     
-| 5 | 2/7 strings and regex, web scraping | 2/9 Lab | |  
+| 5 | 2/7 strings and regex \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/09-strings/stringr.qmd), [html](../slides/09-strings/stringr.html)\], web scraping | 2/9 Lab | |  
 | 6 | 2/14 shiny for interactive graphics | 2/16  databases intro., dbplyr | HW3 |    
 | 7 | 2/21 cloud computing with GCP | 2/23 Lab | |   
 | 8 | 2/28 cluster computing at UCLA, neural network intro. | 3/2 Lab | HW4 |    
