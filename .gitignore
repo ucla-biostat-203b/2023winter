@@ -51,10 +51,6 @@ hwsol_to_hw.html
 *.csv.gz
 grade_hw?.md
 
-tidy_files/
-ggplot2_files/
-dplyr_files/
-
 # SQLite databases
 .sqlite
 
