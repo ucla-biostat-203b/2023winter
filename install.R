@@ -1,0 +1,9 @@
+install.packages(
+  "ggrepel", 
+  "htmlwidgets",
+  "maps",
+  "markdown", 
+  "nycflights13",
+  "rmarkdown", 
+  "tidyverse"
+)
