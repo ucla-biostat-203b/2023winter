@@ -23,10 +23,13 @@ apt_install \
     tree
 
 # install extra R packages
+install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
+    ggrepel \
+    htmlwidgets
 
 # Clean up
 rm -rf /var/lib/apt/lists/*
-# rm -r /tmp/downloaded_packages
+rm -r /tmp/downloaded_packages
 
 ## Strip binary installed lybraries from RSPM
 ## https://github.com/rocker-org/rocker-versioned2/issues/340
