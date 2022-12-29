@@ -1,0 +1,354 @@
+---
+title: "Web Scraping"
+author: "Dr. Hua Zhou @ UCLA"
+date: "Feb 1, 2022"
+output:
+  # ioslides_presentation: default
+  html_document:
+    toc: true
+    toc_depth: 4  
+subtitle: Biostat 203B
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = 'center')
+```
+```{r}
+sessionInfo()
+```
+
+Load tidyverse and other packages for this lecture:
+```{r, echo=FALSE}
+library("tidyverse")
+library("rvest")
+library("quantmod")
+```
+
+## Web scraping
+
+There is a wealth of data on internet. How to scrape them and analyze them?
+
+## rvest
+
+[rvest](https://github.com/hadley/rvest) is an R package written by Hadley Wickham which makes web scraping easy.
+
+## Example: Scraping from webpage
+
+- We follow instructions in a [Blog by SAURAV KAUSHIK](https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/) to find the most popular feature films of 2020.
+
+- Install the [SelectorGadget](https://selectorgadget.com/) extension for Chrome.
+
+- The 100 most popular feature films released in 2020 can be accessed at page <https://www.imdb.com/search/title/?title_type=feature&release_date=2020-01-01,2020-12-31&count=100>.
+
+    ```{r}
+    #Loading the rvest and tidyverse package
+    #Specifying the url for desired website to be scraped
+    url <- "https://www.imdb.com/search/title/?title_type=feature&release_date=2020-01-01,2020-12-31&count=100"
+    #Reading the HTML code from the website
+    (webpage <- read_html(url))
+    ```
+
+- Suppose we want to scrape following 11 features from this page:
+    - Rank
+    - Title
+    - Description
+    - Runtime
+    - Genre
+    - Rating
+    - Metascore
+    - Votes
+    - Gross_Eerning_in_Mil
+    - Director
+    - Actor
+
+<p align="center">
+  <img src="./imdb.png" height="350">
+</p>
+
+### Rank
+
+- Use SelectorGadget to highlight the element we want to scrape
+
+<p align="center">
+  <img src="./selectorgadget.png" height="350">
+</p>
+
+- Use the CSS selector to get the rankings
+    ```{r}
+    # Use CSS selectors to scrap the rankings section
+    (rank_data_html <- html_nodes(webpage, '.text-primary'))
+    # Convert the ranking data to text
+    (rank_data <- html_text(rank_data_html))
+    # Turn into numerical values
+    (rank_data <- as.integer(rank_data))
+    ```
+
+### Title
+
+- Use SelectorGadget to find the CSS selector `.lister-item-header a`.
+    ```{r}
+    # Using CSS selectors to scrap the title section
+    (title_data_html <- html_nodes(webpage, '.lister-item-header a'))
+    # Converting the title data to text
+    (title_data <- html_text(title_data_html))
+    ```
+    
+### Description
+
+-
+    ```{r}
+    # Using CSS selectors to scrap the description section
+    (description_data_html <- html_nodes(webpage, '.ratings-bar+ .text-muted'))
+    # Converting the description data to text
+    description_data <- html_text(description_data_html)
+    # take a look at first few
+    head(description_data)
+    # strip the '\n'
+    description_data <- str_replace(description_data, "^\\n", "")
+    head(description_data)
+    ```
+
+### Runtime
+
+- Retrieve runtime data
+```{r}
+# Using CSS selectors to scrap the Movie runtime section
+(runtime_data <- webpage %>%
+  html_nodes('.runtime') %>%
+  html_text() %>%
+  str_replace(" min", "") %>%
+  as.integer())
+```
+
+### Genre
+
+- Collect the (first) genre of each movie:
+    ```{r}
+    genre_data <- webpage %>%
+      # Using CSS selectors to scrap the Movie genre section
+      html_nodes('.genre') %>%
+      # Converting the genre data to text
+      html_text() %>%
+      # Data-Preprocessing: retrieve the first word
+      str_extract("[:alpha:]+")
+    genre_data
+    ```
+
+### Rating
+
+- Rating data:
+    ```{r}
+    rating_data <- webpage %>%
+      html_nodes('.ratings-imdb-rating strong') %>%
+      html_text() %>%
+      as.numeric()
+    rating_data
+    ```
+    
+### Votes
+
+- Vote data
+    ```{r}
+    votes_data <- webpage %>%
+      html_nodes('.sort-num_votes-visible span:nth-child(2)') %>%
+      html_text() %>% 
+      str_replace(",", "") %>% 
+      as.numeric()
+    votes_data
+    ```
+
+### Director
+
+- Director information
+    ```{r}
+    directors_data <- webpage %>% 
+      html_nodes('.text-muted+ p a:nth-child(1)') %>% 
+      html_text()
+    directors_data
+    ```
+
+### Actor
+
+- Only the first actor
+    ```{r}
+    actors_data <- webpage %>%
+      html_nodes('.lister-item-content .ghost+ a') %>%
+      html_text()
+    actors_data
+    ```
+
+### Metascore
+
+- We encounter the issue of missing data when scraping metascore. 
+
+- We see there are only 90 meta scores. 10 movies don't have meta scores. We may manually find which movies don't have meta scores but that's tedious and not reproducible.
+    ```{r}
+    # Using CSS selectors to scrap the metascore section
+    ms_data_html <- html_nodes(webpage, '.metascore')
+    # Converting the runtime data to text
+    ms_data <- html_text(ms_data_html)
+    # Let's have a look at the metascore 
+    ms_data <- str_replace(ms_data, "\\s*$", "") %>% as.integer()
+    ms_data
+    ```
+
+- First let's tally index and corresponding metascore (if present).
+    ```{r}
+    rank_and_metascore <- webpage %>%
+      html_nodes('.unfavorable , .text-primary , .favorable , .mixed') %>%
+      html_text() %>%
+      str_replace("\\s*$", "") %>%
+      print()
+    ```
+    ```{r}
+    isrank <- str_detect(rank_and_metascore, "\\.$")
+    ismissing <- isrank[1:(length(rank_and_metascore) - 1)] & isrank[2:(length(rank_and_metascore))]
+    ismissing[length(ismissing) + 1] <- isrank[length(isrank)]
+    missingpos <- as.integer(rank_and_metascore[ismissing])
+    metascore_data <- rep(NA, 100)
+    metascore_data[-missingpos] <- ms_data
+    metascore_data
+    ```
+    
+### Gross
+
+- Be careful with missing data.
+    ```{r}
+    # Using CSS selectors to scrap the gross revenue section
+    gross_data_html <- html_nodes(webpage,'.ghost~ .text-muted+ span')
+    # Converting the gross revenue data to text
+    gross_data <- html_text(gross_data_html)
+    # Let's have a look at the gross data
+    gross_data
+    # Data-Preprocessing: removing '$' and 'M' signs
+    gross_data <- str_replace(gross_data, "M", "")
+    gross_data <- str_sub(gross_data, 2, 10)
+    #(gross_data <- str_extract(gross_data, "[:digit:]+.[:digit:]+"))
+    gross_data <- as.numeric(gross_data)
+    # Let's check the length of gross data
+    gross_data
+    ```
+    85 (out of 100) movies don't have gross data yet! We need a better way to figure out missing entries.
+    ```{r}
+    (rank_and_gross <- webpage %>%
+      # retrieve rank and gross
+      html_nodes('.ghost~ .text-muted+ span , .text-primary') %>%
+      html_text() %>%
+      str_replace("\\s+", "") %>%
+      str_replace_all("[$M]", ""))
+    ```
+    ```{r}
+    isrank <- str_detect(rank_and_gross, "\\.$")
+    ismissing <- isrank[1:(length(rank_and_gross) - 1)] & isrank[2:(length(rank_and_gross))]
+    ismissing[length(ismissing)+1] <- isrank[length(isrank)]
+    missingpos <- as.integer(rank_and_gross[ismissing])
+    gs_data <- rep(NA, 100)
+    gs_data[-missingpos] <- gross_data
+    (gross_data <- gs_data)
+    ```
+
+### Visualizing movie data
+
+- Form a tibble:
+    ```{r}
+    # Combining all the lists to form a data frame
+    movies <- tibble(Rank = rank_data, 
+                     Title = title_data,
+                     Description = description_data, 
+                     Runtime = runtime_data,
+                     Genre = genre_data, 
+                     Rating = rating_data,
+                     Metascore = metascore_data, 
+                     Votes = votes_data,
+                     Gross_Earning_in_Mil = gross_data,
+                     Director = directors_data, 
+                     Actor = actors_data)
+    movies %>% print(width=Inf)
+    ```
+    
+- How many top 100 movies are in each genre? (Be careful with interpretation.)
+    ```{r}
+    movies %>%
+      ggplot() +
+      geom_bar(mapping = aes(x = Genre))
+    ```
+
+- Which genre is most profitable in terms of average gross earnings?
+    ```{r}
+    movies %>%
+      group_by(Genre) %>%
+      summarise(avg_earning = mean(Gross_Earning_in_Mil, na.rm = TRUE)) %>%
+      ggplot() +
+        geom_col(mapping = aes(x = Genre, y = avg_earning)) + 
+        labs(y = "avg earning in millions")
+    ```
+    ```{r}
+    ggplot(data = movies) +
+      geom_boxplot(mapping = aes(x = Genre, y = Gross_Earning_in_Mil)) + 
+      labs(y = "Gross earning in millions")
+    ```
+
+- Is there a relationship between gross earning and rating? Find the best selling movie (by gross earning) in each genre    
+    ```{r}
+    library("ggrepel")
+    (best_in_genre <- movies %>%
+        group_by(Genre) %>%
+        filter(row_number(desc(Gross_Earning_in_Mil)) == 1)) %>%
+        print(width = Inf)
+      
+    ggplot(movies, mapping = aes(x = Rating, y = Gross_Earning_in_Mil)) +
+      geom_point(mapping = aes(size = Votes, color = Genre)) + 
+      ggrepel::geom_label_repel(aes(label = Title), data = best_in_genre) +
+      labs(y = "Gross earning in millions")
+    ```
+
+## Example: Scraping finance data
+
+- `quantmod` package contains many utility functions for retrieving and plotting finance data. E.g.,
+    ```{r}
+    library(quantmod)
+    stock <- getSymbols("TSLA", src = "yahoo", auto.assign = FALSE, from = "2020-01-01")
+    head(stock)
+    chartSeries(stock, theme = chartTheme("white"),
+                type = "line", log.scale = FALSE, TA = NULL)
+    ```
+
+## Example: Pull tweets into R
+
+- Read blog: <https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2>
+
+- [`twitteR` package](https://www.rdocumentation.org/packages/twitteR) is useful for pulling tweets text data into R.
+```{r, eval=F}
+library(twitteR) #load package
+```
+
+- Step 1: apply for a [Twitter developer account](https://developer.twitter.com). It takes some time to get approved.
+
+- Step 2: Generate and copy the Twitter App Keys.
+```
+consumer_key <- 'XXXXXXXXXX'
+consumer_secret <- 'XXXXXXXXXX'
+access_token <- 'XXXXXXXXXX'
+access_secret <- 'XXXXXXXXXX'
+```
+```{r include=FALSE, eval=F}
+consumer_key <- 'P952Y45yrM1Xu9ez3r00AUH57'
+consumer_secret <- 'KVmvwfL3dmc0TsY81fo3CPwCMTRldS5CzceM2JhyO3xSjZpwEH'
+access_token <- '783517197012504576-B5Q1D0whnX2KzpHnJJwUHErU8ttGtGQ'
+access_secret <- 'oZoUWWZ7JD1aT3BOAc92zC98dYa1nVETbBHnUoquaKjvO'
+```
+
+- Step 3. Set up authentication
+```{r, eval=F}
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+```
+
+- Step 4: Pull tweets
+```{r, eval=F}
+virus <- searchTwitter('#China + #Coronavirus', 
+                       n = 1000, 
+                       since = '2020-01-01', 
+                       retryOnRateLimit = 1e3)
+virus_df <- as_tibble(twListToDF(virus))
+virus_df %>% print(width = Inf)
+```

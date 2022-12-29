@@ -1,0 +1,45 @@
+---
+title: "Fill Missing Value"
+output: html_document
+author: Yi Fang
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+library('rvest')
+```
+
+```{r}
+url <- 'https://www.imdb.com/search/title/?title_type=feature&release_date=2020-01-01,2020-12-31&count=100'
+webpage <- read_html(url)
+```
+
+If we get data using `html_nodes` directly, we will find that there are only 90 metascore, instead of 100.
+
+```{r}
+metascore_data_html <- html_nodes(webpage,'.metascore')
+metascore_data <- html_text(metascore_data_html)
+metascore_data <-  as.integer(metascore_data)
+length(metascore_data)
+metascore_data
+```
+
+According to the rvest help guide, it states that "html_node() returns a nodeset the same length as the input."
+So we can first use `html_nodes` to find a subset which contains 100 matches, then use `html_node` to find the metascore of this subset. Because `html_node` will return the same length as the input (which is 100 in this case), `html_node` will fill the missing value as `NA` automatically.
+
+For the subset, we can use any element in the webpage that contains the metascore, including but not limited to `.mode-advanced`, `.lister-item-content`, `.ratings-bar`.
+
+```{r}
+metascore_data_html <- html_node(html_nodes(webpage, '.ratings-bar'), '.metascore')
+metascore_data <- html_text(metascore_data_html)
+metascore_data <-  as.integer(metascore_data)
+length(metascore_data)
+metascore_data
+```
+
+
+Reference:
+
+https://www.programmerall.com/article/4032974459/
+
+https://rvest.tidyverse.org/reference/html_nodes.html

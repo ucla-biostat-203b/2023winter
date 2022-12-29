@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
+<meta name="dcterms.date" content="2022-12-28">
+
+<title>Web Scraping</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="scraping_files/libs/clipboard/clipboard.min.js"></script>
+<script src="scraping_files/libs/quarto-html/quarto.js"></script>
+<script src="scraping_files/libs/quarto-html/popper.min.js"></script>
+<script src="scraping_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="scraping_files/libs/quarto-html/anchor.min.js"></script>
+<link href="scraping_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="scraping_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="scraping_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="scraping_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="scraping_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#web-scraping" id="toc-web-scraping" class="nav-link active" data-scroll-target="#web-scraping"><span class="toc-section-number">1</span>  Web scraping</a></li>
+  <li><a href="#rvest" id="toc-rvest" class="nav-link" data-scroll-target="#rvest"><span class="toc-section-number">2</span>  rvest</a></li>
+  <li><a href="#example-scraping-from-webpage" id="toc-example-scraping-from-webpage" class="nav-link" data-scroll-target="#example-scraping-from-webpage"><span class="toc-section-number">3</span>  Example: Scraping from webpage</a>
+  <ul>
+  <li><a href="#rank" id="toc-rank" class="nav-link" data-scroll-target="#rank"><span class="toc-section-number">3.1</span>  Rank</a></li>
+  <li><a href="#title" id="toc-title" class="nav-link" data-scroll-target="#title"><span class="toc-section-number">3.2</span>  Title</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description"><span class="toc-section-number">3.3</span>  Description</a></li>
+  <li><a href="#runtime" id="toc-runtime" class="nav-link" data-scroll-target="#runtime"><span class="toc-section-number">3.4</span>  Runtime</a></li>
+  <li><a href="#genre" id="toc-genre" class="nav-link" data-scroll-target="#genre"><span class="toc-section-number">3.5</span>  Genre</a></li>
+  <li><a href="#rating" id="toc-rating" class="nav-link" data-scroll-target="#rating"><span class="toc-section-number">3.6</span>  Rating</a></li>
+  <li><a href="#votes" id="toc-votes" class="nav-link" data-scroll-target="#votes"><span class="toc-section-number">3.7</span>  Votes</a></li>
+  <li><a href="#director" id="toc-director" class="nav-link" data-scroll-target="#director"><span class="toc-section-number">3.8</span>  Director</a></li>
+  <li><a href="#actor" id="toc-actor" class="nav-link" data-scroll-target="#actor"><span class="toc-section-number">3.9</span>  Actor</a></li>
+  <li><a href="#metascore" id="toc-metascore" class="nav-link" data-scroll-target="#metascore"><span class="toc-section-number">3.10</span>  Metascore</a></li>
+  <li><a href="#gross" id="toc-gross" class="nav-link" data-scroll-target="#gross"><span class="toc-section-number">3.11</span>  Gross</a></li>
+  <li><a href="#visualizing-movie-data" id="toc-visualizing-movie-data" class="nav-link" data-scroll-target="#visualizing-movie-data"><span class="toc-section-number">3.12</span>  Visualizing movie data</a></li>
+  </ul></li>
+  <li><a href="#example-scraping-finance-data" id="toc-example-scraping-finance-data" class="nav-link" data-scroll-target="#example-scraping-finance-data"><span class="toc-section-number">4</span>  Example: Scraping finance data</a></li>
+  <li><a href="#example-pull-tweets-into-r" id="toc-example-pull-tweets-into-r" class="nav-link" data-scroll-target="#example-pull-tweets-into-r"><span class="toc-section-number">5</span>  Example: Pull tweets into R</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Web Scraping</h1>
+<p class="subtitle lead">Biostat 203B</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Hua Zhou @ UCLA </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 28, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-1_2ba2978a551e14247abaab2bb8a13ef1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] digest_0.6.30     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
+ [5] evaluate_0.18     rlang_1.0.6       stringi_1.7.8     cli_3.4.1        
+ [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.18    tools_4.2.2      
+[13] stringr_1.5.0     glue_1.6.2        htmlwidgets_1.6.0 xfun_0.35        
+[17] yaml_2.3.6        fastmap_1.1.0     compiler_4.2.2    htmltools_0.5.4  
+[21] knitr_1.41       </code></pre>
+</div>
+</div>
+<p>Load tidyverse and other packages for this lecture:</p>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-2_68150c5a9023d4ac4cf701f3d23468b5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rvest"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quantmod"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="web-scraping" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="web-scraping"><span class="header-section-number">1</span> Web scraping</h2>
+<p>There is a wealth of data on internet. How to scrape them and analyze them?</p>
+</section>
+<section id="rvest" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="rvest"><span class="header-section-number">2</span> rvest</h2>
+<p><a href="https://github.com/hadley/rvest">rvest</a> is an R package written by Hadley Wickham which makes web scraping easy.</p>
+</section>
+<section id="example-scraping-from-webpage" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="example-scraping-from-webpage"><span class="header-section-number">3</span> Example: Scraping from webpage</h2>
+<ul>
+<li><p>We follow instructions in a <a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">Blog by SAURAV KAUSHIK</a> to find the most popular feature films of 2020.</p></li>
+<li><p>Install the <a href="https://selectorgadget.com/">SelectorGadget</a> extension for Chrome.</p></li>
+<li><p>The 100 most popular feature films released in 2021 can be accessed at page <a href="https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2021-01-01,2021-12-31&amp;count=100" class="uri">https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2021-01-01,2021-12-31&amp;count=100</a>.</p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-3_606da4192055f7a09c271a50a53a79c7">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading the rvest and tidyverse package</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the url for desired website to be scraped</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2021-01-01,2021-12-31&amp;count=100"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Reading the HTML code from the website</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>(webpage <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{html_document}
+&lt;html xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml"&gt;
+[1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+[2] &lt;body id="styleguide-v2" class="fixed"&gt;\n            &lt;img height="1" widt ...</code></pre>
+</div>
+</div>
+<ul>
+<li>Suppose we want to scrape following 11 features from this page:
+<ul>
+<li>Rank</li>
+<li>Title</li>
+<li>Description</li>
+<li>Runtime</li>
+<li>Genre</li>
+<li>Rating</li>
+<li>Metascore</li>
+<li>Votes</li>
+<li>Gross_Eerning_in_Mil</li>
+<li>Director</li>
+<li>Actor</li>
+</ul></li>
+</ul>
+<p align="center">
+<img src="./imdb.png" height="350">
+</p>
+<section id="rank" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="rank"><span class="header-section-number">3.1</span> Rank</h3>
+<ul>
+<li>Use SelectorGadget to highlight the element we want to scrape</li>
+</ul>
+<p align="center">
+<img src="./selectorgadget.png" height="350">
+</p>
+<ul>
+<li>Use the CSS selector to get the rankings</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-4_3d059b9a9f343875671d1d2335ae91f9">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use CSS selectors to scrap the rankings section</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>(rank_data_html <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(webpage, <span class="st">'.text-primary'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (100)}
+ [1] &lt;span class="lister-item-index unbold text-primary"&gt;1.&lt;/span&gt;
+ [2] &lt;span class="lister-item-index unbold text-primary"&gt;2.&lt;/span&gt;
+ [3] &lt;span class="lister-item-index unbold text-primary"&gt;3.&lt;/span&gt;
+ [4] &lt;span class="lister-item-index unbold text-primary"&gt;4.&lt;/span&gt;
+ [5] &lt;span class="lister-item-index unbold text-primary"&gt;5.&lt;/span&gt;
+ [6] &lt;span class="lister-item-index unbold text-primary"&gt;6.&lt;/span&gt;
+ [7] &lt;span class="lister-item-index unbold text-primary"&gt;7.&lt;/span&gt;
+ [8] &lt;span class="lister-item-index unbold text-primary"&gt;8.&lt;/span&gt;
+ [9] &lt;span class="lister-item-index unbold text-primary"&gt;9.&lt;/span&gt;
+[10] &lt;span class="lister-item-index unbold text-primary"&gt;10.&lt;/span&gt;
+[11] &lt;span class="lister-item-index unbold text-primary"&gt;11.&lt;/span&gt;
+[12] &lt;span class="lister-item-index unbold text-primary"&gt;12.&lt;/span&gt;
+[13] &lt;span class="lister-item-index unbold text-primary"&gt;13.&lt;/span&gt;
+[14] &lt;span class="lister-item-index unbold text-primary"&gt;14.&lt;/span&gt;
+[15] &lt;span class="lister-item-index unbold text-primary"&gt;15.&lt;/span&gt;
+[16] &lt;span class="lister-item-index unbold text-primary"&gt;16.&lt;/span&gt;
+[17] &lt;span class="lister-item-index unbold text-primary"&gt;17.&lt;/span&gt;
+[18] &lt;span class="lister-item-index unbold text-primary"&gt;18.&lt;/span&gt;
+[19] &lt;span class="lister-item-index unbold text-primary"&gt;19.&lt;/span&gt;
+[20] &lt;span class="lister-item-index unbold text-primary"&gt;20.&lt;/span&gt;
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the ranking data to text</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>(rank_data <span class="ot">&lt;-</span> <span class="fu">html_text</span>(rank_data_html))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "1."   "2."   "3."   "4."   "5."   "6."   "7."   "8."   "9."   "10." 
+ [11] "11."  "12."  "13."  "14."  "15."  "16."  "17."  "18."  "19."  "20." 
+ [21] "21."  "22."  "23."  "24."  "25."  "26."  "27."  "28."  "29."  "30." 
+ [31] "31."  "32."  "33."  "34."  "35."  "36."  "37."  "38."  "39."  "40." 
+ [41] "41."  "42."  "43."  "44."  "45."  "46."  "47."  "48."  "49."  "50." 
+ [51] "51."  "52."  "53."  "54."  "55."  "56."  "57."  "58."  "59."  "60." 
+ [61] "61."  "62."  "63."  "64."  "65."  "66."  "67."  "68."  "69."  "70." 
+ [71] "71."  "72."  "73."  "74."  "75."  "76."  "77."  "78."  "79."  "80." 
+ [81] "81."  "82."  "83."  "84."  "85."  "86."  "87."  "88."  "89."  "90." 
+ [91] "91."  "92."  "93."  "94."  "95."  "96."  "97."  "98."  "99."  "100."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into numerical values</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>(rank_data <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(rank_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+ [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+ [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+ [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+ [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+ [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
+</div>
+</div>
+</section>
+<section id="title" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="title"><span class="header-section-number">3.2</span> Title</h3>
+<ul>
+<li>Use SelectorGadget to find the CSS selector <code>.lister-item-header a</code>.</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-5_c0f5902accb3fcca29873895a2b93bee">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using CSS selectors to scrap the title section</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>(title_data_html <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(webpage, <span class="st">'.lister-item-header a'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (100)}
+ [1] &lt;a href="/title/tt11847410/?ref_=adv_li_tt"&gt;The Fallout&lt;/a&gt;
+ [2] &lt;a href="/title/tt1160419/?ref_=adv_li_tt"&gt;Dune&lt;/a&gt;
+ [3] &lt;a href="/title/tt10872600/?ref_=adv_li_tt"&gt;Spider-Man: No Way Home&lt;/a&gt;
+ [4] &lt;a href="/title/tt10187208/?ref_=adv_li_tt"&gt;A Boy Called Christmas&lt;/a&gt;
+ [5] &lt;a href="/title/tt2382320/?ref_=adv_li_tt"&gt;No Time to Die&lt;/a&gt;
+ [6] &lt;a href="/title/tt10752004/?ref_=adv_li_tt"&gt;Love Hard&lt;/a&gt;
+ [7] &lt;a href="/title/tt11555492/?ref_=adv_li_tt"&gt;Farha&lt;/a&gt;
+ [8] &lt;a href="/title/tt6334354/?ref_=adv_li_tt"&gt;The Suicide Squad&lt;/a&gt;
+ [9] &lt;a href="/title/tt13269536/?ref_=adv_li_tt"&gt;Girl in the Basement&lt;/a&gt;
+[10] &lt;a href="/title/tt11540284/?ref_=adv_li_tt"&gt;8-Bit Christmas&lt;/a&gt;
+[11] &lt;a href="/title/tt10016180/?ref_=adv_li_tt"&gt;The Little Things&lt;/a&gt;
+[12] &lt;a href="/title/tt11271038/?ref_=adv_li_tt"&gt;Licorice Pizza&lt;/a&gt;
+[13] &lt;a href="/title/tt6467266/?ref_=adv_li_tt"&gt;Sing 2&lt;/a&gt;
+[14] &lt;a href="/title/tt11012066/?ref_=adv_li_tt"&gt;Home Sweet Home Alone&lt;/a&gt;
+[15] &lt;a href="/title/tt7144666/?ref_=adv_li_tt"&gt;The Black Phone&lt;/a&gt;
+[16] &lt;a href="/title/tt11286314/?ref_=adv_li_tt"&gt;Don't Look Up&lt;/a&gt;
+[17] &lt;a href="/title/tt12361974/?ref_=adv_li_tt"&gt;Zack Snyder's Justice League ...
+[18] &lt;a href="/title/tt11493006/?ref_=adv_li_tt"&gt;Mako&lt;/a&gt;
+[19] &lt;a href="/title/tt14315756/?ref_=adv_li_tt"&gt;Single All the Way&lt;/a&gt;
+[20] &lt;a href="/title/tt9032400/?ref_=adv_li_tt"&gt;Eternals&lt;/a&gt;
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the title data to text</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>(title_data <span class="ot">&lt;-</span> <span class="fu">html_text</span>(title_data_html))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "The Fallout"                              
+  [2] "Dune"                                     
+  [3] "Spider-Man: No Way Home"                  
+  [4] "A Boy Called Christmas"                   
+  [5] "No Time to Die"                           
+  [6] "Love Hard"                                
+  [7] "Farha"                                    
+  [8] "The Suicide Squad"                        
+  [9] "Girl in the Basement"                     
+ [10] "8-Bit Christmas"                          
+ [11] "The Little Things"                        
+ [12] "Licorice Pizza"                           
+ [13] "Sing 2"                                   
+ [14] "Home Sweet Home Alone"                    
+ [15] "The Black Phone"                          
+ [16] "Don't Look Up"                            
+ [17] "Zack Snyder's Justice League"             
+ [18] "Mako"                                     
+ [19] "Single All the Way"                       
+ [20] "Eternals"                                 
+ [21] "Nobody"                                   
+ [22] "Free Guy"                                 
+ [23] "The King's Man"                           
+ [24] "Encanto"                                  
+ [25] "Last Night in Soho"                       
+ [26] "The Worst Person in the World"            
+ [27] "House of Gucci"                           
+ [28] "Ghostbusters: Afterlife"                  
+ [29] "Mad God"                                  
+ [30] "The Matrix Resurrections"                 
+ [31] "Nightmare Alley"                          
+ [32] "Infinite"                                 
+ [33] "Father Christmas Is Back"                 
+ [34] "Silent Night"                             
+ [35] "Wrath of Man"                             
+ [36] "F9: The Fast Saga"                        
+ [37] "Black Widow"                              
+ [38] "Pleasure"                                 
+ [39] "CODA"                                     
+ [40] "A Castle for Christmas"                   
+ [41] "The Last Duel"                            
+ [42] "Old"                                      
+ [43] "Yes Day"                                  
+ [44] "West Side Story"                          
+ [45] "After Yang"                               
+ [46] "The Power of the Dog"                     
+ [47] "Shang-Chi and the Legend of the Ten Rings"
+ [48] "The Legend of Molly Johnson"              
+ [49] "Red Notice"                               
+ [50] "The Green Knight"                         
+ [51] "Operation Mincemeat"                      
+ [52] "The Guilty"                               
+ [53] "The Voyeurs"                              
+ [54] "The Tomorrow War"                         
+ [55] "Mortal Kombat"                            
+ [56] "Godzilla vs. Kong"                        
+ [57] "Belfast"                                  
+ [58] "The Many Saints of Newark"                
+ [59] "Army of Thieves"                          
+ [60] "Army of the Dead"                         
+ [61] "Cyrano"                                   
+ [62] "Cruella"                                  
+ [63] "The Innocents"                            
+ [64] "Malignant"                                
+ [65] "Pushpa: The Rise - Part 1"                
+ [66] "Boiling Point"                            
+ [67] "Marcel the Shell with Shoes On"           
+ [68] "Venom: Let There Be Carnage"              
+ [69] "Drive My Car"                             
+ [70] "The Harder They Fall"                     
+ [71] "King Richard"                             
+ [72] "Pig"                                      
+ [73] "Jungle Cruise"                            
+ [74] "The Sadness"                              
+ [75] "Rumble"                                   
+ [76] "The Hating Game"                          
+ [77] "Voyagers"                                 
+ [78] "Resident Evil: Welcome to Raccoon City"   
+ [79] "Red Rocket"                               
+ [80] "The Vault"                                
+ [81] "The Ravine"                               
+ [82] "Benedetta"                                
+ [83] "After We Fell"                            
+ [84] "Spencer"                                  
+ [85] "The Conjuring: The Devil Made Me Do It"   
+ [86] "tick, tick... BOOM!"                      
+ [87] "The Forgiven"                             
+ [88] "Three Wishes for Cinderella"              
+ [89] "Finch"                                    
+ [90] "Antlers"                                  
+ [91] "No Sudden Move"                           
+ [92] "The Electrical Life of Louis Wain"        
+ [93] "Raya and the Last Dragon"                 
+ [94] "Luca"                                     
+ [95] "Titane"                                   
+ [96] "On the Count of Three"                    
+ [97] "The Lady of Heaven"                       
+ [98] "Gunpowder Milkshake"                      
+ [99] "The Tragedy of Macbeth"                   
+[100] "Happening"                                </code></pre>
+</div>
+</div>
+</section>
+<section id="description" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="description"><span class="header-section-number">3.3</span> Description</h3>
+<ul>
+<li></li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-6_05306cccd42b08d5f9ecebedbe82ad53">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using CSS selectors to scrap the description section</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>(description_data_html <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(webpage, <span class="st">'.ratings-bar+ .text-muted'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (100)}
+ [1] &lt;p class="text-muted"&gt;\nHigh schooler Vada navigates the emotional fallo ...
+ [2] &lt;p class="text-muted"&gt;\nA noble family becomes embroiled in a war for co ...
+ [3] &lt;p class="text-muted"&gt;\nWith Spider-Man's identity now revealed, Peter a ...
+ [4] &lt;p class="text-muted"&gt;\nIn this origin story of Father Christmas, an ord ...
+ [5] &lt;p class="text-muted"&gt;\nJames Bond has left active service. His peace is ...
+ [6] &lt;p class="text-muted"&gt;\nAn LA girl, unlucky in love, falls for an East C ...
+ [7] &lt;p class="text-muted"&gt;\nA 14-year-old girl in 1948 Palestine watches fro ...
+ [8] &lt;p class="text-muted"&gt;\nSupervillains Harley Quinn, Bloodsport, Peacemak ...
+ [9] &lt;p class="text-muted"&gt;\nSarah is a teen girl who is looking forward to h ...
+[10] &lt;p class="text-muted"&gt;\nIn 1980s Chicago, a 10-year-old sets out on a qu ...
+[11] &lt;p class="text-muted"&gt;\nKern County Deputy Sheriff Joe Deacon is sent to ...
+[12] &lt;p class="text-muted"&gt;\nThe story of Alana Kane and Gary Valentine growi ...
+[13] &lt;p class="text-muted"&gt;\nBuster Moon and his friends must persuade reclus ...
+[14] &lt;p class="text-muted"&gt;\nA married couple tries to steal back a valuable  ...
+[15] &lt;p class="text-muted"&gt;\nAfter being abducted by a child killer and locke ...
+[16] &lt;p class="text-muted"&gt;\nTwo low-level astronomers must go on a giant med ...
+[17] &lt;p class="text-muted"&gt;\nDetermined to ensure that Superman's ultimate sa ...
+[18] &lt;p class="text-muted"&gt;\nEight Business Men decide to go to location of E ...
+[19] &lt;p class="text-muted"&gt;\nDesperate to avoid his family's judgment about h ...
+[20] &lt;p class="text-muted"&gt;\nThe saga of the Eternals, a race of immortal bei ...
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the description data to text</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>description_data <span class="ot">&lt;-</span> <span class="fu">html_text</span>(description_data_html)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at first few</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(description_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\nHigh schooler Vada navigates the emotional fallout she experiences in the wake of a school tragedy. Relationships with her family, friends and view of the world are forever altered."                                                       
+[2] "\nA noble family becomes embroiled in a war for control over the galaxy's most valuable asset while its heir becomes troubled by visions of a dark future."                                                                                    
+[3] "\nWith Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man."                     
+[4] "\nIn this origin story of Father Christmas, an ordinary boy (with a loyal pet mouse and a reindeer at his side) sets out on an extraordinary adventure to find his father who is on a quest to discover the fabled village of Elfhelm."        
+[5] "\nJames Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology."              
+[6] "\nAn LA girl, unlucky in love, falls for an East Coast guy on a dating app and decides to surprise him for the holidays, only to discover that she's been catfished. This lighthearted romantic comedy chronicles her attempt to reel in love."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># strip the '\n'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>description_data <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(description_data, <span class="st">"^</span><span class="sc">\\</span><span class="st">n"</span>, <span class="st">""</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(description_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "High schooler Vada navigates the emotional fallout she experiences in the wake of a school tragedy. Relationships with her family, friends and view of the world are forever altered."                                                       
+[2] "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset while its heir becomes troubled by visions of a dark future."                                                                                    
+[3] "With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man."                     
+[4] "In this origin story of Father Christmas, an ordinary boy (with a loyal pet mouse and a reindeer at his side) sets out on an extraordinary adventure to find his father who is on a quest to discover the fabled village of Elfhelm."        
+[5] "James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology."              
+[6] "An LA girl, unlucky in love, falls for an East Coast guy on a dating app and decides to surprise him for the holidays, only to discover that she's been catfished. This lighthearted romantic comedy chronicles her attempt to reel in love."</code></pre>
+</div>
+</div>
+</section>
+<section id="runtime" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="runtime"><span class="header-section-number">3.4</span> Runtime</h3>
+<ul>
+<li>Retrieve runtime data</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-7_0e791752e17f12a79394177bfc8091f0">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using CSS selectors to scrap the Movie runtime section</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>(runtime_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.runtime'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="st">" min"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  96 155 148 106 163 104  92 132  88  97 128 133 110  93 103 138 242  96
+ [19]  99 156  92 115 131 102 116 128 158 124  83 148 150 106 105  92 119 143
+ [37] 134 109 111  98 152 108  86 156  96 126 132 109 118 130 128  90 116 138
+ [55] 110 113  98 120 127 148 123 134 117 111 179  92  90  97 179 139 144  92
+ [73] 127  99  95 102 108 107 130 118 121 131  98 117 112 120 117  87 115  99
+ [91] 115 111 107  95 108  86 141 114 105 100</code></pre>
+</div>
+</div>
+</section>
+<section id="genre" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="genre"><span class="header-section-number">3.5</span> Genre</h3>
+<ul>
+<li>Collect the (first) genre of each movie:</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-8_30bc84ff5ee24502c9a706ce091dd5c1">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>genre_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Using CSS selectors to scrap the Movie genre section</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.genre'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Converting the genre data to text</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Data-Preprocessing: retrieve the first word</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">"[:alpha:]+"</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>genre_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Drama"     "Action"    "Action"    "Adventure" "Action"    "Comedy"   
+  [7] "Drama"     "Action"    "Crime"     "Comedy"    "Crime"     "Comedy"   
+ [13] "Animation" "Comedy"    "Horror"    "Comedy"    "Action"    "Adventure"
+ [19] "Comedy"    "Action"    "Action"    "Action"    "Action"    "Animation"
+ [25] "Drama"     "Comedy"    "Biography" "Adventure" "Animation" "Action"   
+ [31] "Crime"     "Action"    "Comedy"    "Comedy"    "Action"    "Action"   
+ [37] "Action"    "Drama"     "Comedy"    "Adventure" "Action"    "Drama"    
+ [43] "Comedy"    "Crime"     "Drama"     "Drama"     "Action"    "Drama"    
+ [49] "Action"    "Adventure" "Drama"     "Crime"     "Drama"     "Action"   
+ [55] "Action"    "Action"    "Biography" "Crime"     "Action"    "Action"   
+ [61] "Drama"     "Adventure" "Drama"     "Crime"     "Action"    "Drama"    
+ [67] "Animation" "Action"    "Drama"     "Action"    "Biography" "Drama"    
+ [73] "Action"    "Horror"    "Animation" "Comedy"    "Adventure" "Action"   
+ [79] "Comedy"    "Action"    "Mystery"   "Biography" "Drama"     "Biography"
+ [85] "Horror"    "Biography" "Drama"     "Family"    "Adventure" "Drama"    
+ [91] "Crime"     "Biography" "Animation" "Animation" "Drama"     "Comedy"   
+ [97] "Action"    "Action"    "Drama"     "Drama"    </code></pre>
+</div>
+</div>
+</section>
+<section id="rating" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="rating"><span class="header-section-number">3.6</span> Rating</h3>
+<ul>
+<li>Rating data:</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-9_ccc928ae118da3155ec2c952d07e10dc">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>rating_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.ratings-imdb-rating strong'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>rating_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 7.0 8.0 8.3 6.7 7.3 6.3 8.4 7.2 6.3 6.7 6.3 7.2 7.4 3.6 6.9 7.2 8.0 3.8
+ [19] 6.1 6.3 7.4 7.1 6.3 7.2 7.1 7.8 6.6 7.1 6.8 5.7 7.0 5.4 4.5 5.7 7.1 5.2
+ [37] 6.7 6.4 8.0 5.5 7.4 5.8 5.7 7.2 6.7 6.8 7.4 6.2 6.3 6.6 6.6 6.3 6.0 6.5
+ [55] 6.1 6.3 7.3 6.3 6.4 5.7 6.4 7.3 7.0 6.2 7.6 7.5 7.9 5.9 7.6 6.6 7.5 6.9
+ [73] 6.6 6.5 5.9 6.2 5.4 5.2 7.2 6.4 5.1 6.7 4.7 6.6 6.3 7.5 6.0 5.7 6.9 5.9
+ [91] 6.4 6.8 7.3 7.4 6.6 7.0 5.7 6.0 7.1 7.4</code></pre>
+</div>
+</div>
+</section>
+<section id="votes" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="votes"><span class="header-section-number">3.7</span> Votes</h3>
+<ul>
+<li>Vote data</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-10_f5a04ec1b4a75f57eb11d2f685f5f63c">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>votes_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.sort-num_votes-visible span:nth-child(2)'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="st">","</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>votes_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  20937 633817 753499  23632 400530  54491  77064 352255   8074  18490
+ [11] 105084 116253  69617  18012 139720 537065 398911   1471  17172 342144
+ [21] 252890 370948 147873 221580 138929  68780 136577 183316   9035 250674
+ [31] 144547  51599   6542  14596 179154 133434 379250  17168 133448  13721
+ [41] 157175 121612  25308  83847  14579 175602 381895   1038 277328 101785
+ [51]  25726 126258  22949 206887 174612 210600  75220  55195  78174 173752
+ [61]  11649 235380  15329  91965  75936  27823   8242 225333  51763  63630
+ [71] 114491  75953 192632  12826   6999  17692  22213  54793  24864  26257
+ [81]   1517  20183  15409  69008 116891 106713   4816   1662  83736  38964
+ [91]  35716  15406 152723 164191  46657   4878  13402  45437  34682   7636</code></pre>
+</div>
+</div>
+</section>
+<section id="director" class="level3" data-number="3.8">
+<h3 data-number="3.8" class="anchored" data-anchor-id="director"><span class="header-section-number">3.8</span> Director</h3>
+<ul>
+<li>Director information</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-11_6600ae9e6bb6278dfa9f1e14df7291ce">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>directors_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.text-muted+ p a:nth-child(1)'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>directors_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Megan Park"                "Denis Villeneuve"         
+  [3] "Jon Watts"                 "Gil Kenan"                
+  [5] "Cary Joji Fukunaga"        "Hernán Jiménez"           
+  [7] "Darin J. Sallam"           "James Gunn"               
+  [9] "Elisabeth Röhm"            "Michael Dowse"            
+ [11] "John Lee Hancock"          "Paul Thomas Anderson"     
+ [13] "Garth Jennings"            "Dan Mazer"                
+ [15] "Scott Derrickson"          "Adam McKay"               
+ [17] "Zack Snyder"               "Mohamed Hesham El-Rashidy"
+ [19] "Michael Mayer"             "Chloé Zhao"               
+ [21] "Ilya Naishuller"           "Shawn Levy"               
+ [23] "Matthew Vaughn"            "Jared Bush"               
+ [25] "Edgar Wright"              "Joachim Trier"            
+ [27] "Ridley Scott"              "Jason Reitman"            
+ [29] "Phil Tippett"              "Lana Wachowski"           
+ [31] "Guillermo del Toro"        "Antoine Fuqua"            
+ [33] "Mick Davis"                "Camille Griffin"          
+ [35] "Guy Ritchie"               "Justin Lin"               
+ [37] "Cate Shortland"            "Ninja Thyberg"            
+ [39] "Sian Heder"                "Mary Lambert"             
+ [41] "Ridley Scott"              "M. Night Shyamalan"       
+ [43] "Miguel Arteta"             "Steven Spielberg"         
+ [45] "Kogonada"                  "Jane Campion"             
+ [47] "Destin Daniel Cretton"     "Leah Purcell"             
+ [49] "Rawson Marshall Thurber"   "David Lowery"             
+ [51] "John Madden"               "Antoine Fuqua"            
+ [53] "Michael Mohan"             "Chris McKay"              
+ [55] "Simon McQuoid"             "Adam Wingard"             
+ [57] "Kenneth Branagh"           "Alan Taylor"              
+ [59] "Matthias Schweighöfer"     "Zack Snyder"              
+ [61] "Joe Wright"                "Craig Gillespie"          
+ [63] "Eskil Vogt"                "James Wan"                
+ [65] "Sukumar"                   "Philip Barantini"         
+ [67] "Dean Fleischer-Camp"       "Andy Serkis"              
+ [69] "Ryûsuke Hamaguchi"         "Jeymes Samuel"            
+ [71] "Reinaldo Marcus Green"     "Michael Sarnoski"         
+ [73] "Jaume Collet-Serra"        "Rob Jabbaz"               
+ [75] "Hamish Grieve"             "Peter Hutchings"          
+ [77] "Neil Burger"               "Johannes Roberts"         
+ [79] "Sean Baker"                "Jaume Balagueró"          
+ [81] "Keoni Waxman"              "Paul Verhoeven"           
+ [83] "Castille Landon"           "Pablo Larraín"            
+ [85] "Michael Chaves"            "Lin-Manuel Miranda"       
+ [87] "John Michael McDonagh"     "Cecilie A. Mosli"         
+ [89] "Miguel Sapochnik"          "Scott Cooper"             
+ [91] "Steven Soderbergh"         "Will Sharpe"              
+ [93] "Don Hall"                  "Enrico Casarosa"          
+ [95] "Julia Ducournau"           "Jerrod Carmichael"        
+ [97] "Eli King"                  "Navot Papushado"          
+ [99] "Joel Coen"                 "Audrey Diwan"             </code></pre>
+</div>
+</div>
+</section>
+<section id="actor" class="level3" data-number="3.9">
+<h3 data-number="3.9" class="anchored" data-anchor-id="actor"><span class="header-section-number">3.9</span> Actor</h3>
+<ul>
+<li>Only the first actor</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-12_2b51174dc5367a4cc3679949e80d7f11">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>actors_data <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.lister-item-content .ghost+ a'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>actors_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Jenna Ortega"          "Timothée Chalamet"     "Tom Holland"          
+  [4] "Maggie Smith"          "Daniel Craig"          "Nina Dobrev"          
+  [7] "Karam Taher"           "Margot Robbie"         "Judd Nelson"          
+ [10] "Winslow Fegley"        "Denzel Washington"     "Alana Haim"           
+ [13] "Matthew McConaughey"   "Ellie Kemper"          "Mason Thames"         
+ [16] "Leonardo DiCaprio"     "Henry Cavill"          "Basma"                
+ [19] "Michael Urie"          "Gemma Chan"            "Bob Odenkirk"         
+ [22] "Ryan Reynolds"         "Ralph Fiennes"         "Stephanie Beatriz"    
+ [25] "Thomasin McKenzie"     "Renate Reinsve"        "Lady Gaga"            
+ [28] "Carrie Coon"           "Alex Cox"              "Keanu Reeves"         
+ [31] "Bradley Cooper"        "Mark Wahlberg"         "Elizabeth Hurley"     
+ [34] "Keira Knightley"       "Jason Statham"         "Vin Diesel"           
+ [37] "Scarlett Johansson"    "Sofia Kappel"          "Emilia Jones"         
+ [40] "Brooke Shields"        "Matt Damon"            "Gael García Bernal"   
+ [43] "Jennifer Garner"       "Ansel Elgort"          "Colin Farrell"        
+ [46] "Benedict Cumberbatch"  "Simu Liu"              "Leah Purcell"         
+ [49] "Dwayne Johnson"        "Dev Patel"             "Colin Firth"          
+ [52] "Jake Gyllenhaal"       "Sydney Sweeney"        "Chris Pratt"          
+ [55] "Lewis Tan"             "Alexander Skarsgård"   "Jude Hill"            
+ [58] "Alessandro Nivola"     "Matthias Schweighöfer" "Dave Bautista"        
+ [61] "Peter Dinklage"        "Emma Stone"            "Rakel Lenora Fløttum" 
+ [64] "Annabelle Wallis"      "Allu Arjun"            "Stephen Graham"       
+ [67] "Jenny Slate"           "Tom Hardy"             "Hidetoshi Nishijima"  
+ [70] "Jonathan Majors"       "Will Smith"            "Nicolas Cage"         
+ [73] "Dwayne Johnson"        "Berant Zhu"            "Geraldine Viswanathan"
+ [76] "Lucy Hale"             "Colin Farrell"         "Kaya Scodelario"      
+ [79] "Simon Rex"             "Freddie Highmore"      "Eric Dane"            
+ [82] "Virginie Efira"        "Josephine Langford"    "Kristen Stewart"      
+ [85] "Patrick Wilson"        "Andrew Garfield"       "Jessica Chastain"     
+ [88] "Astrid S"              "Tom Hanks"             "Keri Russell"         
+ [91] "Don Cheadle"           "Benedict Cumberbatch"  "Kelly Marie Tran"     
+ [94] "Jacob Tremblay"        "Vincent Lindon"        "Jerrod Carmichael"    
+ [97] "Denise Black"          "Karen Gillan"          "Denzel Washington"    
+[100] "Anamaria Vartolomei"  </code></pre>
+</div>
+</div>
+</section>
+<section id="metascore" class="level3" data-number="3.10">
+<h3 data-number="3.10" class="anchored" data-anchor-id="metascore"><span class="header-section-number">3.10</span> Metascore</h3>
+<ul>
+<li><p>We encounter the issue of missing data when scraping metascore.</p></li>
+<li><p>We see there are only 90 meta scores. 10 movies don’t have meta scores. We may manually find which movies don’t have meta scores but that’s tedious and not reproducible.</p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-13_b1612a6250e55633ec50cecb1260d4c5">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using CSS selectors to scrap the metascore section</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ms_data_html <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(webpage, <span class="st">'.metascore'</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the runtime data to text</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>ms_data <span class="ot">&lt;-</span> <span class="fu">html_text</span>(ms_data_html)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at the metascore </span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>ms_data <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(ms_data, <span class="st">"</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">as.integer</span>()</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>ms_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 84 74 71 61 68 42 72 66 54 90 49 35 65 49 54 49 52 64 62 44 75 65 90 59 45
+[26] 80 63 70 28 52 57 58 67 75 72 53 67 55 46 85 78 89 71 60 37 85 65 63 54 45
+[51] 44 59 75 60 49 57 66 59 79 51 73 81 49 91 68 76 82 50 68 48 44 44 76 50 73
+[76] 76 53 74 59 57 57 76 63 74 71 75 74 41 47 87 86</code></pre>
+</div>
+</div>
+<ul>
+<li>First let’s tally index and corresponding metascore (if present).</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-14_dd97b056bcdf52210015c537ab032a97">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>rank_and_metascore <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">'.unfavorable , .text-primary , .favorable , .mixed'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "1."   "84"   "2."   "74"   "3."   "71"   "4."   "61"   "5."   "68"  
+ [11] "6."   "42"   "7."   "8."   "72"   "9."   "10."  "66"   "11."  "54"  
+ [21] "12."  "90"   "13."  "49"   "14."  "35"   "15."  "65"   "16."  "49"  
+ [31] "17."  "54"   "18."  "19."  "49"   "20."  "52"   "21."  "64"   "22." 
+ [41] "62"   "23."  "44"   "24."  "75"   "25."  "65"   "26."  "90"   "27." 
+ [51] "59"   "28."  "45"   "29."  "80"   "30."  "63"   "31."  "70"   "32." 
+ [61] "28"   "33."  "34."  "52"   "35."  "57"   "36."  "58"   "37."  "67"  
+ [71] "38."  "75"   "39."  "72"   "40."  "53"   "41."  "67"   "42."  "55"  
+ [81] "43."  "46"   "44."  "85"   "45."  "78"   "46."  "89"   "47."  "71"  
+ [91] "48."  "60"   "49."  "37"   "50."  "85"   "51."  "65"   "52."  "63"  
+[101] "53."  "54"   "54."  "45"   "55."  "44"   "56."  "59"   "57."  "75"  
+[111] "58."  "60"   "59."  "49"   "60."  "57"   "61."  "66"   "62."  "59"  
+[121] "63."  "79"   "64."  "51"   "65."  "66."  "73"   "67."  "81"   "68." 
+[131] "49"   "69."  "91"   "70."  "68"   "71."  "76"   "72."  "82"   "73." 
+[141] "50"   "74."  "68"   "75."  "48"   "76."  "77."  "44"   "78."  "44"  
+[151] "79."  "76"   "80."  "50"   "81."  "82."  "73"   "83."  "84."  "76"  
+[161] "85."  "53"   "86."  "74"   "87."  "59"   "88."  "89."  "57"   "90." 
+[171] "57"   "91."  "76"   "92."  "63"   "93."  "74"   "94."  "71"   "95." 
+[181] "75"   "96."  "74"   "97."  "41"   "98."  "47"   "99."  "87"   "100."
+[191] "86"  </code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-15_0b99757ea71db60a0682e6c587dd823a">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>isrank <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(rank_and_metascore, <span class="st">"</span><span class="sc">\\</span><span class="st">.$"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>ismissing <span class="ot">&lt;-</span> isrank[<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(rank_and_metascore) <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">&amp;</span> isrank[<span class="dv">2</span><span class="sc">:</span>(<span class="fu">length</span>(rank_and_metascore))]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>ismissing[<span class="fu">length</span>(ismissing) <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> isrank[<span class="fu">length</span>(isrank)]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>missingpos <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(rank_and_metascore[ismissing])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>metascore_data <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>metascore_data[<span class="sc">-</span>missingpos] <span class="ot">&lt;-</span> ms_data</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>metascore_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 84 74 71 61 68 42 NA 72 NA 66 54 90 49 35 65 49 54 NA 49 52 64 62 44 75 65
+ [26] 90 59 45 80 63 70 28 NA 52 57 58 67 75 72 53 67 55 46 85 78 89 71 60 37 85
+ [51] 65 63 54 45 44 59 75 60 49 57 66 59 79 51 NA 73 81 49 91 68 76 82 50 68 48
+ [76] NA 44 44 76 50 NA 73 NA 76 53 74 59 NA 57 57 76 63 74 71 75 74 41 47 87 86</code></pre>
+</div>
+</div>
+</section>
+<section id="gross" class="level3" data-number="3.11">
+<h3 data-number="3.11" class="anchored" data-anchor-id="gross"><span class="header-section-number">3.11</span> Gross</h3>
+<ul>
+<li>Be careful with missing data.</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-16_c70cb8380b909c4172781960825e11bd">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using CSS selectors to scrap the gross revenue section</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>gross_data_html <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(webpage,<span class="st">'.ghost~ .text-muted+ span'</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the gross revenue data to text</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>gross_data <span class="ot">&lt;-</span> <span class="fu">html_text</span>(gross_data_html)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at the gross data</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>gross_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "$108.33M" "$804.75M" "$160.87M" "$55.82M"  "$162.79M" "$164.87M"
+ [7] "$27.27M"  "$121.63M" "$96.09M"  "$129.36M" "$173.20M" "$183.65M"
+[13] "$224.54M" "$42.20M"  "$100.92M" "$1.00M"   "$86.10M"  "$5.79M"  
+[19] "$213.55M" "$116.99M" "$65.63M" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data-Preprocessing: removing '$' and 'M' signs</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>gross_data <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(gross_data, <span class="st">"M"</span>, <span class="st">""</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>gross_data <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(gross_data, <span class="dv">2</span>, <span class="dv">10</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">#(gross_data &lt;- str_extract(gross_data, "[:digit:]+.[:digit:]+"))</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>gross_data <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gross_data)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check the length of gross data</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>gross_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 108.33 804.75 160.87  55.82 162.79 164.87  27.27 121.63  96.09 129.36
+[11] 173.20 183.65 224.54  42.20 100.92   1.00  86.10   5.79 213.55 116.99
+[21]  65.63</code></pre>
+</div>
+</div>
+<p>85 (out of 100) movies don’t have gross data yet! We need a better way to figure out missing entries.</p>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-17_52476d00ef3c662badebb4c098ebf622">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(rank_and_gross <span class="ot">&lt;-</span> webpage <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># retrieve rank and gross</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">html_nodes</span>(<span class="st">'.ghost~ .text-muted+ span , .text-primary'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_replace</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_replace_all</span>(<span class="st">"[$M]"</span>, <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "1."     "2."     "108.33" "3."     "804.75" "4."     "5."     "160.87"
+  [9] "6."     "7."     "8."     "55.82"  "9."     "10."    "11."    "12."   
+ [17] "13."    "162.79" "14."    "15."    "16."    "17."    "18."    "19."   
+ [25] "20."    "164.87" "21."    "27.27"  "22."    "121.63" "23."    "24."   
+ [33] "96.09"  "25."    "26."    "27."    "28."    "129.36" "29."    "30."   
+ [41] "31."    "32."    "33."    "34."    "35."    "36."    "173.20" "37."   
+ [49] "183.65" "38."    "39."    "40."    "41."    "42."    "43."    "44."   
+ [57] "45."    "46."    "47."    "224.54" "48."    "49."    "50."    "51."   
+ [65] "52."    "53."    "54."    "55."    "42.20"  "56."    "100.92" "57."   
+ [73] "58."    "59."    "60."    "1.00"   "61."    "62."    "86.10"  "63."   
+ [81] "64."    "65."    "66."    "67."    "5.79"   "68."    "213.55" "69."   
+ [89] "70."    "71."    "72."    "73."    "116.99" "74."    "75."    "76."   
+ [97] "77."    "78."    "79."    "80."    "81."    "82."    "83."    "84."   
+[105] "85."    "65.63"  "86."    "87."    "88."    "89."    "90."    "91."   
+[113] "92."    "93."    "94."    "95."    "96."    "97."    "98."    "99."   
+[121] "100."  </code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-18_89f004868622727cadf220f6c54e570d">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>isrank <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(rank_and_gross, <span class="st">"</span><span class="sc">\\</span><span class="st">.$"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>ismissing <span class="ot">&lt;-</span> isrank[<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(rank_and_gross) <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">&amp;</span> isrank[<span class="dv">2</span><span class="sc">:</span>(<span class="fu">length</span>(rank_and_gross))]</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>ismissing[<span class="fu">length</span>(ismissing)<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> isrank[<span class="fu">length</span>(isrank)]</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>missingpos <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(rank_and_gross[ismissing])</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>gs_data <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>gs_data[<span class="sc">-</span>missingpos] <span class="ot">&lt;-</span> gross_data</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>(gross_data <span class="ot">&lt;-</span> gs_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]     NA 108.33 804.75     NA 160.87     NA     NA  55.82     NA     NA
+ [11]     NA     NA 162.79     NA     NA     NA     NA     NA     NA 164.87
+ [21]  27.27 121.63     NA  96.09     NA     NA     NA 129.36     NA     NA
+ [31]     NA     NA     NA     NA     NA 173.20 183.65     NA     NA     NA
+ [41]     NA     NA     NA     NA     NA     NA 224.54     NA     NA     NA
+ [51]     NA     NA     NA     NA  42.20 100.92     NA     NA     NA   1.00
+ [61]     NA  86.10     NA     NA     NA     NA   5.79 213.55     NA     NA
+ [71]     NA     NA 116.99     NA     NA     NA     NA     NA     NA     NA
+ [81]     NA     NA     NA     NA  65.63     NA     NA     NA     NA     NA
+ [91]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-movie-data" class="level3" data-number="3.12">
+<h3 data-number="3.12" class="anchored" data-anchor-id="visualizing-movie-data"><span class="header-section-number">3.12</span> Visualizing movie data</h3>
+<ul>
+<li>Form a tibble:</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-19_0d07e227dc11bf7f9f5b6a463a3971da">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining all the lists to form a data frame</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Rank =</span> rank_data, </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Title =</span> title_data,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Description =</span> description_data, </span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Runtime =</span> runtime_data,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Genre =</span> genre_data, </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Rating =</span> rating_data,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Metascore =</span> metascore_data, </span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Votes =</span> votes_data,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Gross_Earning_in_Mil =</span> gross_data,</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Director =</span> directors_data, </span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Actor =</span> actors_data)</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>movies <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">width=</span><span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 11
+    Rank Title                  
+   &lt;int&gt; &lt;chr&gt;                  
+ 1     1 The Fallout            
+ 2     2 Dune                   
+ 3     3 Spider-Man: No Way Home
+ 4     4 A Boy Called Christmas 
+ 5     5 No Time to Die         
+ 6     6 Love Hard              
+ 7     7 Farha                  
+ 8     8 The Suicide Squad      
+ 9     9 Girl in the Basement   
+10    10 8-Bit Christmas        
+   Description                                                                  
+   &lt;chr&gt;                                                                        
+ 1 High schooler Vada navigates the emotional fallout she experiences in the wa…
+ 2 A noble family becomes embroiled in a war for control over the galaxy's most…
+ 3 With Spider-Man's identity now revealed, Peter asks Doctor Strange for help.…
+ 4 In this origin story of Father Christmas, an ordinary boy (with a loyal pet …
+ 5 James Bond has left active service. His peace is short-lived when Felix Leit…
+ 6 An LA girl, unlucky in love, falls for an East Coast guy on a dating app and…
+ 7 A 14-year-old girl in 1948 Palestine watches from a locked pantry as catastr…
+ 8 Supervillains Harley Quinn, Bloodsport, Peacemaker, and a collection of nutt…
+ 9 Sarah is a teen girl who is looking forward to her 18th birthday to move awa…
+10 In 1980s Chicago, a 10-year-old sets out on a quest to get the Christmas gif…
+   Runtime Genre     Rating Metascore  Votes Gross_Earning_in_Mil
+     &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;     &lt;int&gt;  &lt;dbl&gt;                &lt;dbl&gt;
+ 1      96 Drama        7          84  20937                 NA  
+ 2     155 Action       8          74 633817                108. 
+ 3     148 Action       8.3        71 753499                805. 
+ 4     106 Adventure    6.7        61  23632                 NA  
+ 5     163 Action       7.3        68 400530                161. 
+ 6     104 Comedy       6.3        42  54491                 NA  
+ 7      92 Drama        8.4        NA  77064                 NA  
+ 8     132 Action       7.2        72 352255                 55.8
+ 9      88 Crime        6.3        NA   8074                 NA  
+10      97 Comedy       6.7        66  18490                 NA  
+   Director           Actor            
+   &lt;chr&gt;              &lt;chr&gt;            
+ 1 Megan Park         Jenna Ortega     
+ 2 Denis Villeneuve   Timothée Chalamet
+ 3 Jon Watts          Tom Holland      
+ 4 Gil Kenan          Maggie Smith     
+ 5 Cary Joji Fukunaga Daniel Craig     
+ 6 Hernán Jiménez     Nina Dobrev      
+ 7 Darin J. Sallam    Karam Taher      
+ 8 James Gunn         Margot Robbie    
+ 9 Elisabeth Röhm     Judd Nelson      
+10 Michael Dowse      Winslow Fegley   
+# … with 90 more rows</code></pre>
+</div>
+</div>
+<ul>
+<li>How many top 100 movies are in each genre? (Be careful with interpretation.)</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-20_8ff026bfe7dbc5474239d0e90d0f0fa3">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>movies <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Genre))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="scraping_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Which genre is most profitable in terms of average gross earnings?</p>
+<p>::: {.cell layout-align=“center” hash=‘scraping_cache/html/unnamed-chunk-21_eee65cf5ed816103a365e8363b8c3006’}</p>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>movies <span class="sc">%&gt;%</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genre) <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_earning =</span> <span class="fu">mean</span>(Gross_Earning_in_Mil, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Genre, <span class="at">y =</span> avg_earning)) <span class="sc">+</span> </span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"avg earning in millions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>::: {.cell-output .cell-output-stderr} <code>Warning: Removed 6 rows containing missing values (`position_stack()`).</code> :::</p>
+<p>::: {.cell-output-display} <img src="scraping_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" data-fig-align="center" width="576"> ::: :::</p>
+<p>::: {.cell layout-align=“center” hash=‘scraping_cache/html/unnamed-chunk-22_51ae6034cc0a7832e98e4895f05aab6b’}</p>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies) <span class="sc">+</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Genre, <span class="at">y =</span> Gross_Earning_in_Mil)) <span class="sc">+</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Gross earning in millions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>::: {.cell-output .cell-output-stderr} <code>Warning: Removed 79 rows containing non-finite values (`stat_boxplot()`).</code> :::</p>
+<p>::: {.cell-output-display} <img src="scraping_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" data-fig-align="center" width="576"> ::: :::</p></li>
+<li><p>Is there a relationship between gross earning and rating? Find the best selling movie (by gross earning) in each genre</p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-23_7f4b446c7cc1499d2fa131aa46dcf843">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggrepel"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>(best_in_genre <span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Genre) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">row_number</span>(<span class="fu">desc</span>(Gross_Earning_in_Mil)) <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 11
+# Groups:   Genre [4]
+   Rank Title                                 
+  &lt;int&gt; &lt;chr&gt;                                 
+1     3 Spider-Man: No Way Home               
+2    13 Sing 2                                
+3    28 Ghostbusters: Afterlife               
+4    85 The Conjuring: The Devil Made Me Do It
+  Description                                                                   
+  &lt;chr&gt;                                                                         
+1 With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. …
+2 Buster Moon and his friends must persuade reclusive rock star Clay Calloway t…
+3 When a single mom and her two kids arrive in a small town, they begin to disc…
+4 The Warrens investigate a murder that may be linked to a demonic possession.  
+  Runtime Genre     Rating Metascore  Votes Gross_Earning_in_Mil Director      
+    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;     &lt;int&gt;  &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;         
+1     148 Action       8.3        71 753499                805.  Jon Watts     
+2     110 Animation    7.4        49  69617                163.  Garth Jennings
+3     124 Adventure    7.1        45 183316                129.  Jason Reitman 
+4     112 Horror       6.3        53 116891                 65.6 Michael Chaves
+  Actor              
+  &lt;chr&gt;              
+1 Tom Holland        
+2 Matthew McConaughey
+3 Carrie Coon        
+4 Patrick Wilson     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Rating, <span class="at">y =</span> Gross_Earning_in_Mil)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">size =</span> Votes, <span class="at">color =</span> Genre)) <span class="sc">+</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_label_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> Title), <span class="at">data =</span> best_in_genre) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Gross earning in millions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 79 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="scraping_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="example-scraping-finance-data" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="example-scraping-finance-data"><span class="header-section-number">4</span> Example: Scraping finance data</h2>
+<ul>
+<li><code>quantmod</code> package contains many utility functions for retrieving and plotting finance data. E.g.,</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-24_f526335bf7c7c1d4b308d65ba59bd6a1">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>stock <span class="ot">&lt;-</span> <span class="fu">getSymbols</span>(<span class="st">"TSLA"</span>, <span class="at">src =</span> <span class="st">"yahoo"</span>, <span class="at">auto.assign =</span> <span class="cn">FALSE</span>, <span class="at">from =</span> <span class="st">"2020-01-01"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stock)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           TSLA.Open TSLA.High TSLA.Low TSLA.Close TSLA.Volume TSLA.Adjusted
+2020-01-02  28.30000  28.71333 28.11400   28.68400   142981500      28.68400
+2020-01-03  29.36667  30.26667 29.12800   29.53400   266677500      29.53400
+2020-01-06  29.36467  30.10400 29.33333   30.10267   151995000      30.10267
+2020-01-07  30.76000  31.44200 30.22400   31.27067   268231500      31.27067
+2020-01-08  31.58000  33.23267 31.21533   32.80933   467164500      32.80933
+2020-01-09  33.14000  33.25333 31.52467   32.08933   426606000      32.08933</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chartSeries</span>(stock, <span class="at">theme =</span> <span class="fu">chartTheme</span>(<span class="st">"white"</span>),</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">type =</span> <span class="st">"line"</span>, <span class="at">log.scale =</span> <span class="cn">FALSE</span>, <span class="at">TA =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="scraping_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-pull-tweets-into-r" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="example-pull-tweets-into-r"><span class="header-section-number">5</span> Example: Pull tweets into R</h2>
+<ul>
+<li><p>Read blog: <a href="https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2" class="uri">https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2</a></p></li>
+<li><p><a href="https://www.rdocumentation.org/packages/twitteR"><code>twitteR</code> package</a> is useful for pulling tweets text data into R.</p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-25_127c26361a59aff10525701992163b7e">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(twitteR) <span class="co">#load package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Step 1: apply for a <a href="https://developer.twitter.com">Twitter developer account</a>. It takes some time to get approved.</p></li>
+<li><p>Step 2: Generate and copy the Twitter App Keys.</p></li>
+</ul>
+<pre><code>consumer_key &lt;- 'XXXXXXXXXX'
+consumer_secret &lt;- 'XXXXXXXXXX'
+access_token &lt;- 'XXXXXXXXXX'
+access_secret &lt;- 'XXXXXXXXXX'</code></pre>
+<ul>
+<li>Step 3. Set up authentication</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-27_2f1a2fdad878643e769ead76bd29c4b9">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setup_twitter_oauth</span>(consumer_key, consumer_secret, access_token, access_secret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 4: Pull tweets</li>
+</ul>
+<div class="cell" data-layout-align="center" data-hash="scraping_cache/html/unnamed-chunk-28_0717e1b622700075d3971431e8e94d62">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>virus <span class="ot">&lt;-</span> <span class="fu">searchTwitter</span>(<span class="st">'#China + #Coronavirus'</span>, </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n =</span> <span class="dv">1000</span>, </span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">since =</span> <span class="st">'2020-01-01'</span>, </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">retryOnRateLimit =</span> <span class="fl">1e3</span>)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>virus_df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">twListToDF</span>(virus))</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>virus_df <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
