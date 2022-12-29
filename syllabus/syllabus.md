@@ -18,10 +18,10 @@ Phone: (310)794-7835
 Email: <huazhou@ucla.edu>  
 Office hours: Tue, Thu 5pm-6pm @ Zoom <https://ucla.zoom.us/j/97364661679> and CHS 21-254A  
 
-## Teaching Assistant
+## Course Reader
 
-TBA <???>   
-Office hours: TBA  
+Tomoki Okuno <tomokiokuno0528@ucla.edu> assists with grading.   
+Office hours: Fri 5:30pm-6:30m @ Zoom <https://ucla.zoom.us/j/97364661679>   
 
 ## Course Description
 
@@ -43,7 +43,7 @@ There are no required textbooks. Some useful resources will be distributed durin
 
 ## Attendance
 
-Class attendance to both Tuesday lectures and Thursday lab is **mandatory**.
+Class attendance to both lectures and Thursday lab is **mandatory**.
 
 ## Homework
 
@@ -55,7 +55,7 @@ There will be no midterm and final exams.
 
 ## Final Grade
 
-Grades will be based on the homework (70%) and class attendance and participation (30%). Auditors must earn a respectable D to gain recording of this course.
+Grades will be based on the homework (70%) + class attendance and participation (30%). Auditors must earn a respectable D to gain recording of this course.
 
 ## UCLA ADA Policy 
 
