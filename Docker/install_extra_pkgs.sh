@@ -25,7 +25,9 @@ apt_install \
 # install extra R packages
 install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
     ggrepel \
-    htmlwidgets
+    htmlwidgets \
+    mapproj \
+    quantmod
 
 # Clean up
 rm -rf /var/lib/apt/lists/*
