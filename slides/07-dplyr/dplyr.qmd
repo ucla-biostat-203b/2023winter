@@ -2,7 +2,7 @@
 title: "Data Transformation With dplyr"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-26"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -22,16 +22,20 @@ knitr:
     cache: true
 ---
 
+```{r}
+sessionInfo()
+```
+Load tidyverse
+```{r}
+library(tidyverse)
+```
+
 A typical data science project:
 
 <p align="center">
 <img src="./data-science.png" height="275">
 </p>
 
-Load tidyverse
-```{r}
-library("tidyverse")
-```
 
 ## nycflights13 data
 

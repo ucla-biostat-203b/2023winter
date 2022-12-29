@@ -2,7 +2,7 @@
 title: "String Manipulation With stringr"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-02-07"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -21,6 +21,10 @@ knitr:
     message: FALSE
     cache: false
 ---
+
+```{r}
+sessionInfo()
+```
 
 # String | r4ds chapter 14
 

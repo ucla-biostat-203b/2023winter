@@ -2,7 +2,7 @@
 title: "Data Visualization With ggplot2"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-26"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -22,6 +22,14 @@ knitr:
     cache: true
 ---
 
+```{r}
+sessionInfo()
+```
+Load tidyverse
+```{r}
+library(tidyverse)
+```
+
 A typical data science project:
 
 <p align="center">
@@ -33,12 +41,6 @@ A typical data science project:
 > “The simple graph has brought more information to the data analyst’s mind than any other device.”  
 > 
 > John Tukey
-
-## Load tidyverse
-
-```{r}
-library(tidyverse)
-```
 
 ## `mpg` data
 

@@ -2,7 +2,7 @@
 title: "Import and Tidy Data"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-24"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -17,6 +17,10 @@ knitr:
   opts_chunk: 
     fig.align: 'center'
 ---
+
+```{r}
+sessionInfo()
+```
 
 ## Outline
 

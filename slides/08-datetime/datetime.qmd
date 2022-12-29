@@ -2,7 +2,7 @@
 title: "Dates and Times | r4ds Chapter 16"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-31"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -21,7 +21,9 @@ knitr:
     message: FALSE
     cache: true
 ---
-
+```{r}
+sessionInfo()
+```
 ```{r}
 library(tidyverse)
 library(lubridate)
