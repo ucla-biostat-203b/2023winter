@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
+<meta name="dcterms.date" content="2022-12-28">
+
+<title>Working with Databases - Part I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="dbintro_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dbintro_files/libs/quarto-html/quarto.js"></script>
+<script src="dbintro_files/libs/quarto-html/popper.min.js"></script>
+<script src="dbintro_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dbintro_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dbintro_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dbintro_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="dbintro_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dbintro_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dbintro_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-scientist" id="toc-data-scientist" class="nav-link active" data-scroll-target="#data-scientist"><span class="toc-section-number">1</span>  Data scientist</a></li>
+  <li><a href="#a-typical-data-science-project" id="toc-a-typical-data-science-project" class="nav-link" data-scroll-target="#a-typical-data-science-project"><span class="toc-section-number">2</span>  A typical data science project:</a>
+  <ul>
+  <li><a href="#acknowledgement" id="toc-acknowledgement" class="nav-link" data-scroll-target="#acknowledgement"><span class="toc-section-number">2.1</span>  Acknowledgement</a></li>
+  </ul></li>
+  <li><a href="#why-databases" id="toc-why-databases" class="nav-link" data-scroll-target="#why-databases"><span class="toc-section-number">3</span>  Why databases?</a>
+  <ul>
+  <li><a href="#size-of-data" id="toc-size-of-data" class="nav-link" data-scroll-target="#size-of-data"><span class="toc-section-number">3.1</span>  Size of data</a></li>
+  <li><a href="#computer-architecture" id="toc-computer-architecture" class="nav-link" data-scroll-target="#computer-architecture"><span class="toc-section-number">3.2</span>  Computer architecture</a></li>
+  <li><a href="#numbers-everyone-should-know" id="toc-numbers-everyone-should-know" class="nav-link" data-scroll-target="#numbers-everyone-should-know"><span class="toc-section-number">3.3</span>  Numbers everyone should know</a></li>
+  <li><a href="#implications-for-bigish-data" id="toc-implications-for-bigish-data" class="nav-link" data-scroll-target="#implications-for-bigish-data"><span class="toc-section-number">3.4</span>  Implications for bigish data</a></li>
+  <li><a href="#blocks" id="toc-blocks" class="nav-link" data-scroll-target="#blocks"><span class="toc-section-number">3.5</span>  Blocks</a></li>
+  <li><a href="#linear-vs-binary-search" id="toc-linear-vs-binary-search" class="nav-link" data-scroll-target="#linear-vs-binary-search"><span class="toc-section-number">3.6</span>  Linear vs binary Search</a></li>
+  </ul></li>
+  <li><a href="#databases" id="toc-databases" class="nav-link" data-scroll-target="#databases"><span class="toc-section-number">4</span>  Databases</a>
+  <ul>
+  <li><a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="toc-section-number">4.1</span>  SQL</a></li>
+  <li><a href="#access-databases-from-r" id="toc-access-databases-from-r" class="nav-link" data-scroll-target="#access-databases-from-r"><span class="toc-section-number">4.2</span>  Access databases from R</a></li>
+  </ul></li>
+  <li><a href="#a-sample-session-using-sqlite" id="toc-a-sample-session-using-sqlite" class="nav-link" data-scroll-target="#a-sample-session-using-sqlite"><span class="toc-section-number">5</span>  A sample session using SQLite</a>
+  <ul>
+  <li><a href="#create-an-sqlite-database" id="toc-create-an-sqlite-database" class="nav-link" data-scroll-target="#create-an-sqlite-database"><span class="toc-section-number">5.1</span>  Create an SQLite database</a></li>
+  <li><a href="#add-a-table-into-database" id="toc-add-a-table-into-database" class="nav-link" data-scroll-target="#add-a-table-into-database"><span class="toc-section-number">5.2</span>  Add a table into database</a></li>
+  <li><a href="#add-another-table" id="toc-add-another-table" class="nav-link" data-scroll-target="#add-another-table"><span class="toc-section-number">5.3</span>  Add another table</a></li>
+  <li><a href="#remove-a-table-from-database" id="toc-remove-a-table-from-database" class="nav-link" data-scroll-target="#remove-a-table-from-database"><span class="toc-section-number">5.4</span>  Remove a table from database</a></li>
+  <li><a href="#querying-tables" id="toc-querying-tables" class="nav-link" data-scroll-target="#querying-tables"><span class="toc-section-number">5.5</span>  Querying tables</a></li>
+  <li><a href="#closing-the-connection" id="toc-closing-the-connection" class="nav-link" data-scroll-target="#closing-the-connection"><span class="toc-section-number">5.6</span>  Closing the connection</a></li>
+  </ul></li>
+  <li><a href="#sql-queries" id="toc-sql-queries" class="nav-link" data-scroll-target="#sql-queries"><span class="toc-section-number">6</span>  SQL Queries</a>
+  <ul>
+  <li><a href="#connecting" id="toc-connecting" class="nav-link" data-scroll-target="#connecting"><span class="toc-section-number">6.1</span>  Connecting</a></li>
+  <li><a href="#select-statements" id="toc-select-statements" class="nav-link" data-scroll-target="#select-statements"><span class="toc-section-number">6.2</span>  SELECT statements</a></li>
+  <li><a href="#select-using-select" id="toc-select-using-select" class="nav-link" data-scroll-target="#select-using-select"><span class="toc-section-number">6.3</span>  Select using SELECT</a></li>
+  <li><a href="#arrange-using-order-by" id="toc-arrange-using-order-by" class="nav-link" data-scroll-target="#arrange-using-order-by"><span class="toc-section-number">6.4</span>  Arrange using ORDER BY</a></li>
+  <li><a href="#filter-via-where" id="toc-filter-via-where" class="nav-link" data-scroll-target="#filter-via-where"><span class="toc-section-number">6.5</span>  Filter via WHERE</a></li>
+  <li><a href="#group_by-via-group-by" id="toc-group_by-via-group-by" class="nav-link" data-scroll-target="#group_by-via-group-by"><span class="toc-section-number">6.6</span>  Group_by via GROUP BY</a></li>
+  <li><a href="#head-via-limit" id="toc-head-via-limit" class="nav-link" data-scroll-target="#head-via-limit"><span class="toc-section-number">6.7</span>  Head via LIMIT</a></li>
+  <li><a href="#join-two-tables-default" id="toc-join-two-tables-default" class="nav-link" data-scroll-target="#join-two-tables-default"><span class="toc-section-number">6.8</span>  Join two tables (default)</a></li>
+  <li><a href="#inner-join-by-natural" id="toc-inner-join-by-natural" class="nav-link" data-scroll-target="#inner-join-by-natural"><span class="toc-section-number">6.9</span>  Inner join by NATURAL</a></li>
+  <li><a href="#inner-join---explicit" id="toc-inner-join---explicit" class="nav-link" data-scroll-target="#inner-join---explicit"><span class="toc-section-number">6.10</span>  Inner join - explicit</a></li>
+  <li><a href="#left-join---natural" id="toc-left-join---natural" class="nav-link" data-scroll-target="#left-join---natural"><span class="toc-section-number">6.11</span>  Left join - natural</a></li>
+  <li><a href="#left-join---explicit" id="toc-left-join---explicit" class="nav-link" data-scroll-target="#left-join---explicit"><span class="toc-section-number">6.12</span>  Left join - explicit</a></li>
+  <li><a href="#other-joins" id="toc-other-joins" class="nav-link" data-scroll-target="#other-joins"><span class="toc-section-number">6.13</span>  Other joins</a></li>
+  <li><a href="#creating-indices" id="toc-creating-indices" class="nav-link" data-scroll-target="#creating-indices"><span class="toc-section-number">6.14</span>  Creating indices</a></li>
+  <li><a href="#close-connection" id="toc-close-connection" class="nav-link" data-scroll-target="#close-connection"><span class="toc-section-number">6.15</span>  Close connection</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Working with Databases - Part I</h1>
+<p class="subtitle lead">Biostat 203B</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Hua Zhou @ UCLA </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 28, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-scientist" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Data scientist</h1>
+<p align="center">
+<img src="./data-scientist-datacamp.jpg" width="400">
+</p>
+</section>
+<section id="a-typical-data-science-project" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> A typical data science project:</h1>
+<p align="center">
+<img src="./data-science.png" height="300">
+</p>
+<section id="acknowledgement" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="acknowledgement"><span class="header-section-number">2.1</span> Acknowledgement</h2>
+<p>Much material in this lecture is adpated from <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html</a> and <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html</a>.</p>
+</section>
+</section>
+<section id="why-databases" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Why databases?</h1>
+<section id="size-of-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="size-of-data"><span class="header-section-number">3.1</span> Size of data</h2>
+<ul>
+<li><p>Small data: those can fit into computer memory.</p></li>
+<li><p>Bigish data: those can fit into disk(s) of a single machine.</p></li>
+<li><p>Big data: those cannot fit into disk(s) of a single machine.</p></li>
+</ul>
+</section>
+<section id="computer-architecture" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="computer-architecture"><span class="header-section-number">3.2</span> Computer architecture</h2>
+<blockquote class="blockquote">
+<p>Key to high performance is effective use of memory hierarchy. True on all architectures.</p>
+</blockquote>
+<p align="center">
+<img src="./macpro-inside.png" height="250">
+</p>
+<p align="center">
+<img src="./cpu_i7_die.png" height="250">
+</p>
+<p align="center">
+<img src="./memory_hierarchy.png" height="250">
+</p>
+</section>
+<section id="numbers-everyone-should-know" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="numbers-everyone-should-know"><span class="header-section-number">3.3</span> Numbers everyone should know</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Operation</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L1 cache reference</td>
+<td>0.5 ns</td>
+</tr>
+<tr class="even">
+<td>L2 cache reference</td>
+<td>7 ns</td>
+</tr>
+<tr class="odd">
+<td>Main memory reference</td>
+<td>100 ns</td>
+</tr>
+<tr class="even">
+<td>Read 1 MB sequentially from memory</td>
+<td>250,000 ns</td>
+</tr>
+<tr class="odd">
+<td>Read 1 MB sequentially from SSD</td>
+<td>1,000,000 ns</td>
+</tr>
+<tr class="even">
+<td>Read 1 MB sequentially from disk</td>
+<td>20,000,000 ns</td>
+</tr>
+</tbody>
+</table>
+<!-- | Operation                           | Time           | -->
+<!-- |-------------------------------------|----------------| -->
+<!-- | L1 cache reference                  | 0.5 ns         | -->
+<!-- | Branch mispredict                   | 5 ns           | -->
+<!-- | L2 cache reference                  | 7 ns           | -->
+<!-- | Mutex lock/unlock                   | 100 ns         | -->
+<!-- | Main memory reference               | 100 ns         | -->
+<!-- | Compress 1K bytes with Zippy        | 10,000 ns      | -->
+<!-- | Send 2K bytes over 1 Gbps network   | 20,000 ns      | -->
+<!-- | Read 1 MB sequentially from memory  | 250,000 ns     | -->
+<!-- | Round trip within same datacenter   | 500,000 ns     | -->
+<!-- | Disk seek                           | 10,000,000 ns  | -->
+<!-- | Read 1 MB sequentially from network | 10,000,000 ns  | -->
+<!-- | Read 1 MB sequentially from disk    | 30,000,000 ns  | -->
+<!-- | Send packet CA->Netherlands->CA     | 150,000,000 ns | -->
+<p>Source: <a href="https://gist.github.com/jboner/2841832" class="uri">https://gist.github.com/jboner/2841832</a></p>
+</section>
+<section id="implications-for-bigish-data" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="implications-for-bigish-data"><span class="header-section-number">3.4</span> Implications for bigish data</h2>
+<p>Suppose we have a 10 GB flat data file and that we want to select certain rows based on a given criteria. This requires a sequential read across the entire data set.</p>
+<p>If we can store the file in memory:<br>
+10 GB × (250 μs/1 MB) = 2.5 seconds</p>
+<p>If we have to access the file from SSD (~1GB/sec):<br>
+10 GB × (1 ms/1 MB) = 10 seconds</p>
+<p>If we have to access the file from disk:<br>
+10 GB × (20 ms/1 MB) = 200 seconds</p>
+<p>This is just for reading data, if we make any modifications (writing) things are much worse.</p>
+</section>
+<section id="blocks" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="blocks"><span class="header-section-number">3.5</span> Blocks</h2>
+<p>Cost: Disk &lt;&lt; Memory</p>
+<p>Speed: Disk &lt;&lt;&lt; Memory</p>
+<p>So usually possible to grow our disk storage to accommodate our data. However, memory is usually the limiting resource, and what if we can’t fit everything into memory?</p>
+<p>Create blocks - group rows based on similar attributes and read in multiple rows at a time. Optimal size will depend on the task and the properties of the disk.</p>
+</section>
+<section id="linear-vs-binary-search" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="linear-vs-binary-search"><span class="header-section-number">3.6</span> Linear vs binary Search</h2>
+<p>Even with blocks, any kind of subsetting of rows requires a linear search, which requires <span class="math inline">\(O(N)\)</span> accesses where <span class="math inline">\(N\)</span> is the number of blocks.</p>
+<p>We can do much better if we are careful about how we structure our data, specifically sorting some or all of the columns.</p>
+<ul>
+<li><p>Sorting is expensive, <span class="math inline">\(O(N \log N)\)</span>, but it only needs to be done once.</p></li>
+<li><p>After sorting, we can use a binary search for any subsetting tasks <span class="math inline">\(O(\log N)\)</span>.</p></li>
+<li><p>These sorted columns are known as <em>indexes</em>.</p></li>
+<li><p>Indexes require additional storage, but usually small enough to be kept in memory while blocks stay on disk.</p></li>
+</ul>
+</section>
+</section>
+<section id="databases" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Databases</h1>
+<section id="sql" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sql"><span class="header-section-number">4.1</span> SQL</h2>
+<p><strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage (SQL) is a special purpose language for interacting with (querying and modifying) these indexed tabular data structures.</p>
+<ul>
+<li><p>ANSI Standard but with some dialect divergence.</p></li>
+<li><p>SQL functionality maps very closely (but not exactly) with the data manipulation verbs present in dplyr.</p></li>
+<li><p>We will see this mapping in more detail in a bit.</p></li>
+</ul>
+</section>
+<section id="access-databases-from-r" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="access-databases-from-r"><span class="header-section-number">4.2</span> Access databases from R</h2>
+<p align="center">
+<img src="./open-source-db.png" height="200">
+</p>
+<ul>
+<li><p>dplyr package supports a variety of databases.</p>
+<ul>
+<li>Open source databases: SQLite, MySQL, PostgreSQL, BigQuery.</li>
+<li>Commercial databases: Oracle, Microsoft SQL Server.</li>
+<li>See <a href="https://db.rstudio.com/databases">link</a> for a complete list.</li>
+</ul></li>
+<li><p>DBI package provides a common interface for connecting to databases.</p></li>
+<li><p>dbplyr package is the backend that translates dplyr verbs to database SQL queries.</p></li>
+<li><p>To install database drivers, follow instructions at <a href="https://db.rstudio.com/best-practices/drivers/" class="uri">https://db.rstudio.com/best-practices/drivers/</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="a-sample-session-using-sqlite" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> A sample session using SQLite</h1>
+<section id="create-an-sqlite-database" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="create-an-sqlite-database"><span class="header-section-number">5.1</span> Create an SQLite database</h2>
+<p>Create an SQLite database <code>employee.sqlite</code> on disk (or <em>in memory</em>) for learning purpose.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"DBI"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"RSQLite"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>con <span class="ot">=</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">"employee.sqlite"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># con = dbConnect(RSQLite::SQLite(), ":memory:")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Formal class 'SQLiteConnection' [package "RSQLite"] with 8 slots
+  ..@ ptr                :&lt;externalptr&gt; 
+  ..@ dbname             : chr "/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/employee.sqlite"
+  ..@ loadable.extensions: logi TRUE
+  ..@ flags              : int 70
+  ..@ vfs                : chr ""
+  ..@ ref                :&lt;environment: 0x7f837ca67388&gt; 
+  ..@ bigint             : chr "integer64"
+  ..@ extended_types     : logi FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="add-a-table-into-database" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="add-a-table-into-database"><span class="header-section-number">5.2</span> Add a table into database</h2>
+<p>First table:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name   =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Carol"</span>, <span class="st">"Dave"</span>, <span class="st">"Eve"</span>, <span class="st">"Frank"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">email  =</span> <span class="fu">c</span>(<span class="st">"alice@company.com"</span>, <span class="st">"bob@company.com"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"carol@company.com"</span>, <span class="st">"dave@company.com"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"eve@company.com"</span>,   <span class="st">"frank@comany.com"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">salary =</span> <span class="fu">c</span>(<span class="dv">52000</span>, <span class="dv">40000</span>, <span class="dv">30000</span>, <span class="dv">33000</span>, <span class="dv">44000</span>, <span class="dv">37000</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dept   =</span> <span class="fu">c</span>(<span class="st">"Accounting"</span>, <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>, <span class="st">"Sales"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  name  email             salary dept      
+  &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
+1 Alice alice@company.com  52000 Accounting
+2 Bob   bob@company.com    40000 Accounting
+3 Carol carol@company.com  30000 Sales     
+4 Dave  dave@company.com   33000 Accounting
+5 Eve   eve@company.com    44000 Sales     
+6 Frank frank@comany.com   37000 Sales     </code></pre>
+</div>
+</div>
+<p>Second table:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(phone <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name  =</span> <span class="fu">c</span>(<span class="st">"Bob"</span>, <span class="st">"Carol"</span>, <span class="st">"Eve"</span>, <span class="st">"Frank"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">phone =</span> <span class="fu">c</span>(<span class="st">"919 555-1111"</span>, <span class="st">"919 555-2222"</span>, <span class="st">"919 555-3333"</span>, <span class="st">"919 555-4444"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  name  phone       
+  &lt;chr&gt; &lt;chr&gt;       
+1 Bob   919 555-1111
+2 Carol 919 555-2222
+3 Eve   919 555-3333
+4 Frank 919 555-4444</code></pre>
+</div>
+</div>
+<p>Write tables to the database:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"employees"</span>, employees, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"phone"</span>, phone, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "employees" "phone"    </code></pre>
+</div>
+</div>
+</section>
+<section id="add-another-table" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="add-another-table"><span class="header-section-number">5.3</span> Add another table</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"employs"</span>, employees)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "employees" "employs"   "phone"    </code></pre>
+</div>
+</div>
+</section>
+<section id="remove-a-table-from-database" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="remove-a-table-from-database"><span class="header-section-number">5.4</span> Remove a table from database</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbRemoveTable</span>(con, <span class="st">"employs"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "employees" "phone"    </code></pre>
+</div>
+</div>
+</section>
+<section id="querying-tables" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="querying-tables"><span class="header-section-number">5.5</span> Querying tables</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select all columns from table employees</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con, <span class="st">"SELECT * FROM employees"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQLiteResult&gt;
+  SQL  SELECT * FROM employees
+  ROWS Fetched: 0 [incomplete]
+       Changed: 0</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># execute the query</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbFetch</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   name             email salary       dept
+1 Alice alice@company.com  52000 Accounting
+2   Bob   bob@company.com  40000 Accounting
+3 Carol carol@company.com  30000      Sales
+4  Dave  dave@company.com  33000 Accounting
+5   Eve   eve@company.com  44000      Sales
+6 Frank  frank@comany.com  37000      Sales</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbClearResult</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="closing-the-connection" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="closing-the-connection"><span class="header-section-number">5.6</span> Closing the connection</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="sql-queries" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> SQL Queries</h1>
+<p>Following we demonstrate some common SQL commands, although all task can be achieved by using dplyr as well.</p>
+<section id="connecting" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="connecting"><span class="header-section-number">6.1</span> Connecting</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">"employee.sqlite"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "employees" "phone"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">connection =</span> <span class="st">"con"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Below we demonstrate some common SQL queries.</p>
+</section>
+<section id="select-statements" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="select-statements"><span class="header-section-number">6.2</span> SELECT statements</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: left;">dave@company.com</td>
+<td style="text-align: right;">33000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>4 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="select-using-select" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="select-using-select"><span class="header-section-number">6.3</span> Select using SELECT</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name <span class="kw">AS</span> first_name, salary <span class="kw">FROM</span> employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">first_name</th>
+<th style="text-align: right;">salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">52000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">40000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: right;">30000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">33000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">44000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: right;">37000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="arrange-using-order-by" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="arrange-using-order-by"><span class="header-section-number">6.4</span> Arrange using ORDER BY</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name <span class="kw">AS</span> first_name, salary <span class="kw">FROM</span> employees <span class="kw">ORDER</span> <span class="kw">BY</span> salary;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">first_name</th>
+<th style="text-align: right;">salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: right;">30000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">33000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: right;">37000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">40000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">44000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">52000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Descending order:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name <span class="kw">AS</span> first_name, salary <span class="kw">FROM</span> employees <span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">first_name</th>
+<th style="text-align: right;">salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">52000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">44000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">40000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: right;">37000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">33000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: right;">30000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="filter-via-where" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="filter-via-where"><span class="header-section-number">6.5</span> Filter via WHERE</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">WHERE</span> salary <span class="op">&lt;</span> <span class="dv">40000</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: left;">dave@company.com</td>
+<td style="text-align: right;">33000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="group_by-via-group-by" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="group_by-via-group-by"><span class="header-section-number">6.6</span> Group_by via GROUP BY</h2>
+<p>First record in each group.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">GROUP</span> <span class="kw">BY</span> dept;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="head-via-limit" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="head-via-limit"><span class="header-section-number">6.7</span> Head via LIMIT</h2>
+<p>First 3 records:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">LIMIT</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Last 3 records:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">ORDER</span> <span class="kw">BY</span> name <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: left;">dave@company.com</td>
+<td style="text-align: right;">33000</td>
+<td style="text-align: left;">Accounting</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="join-two-tables-default" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="join-two-tables-default"><span class="header-section-number">6.8</span> Join two tables (default)</h2>
+<p>By default SQLite uses a <code>CROSS JOIN</code> (all row combinations) which is not terribly useful. Note only first 10 rows of results are shown.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">JOIN</span> phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="inner-join-by-natural" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="inner-join-by-natural"><span class="header-section-number">6.9</span> Inner join by NATURAL</h2>
+<p>By default, the common variable <code>name</code> is used as key.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">NATURAL</span> <span class="kw">JOIN</span> phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>4 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="inner-join---explicit" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="inner-join---explicit"><span class="header-section-number">6.10</span> Inner join - explicit</h2>
+<p>Explicitly specify key.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">JOIN</span> phone <span class="kw">ON</span> employees.name <span class="op">=</span> phone.name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>4 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="left-join---natural" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="left-join---natural"><span class="header-section-number">6.11</span> Left join - natural</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">NATURAL</span> <span class="kw">LEFT</span> <span class="kw">JOIN</span> phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: left;">dave@company.com</td>
+<td style="text-align: right;">33000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="left-join---explicit" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="left-join---explicit"><span class="header-section-number">6.12</span> Left join - explicit</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> employees <span class="kw">LEFT</span> <span class="kw">JOIN</span> phone <span class="kw">ON</span> employees.name <span class="op">=</span> phone.name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">email</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: left;">dept</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice</td>
+<td style="text-align: left;">alice@company.com</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">bob@company.com</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: left;">919 555-1111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">carol@company.com</td>
+<td style="text-align: right;">30000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Carol</td>
+<td style="text-align: left;">919 555-2222</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dave</td>
+<td style="text-align: left;">dave@company.com</td>
+<td style="text-align: right;">33000</td>
+<td style="text-align: left;">Accounting</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">eve@company.com</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: left;">919 555-3333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">frank@comany.com</td>
+<td style="text-align: right;">37000</td>
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Frank</td>
+<td style="text-align: left;">919 555-4444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="other-joins" class="level2" data-number="6.13">
+<h2 data-number="6.13" class="anchored" data-anchor-id="other-joins"><span class="header-section-number">6.13</span> Other joins</h2>
+<p>SQLite does not support directly an <code>OUTER JOIN</code> or a <code>RIGHT JOIN</code>.</p>
+</section>
+<section id="creating-indices" class="level2" data-number="6.14">
+<h2 data-number="6.14" class="anchored" data-anchor-id="creating-indices"><span class="header-section-number">6.14</span> Creating indices</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> index_name <span class="kw">ON</span> employees (name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> index_name_email <span class="kw">ON</span> employees (name, email);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlite3</span> employee.sqlite .indices</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>index_name        index_name_email</code></pre>
+</div>
+</div>
+</section>
+<section id="close-connection" class="level2" data-number="6.15">
+<h2 data-number="6.15" class="anchored" data-anchor-id="close-connection"><span class="header-section-number">6.15</span> Close connection</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
