@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
+<meta name="dcterms.date" content="2022-12-28">
+
+<title>Cloud Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="gcp_files/libs/clipboard/clipboard.min.js"></script>
+<script src="gcp_files/libs/quarto-html/quarto.js"></script>
+<script src="gcp_files/libs/quarto-html/popper.min.js"></script>
+<script src="gcp_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="gcp_files/libs/quarto-html/anchor.min.js"></script>
+<link href="gcp_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="gcp_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="gcp_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="gcp_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="gcp_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-cloud-computing" id="toc-what-is-cloud-computing" class="nav-link active" data-scroll-target="#what-is-cloud-computing"><span class="toc-section-number">1</span>  What is cloud computing</a></li>
+  <li><a href="#its-not-in-cloud" id="toc-its-not-in-cloud" class="nav-link" data-scroll-target="#its-not-in-cloud"><span class="toc-section-number">2</span>  It’s not in cloud</a></li>
+  <li><a href="#why-cloud-computing-is-so-popular" id="toc-why-cloud-computing-is-so-popular" class="nav-link" data-scroll-target="#why-cloud-computing-is-so-popular"><span class="toc-section-number">3</span>  Why cloud computing is so popular</a></li>
+  <li><a href="#why-we-students-researchers-care-about-cloud-computing" id="toc-why-we-students-researchers-care-about-cloud-computing" class="nav-link" data-scroll-target="#why-we-students-researchers-care-about-cloud-computing"><span class="toc-section-number">4</span>  Why <em>we</em> (students, researchers) care about cloud computing</a></li>
+  <li><a href="#vendors" id="toc-vendors" class="nav-link" data-scroll-target="#vendors"><span class="toc-section-number">5</span>  Vendors</a></li>
+  <li><a href="#using-gcp-compute-engine-basic-workflow" id="toc-using-gcp-compute-engine-basic-workflow" class="nav-link" data-scroll-target="#using-gcp-compute-engine-basic-workflow"><span class="toc-section-number">6</span>  Using GCP Compute Engine: basic workflow</a></li>
+  <li><a href="#step-0-set-up-gcp-account" id="toc-step-0-set-up-gcp-account" class="nav-link" data-scroll-target="#step-0-set-up-gcp-account"><span class="toc-section-number">7</span>  Step 0: set up GCP account</a></li>
+  <li><a href="#step-1-configure-and-launch-a-vm-instance" id="toc-step-1-configure-and-launch-a-vm-instance" class="nav-link" data-scroll-target="#step-1-configure-and-launch-a-vm-instance"><span class="toc-section-number">8</span>  Step 1: configure and launch a VM instance</a></li>
+  <li><a href="#step-2-set-up-ssh-keys" id="toc-step-2-set-up-ssh-keys" class="nav-link" data-scroll-target="#step-2-set-up-ssh-keys"><span class="toc-section-number">9</span>  Step 2: set up SSH keys</a></li>
+  <li><a href="#step-3-install-software" id="toc-step-3-install-software" class="nav-link" data-scroll-target="#step-3-install-software"><span class="toc-section-number">10</span>  Step 3: install software</a>
+  <ul>
+  <li><a href="#install-rr-studio-server" id="toc-install-rr-studio-server" class="nav-link" data-scroll-target="#install-rr-studio-server"><span class="toc-section-number">10.1</span>  Install R/R Studio Server</a></li>
+  <li><a href="#set-up-a-regular-user" id="toc-set-up-a-regular-user" class="nav-link" data-scroll-target="#set-up-a-regular-user"><span class="toc-section-number">10.2</span>  Set up a regular user</a></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages"><span class="toc-section-number">10.3</span>  Install R packages</a></li>
+  <li><a href="#install-git" id="toc-install-git" class="nav-link" data-scroll-target="#install-git"><span class="toc-section-number">10.4</span>  Install Git</a></li>
+  <li><a href="#optional-install-julia" id="toc-optional-install-julia" class="nav-link" data-scroll-target="#optional-install-julia"><span class="toc-section-number">10.5</span>  (Optional) Install Julia</a></li>
+  </ul></li>
+  <li><a href="#step-4-run-your-jobs" id="toc-step-4-run-your-jobs" class="nav-link" data-scroll-target="#step-4-run-your-jobs"><span class="toc-section-number">11</span>  Step 4: run your jobs</a></li>
+  <li><a href="#step-5-transfer-results" id="toc-step-5-transfer-results" class="nav-link" data-scroll-target="#step-5-transfer-results"><span class="toc-section-number">12</span>  Step 5: transfer results</a></li>
+  <li><a href="#step-6-terminate-instances" id="toc-step-6-terminate-instances" class="nav-link" data-scroll-target="#step-6-terminate-instances"><span class="toc-section-number">13</span>  Step 6: terminate instance(s)</a></li>
+  <li><a href="#go-forth-and-use-the-cloud" id="toc-go-forth-and-use-the-cloud" class="nav-link" data-scroll-target="#go-forth-and-use-the-cloud"><span class="toc-section-number">14</span>  Go forth and use the cloud</a></li>
+  <li><a href="#final-word" id="toc-final-word" class="nav-link" data-scroll-target="#final-word"><span class="toc-section-number">15</span>  Final word</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cloud Computing</h1>
+<p class="subtitle lead">Biostat 203B</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Hua Zhou @ UCLA </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 28, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="what-is-cloud-computing" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="what-is-cloud-computing"><span class="header-section-number">1</span> What is cloud computing</h2>
+<p align="center">
+<img src="./cloud_computing_meme.jpg" width="350">
+</p>
+<p>Image source: <a href="https://towardsdatascience.com/how-to-start-a-data-science-project-using-google-cloud-platform-6618b7c6edd2" class="uri">https://towardsdatascience.com/how-to-start-a-data-science-project-using-google-cloud-platform-6618b7c6edd2</a>.</p>
+<ul>
+<li><p>Using a collection of remote servers for computation, data storage/manipulation, etc.</p></li>
+<li><p>Pay for clock-cycles, storage, and network flow rather than hardware.</p></li>
+<li><p>Computing when you need it:</p>
+<ul>
+<li>Scalable computing</li>
+<li>Scalable storage</li>
+</ul></li>
+</ul>
+</section>
+<section id="its-not-in-cloud" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="its-not-in-cloud"><span class="header-section-number">2</span> It’s not in cloud</h2>
+<p align="center">
+<img src="./google-datacenter-georgia.jpg" class="img-fluid" width="400"> <img src="./google-datacenter-iowa.jpg" class="img-fluid" width="400"> <img src="./google-datacenter-cooling.jpg" class="img-fluid" width="400"> <img src="./google-dalles-datacenter.jpg" class="img-fluid" width="400">
+</p>
+</section>
+<section id="why-cloud-computing-is-so-popular" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="why-cloud-computing-is-so-popular"><span class="header-section-number">3</span> Why cloud computing is so popular</h2>
+<ul>
+<li><p>Scalability!</p></li>
+<li><p>Adapt to fluctuating demand:</p>
+<ul>
+<li><p>Websites with fluctuating traffic.</p></li>
+<li><p>Large corporations use much more computing during business hours than off-business hours.</p></li>
+</ul></li>
+<li><p>Efficiency:</p>
+<ul>
+<li><p>Pay for what you need.</p></li>
+<li><p>No need for hardware maintenance.</p></li>
+<li><p>Less waiting for fixed compute-time jobs.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-we-students-researchers-care-about-cloud-computing" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="why-we-students-researchers-care-about-cloud-computing"><span class="header-section-number">4</span> Why <em>we</em> (students, researchers) care about cloud computing</h2>
+<ul>
+<li><p>Our computational demands often fluctuate dramatically.</p></li>
+<li><p>Grant resource management.</p>
+<ul>
+<li>Old style: buy computer with grant X money, must use computer <strong>only</strong> for grant X research.<br>
+</li>
+<li>New style: buy computing time for grant X research with grant X money.</li>
+</ul></li>
+<li><p>Massive computing when you need it</p>
+<ul>
+<li>On the cloud you can run your job on 10,000 machines for one hour for the same price as running it on one machine for 10,000 hours!</li>
+<li>Using AWS EC2 spot instances, this can be done for $700 an hour, and gets you super-computer performance.</li>
+<li>It may be more compelling to know that you can get 8 cores for around $0.27 an hour.</li>
+</ul></li>
+</ul>
+</section>
+<section id="vendors" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="vendors"><span class="header-section-number">5</span> Vendors</h2>
+<p align="center">
+<img src="./cloud-market-share.png" height="350">
+</p>
+<p>There are many vendors out there. Good for customers (us). They all work similarly.<br>
+- Amazon web services (AWS).</p>
+<ul>
+<li><p>Google cloud platform (GCP).</p></li>
+<li><p>Microsoft Azure.</p></li>
+<li><p>IBM cloud.</p></li>
+</ul>
+<p>We will demonstrate how to start using GCP.</p>
+</section>
+<section id="using-gcp-compute-engine-basic-workflow" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="using-gcp-compute-engine-basic-workflow"><span class="header-section-number">6</span> Using GCP Compute Engine: basic workflow</h2>
+<ol start="0" type="1">
+<li><p>Set up GCP account.</p></li>
+<li><p>Configure and launch VM instance(s).</p></li>
+<li><p>Set up connection (SSH key).</p></li>
+<li><p>Install software you need.</p></li>
+<li><p>Run your jobs.</p></li>
+<li><p>Transfer result.</p></li>
+<li><p>Terminate instance(s).</p></li>
+</ol>
+</section>
+<section id="step-0-set-up-gcp-account" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="step-0-set-up-gcp-account"><span class="header-section-number">7</span> Step 0: set up GCP account</h2>
+<p align="center">
+<img src="./gcp_signup.png" height="350">
+</p>
+<ul>
+<li><p>Go to <a href="https://cloud.google.com" class="uri">https://cloud.google.com</a>.</p></li>
+<li><p>Choose the Google account you want to use for GCP.</p></li>
+<li><p>If you click <code>Try it free</code> at <a href="https://cloud.google.com" class="uri">https://cloud.google.com</a> and fill out requisite information, you will get $300 credit <strong>which expires in <del>1 year</del> 3 months</strong>. You do <strong>not</strong> need to use it for this course.</p></li>
+<li><p>After email verification and redeeming the coupon, a project <code>My First Project</code> is created in GCP.</p></li>
+</ul>
+<p><strong>GCP free trial</strong>:</p>
+<ul>
+<li><p>Some resources are always free: 1 f1-micro VM instance, 30GB of standard persistent disk storage, etc.</p></li>
+<li><p>General pricing can be found on this <a href="https://cloud.google.com/compute/pricing?hl=en_US&amp;_ga=2.155132024.-1106292436.1515381586">page</a>.</p></li>
+</ul>
+</section>
+<section id="step-1-configure-and-launch-a-vm-instance" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="step-1-configure-and-launch-a-vm-instance"><span class="header-section-number">8</span> Step 1: configure and launch a VM instance</h2>
+<p align="center">
+<img src="./gcp_createinstance.png" height="350">
+</p>
+<ul>
+<li><p>Go to GCP console, create a project.</p></li>
+<li><p>Go to Compute Engine, click <code>CREATE INSTANCE</code>.</p>
+<ul>
+<li><p>Give a meaningful name, e.g, <code>biostat-203b</code>.</p></li>
+<li><p>Choose <code>us-west2</code> zone (Los Angeles).</p></li>
+<li><p>Machine type: 2 vCPUs, 7.5GB memory should suffice for this course.</p></li>
+<li><p>Boot disk: CentOS 7, standard persistent disk (or SSD) 50GB should sufficie for the kind of copmuting in this course.</p></li>
+<li><p>These settings can be changed anytime. <strong>Typical paradigm</strong>: develop code using an inexpensive machine type and switch to a powerful one when running computation intensive tasks.</p></li>
+<li><p>Click <code>Create</code>.</p></li>
+</ul></li>
+<li><p>At the <code>VM Instances</code> page, you can see a list of all instances in your project and their IP addresses. We use the external IP address, e.g., <code>XX.XXX.XXX.XXX</code>, for SSH connection.</p></li>
+</ul>
+<p align="center">
+<img src="./gcp_vminstances.png" height="350">
+</p>
+<ul>
+<li>Note if we stop the instance and start again. The external IP address may change. To keep a fixed external IP address, go to <code>VPC network</code> then <code>External IP addresses</code> and make the desired external IP address <code>static</code> (vs ephemeral). Note that if no instance is using a <code>static</code> IP address, you will be charged for the idle <code>static</code> IP.</li>
+</ul>
+<p align="center">
+<img src="./gcp_external_ip.png" height="350">
+</p>
+</section>
+<section id="step-2-set-up-ssh-keys" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="step-2-set-up-ssh-keys"><span class="header-section-number">9</span> Step 2: set up SSH keys</h2>
+<p>There are several ways to connect to the VM instance you just created. Most often we want to be able to SSH into the VM instance from other machines, e.g., your own laptop. By default, VM instance only accept key authentication. So it’s necessary to set up the SSH key first.</p>
+<p><strong>Option 1: SSH in browser</strong></p>
+<ul>
+<li>Click the <code>SSH</code> button on <code>VM Instances</code> page will bring out a terminal in browser as super user, e.g., <code>huazhou</code> (my gmail account name).</li>
+</ul>
+<p><strong>Option 2: Manually set up SSH</strong></p>
+<ul>
+<li>First use browser SSH to set up your own SSH keys:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> .ssh</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> go-rx .ssh/</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .ssh</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vi</span> authorized_keys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Copy your public key to <code>authorized_keys</code> and set permission</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> go-rwx authorized_keys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Now you should be able to connect to the VM instance from any machine with the matching private key:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> username@XX.XXX.XXX.XXX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Option 3: Set up instance specific key in GCP</strong></p>
+<ul>
+<li><p>On the VM Instances page, click the instance you want to set up key. Click Edit.</p></li>
+<li><p>We can enter public key in the SSH Keys section.</p></li>
+</ul>
+<p align="center">
+<img src="./gcp_instancekey.png" height="350">
+</p>
+<p><strong>Option 4: Set up project-wide key in GCP</strong></p>
+<ul>
+<li><p>Click the Metadata tab on the left.</p></li>
+<li><p>Enter public key in the SSH Keys section. This will apply to all instances in the project.</p></li>
+</ul>
+<p align="center">
+<img src="./gcp_metadata.png" height="350">
+</p>
+</section>
+<section id="step-3-install-software" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="step-3-install-software"><span class="header-section-number">10</span> Step 3: install software</h2>
+<p><code>yum</code> is the default package management tool on CentOS. Most software can be installed via <code>sudo yum</code>. <code>sudo</code> executes a command as a superuser (or root).</p>
+<section id="install-rr-studio-server" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="install-rr-studio-server"><span class="header-section-number">10.1</span> Install R/R Studio Server</h3>
+<ul>
+<li>Install the epel-repository (if not yet)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install epel-release <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Install R (it takes a couple minutes)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install R <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Install <code>wget</code>, which is a command line tool for downloading files from internet.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install wget <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Download and install the most recent <a href="https://www.rstudio.com/products/rstudio/download-server/">R Studio Server</a>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2021.09.2-382-x86_64.rpm</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install rstudio-server-rhel-2021.09.2-382-x86_64.rpm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>The R Studio service starts immediately. Let’s check if it is running properly by triggering the following command.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status rstudio-server.service</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>By default, port 8787 used by R Studio Server is blocked by VM firewall. On GCP console, go to <code>VPC network</code> and then <code>Firewall rules</code>, create a rule for R Studio Server (tcp: 8787), apply that rule to your VM instance.</li>
+</ul>
+<p align="center">
+<img src="./gcp_firewall_rules.png" height="350">
+</p>
+<p align="center">
+<img src="./gcp_firewall_tags.png" height="350">
+</p>
+<ul>
+<li>Now you should be able to access R Studio Server on the VM instance by pointing your browser to address <code>http://XX.XXX.XXX.XXX:8787</code>.</li>
+</ul>
+</section>
+<section id="set-up-a-regular-user" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="set-up-a-regular-user"><span class="header-section-number">10.2</span> Set up a regular user</h3>
+<ul>
+<li><p>Key authentication suffices for most applications.</p></li>
+<li><p>Unfortunately R Studio Server (open source edition) does not support key authentication. That implies if you want to use R Studio Server on the VM Instance, you need to enable username/password authentication.</p></li>
+<li><p>You can set password for a user by</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Now you should be able to log in the R Studio Server from browser <code>http://XX.XXX.XXX.XXX:8787</code> using your username and corresponding password.</p></li>
+<li><p>To SSH into VM instance as the regular user, you need to set up the key (similar to set up key for superuser).</p></li>
+<li><p>If you want to enable a regular user as a sudoer, add it into the <code>wheel</code> group:</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">su</span> <span class="at">-</span> huazhou</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> wheel username</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">su</span> <span class="at">-</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="install-r-packages" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="install-r-packages"><span class="header-section-number">10.3</span> Install R packages</h3>
+<ul>
+<li>Install R packages using <code>install.packages()</code> function in R. Install as superuser will make packages availalbe to all users on this instance. For example,</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sudo R <span class="sc">-</span>e <span class="st">'install.packages("tidyverse")'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>To set the CRAN mirror globally, we write following lines into the <code>/usr/lib64/R/etc/Rprofile.site</code> file: <code>options(repos = c(CRAN = "https://cran.rstudio.com"))</code>.</p></li>
+<li><p>When installing R packages, it often fails because certain Linux libraries are absent.</p></li>
+<li><p>Pay attention to the error messages, and install those libraries using <code>yum</code>.</p></li>
+<li><p>E.g., try installing <code>tidyverse</code> may yield following errors</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ERROR<span class="sc">:</span> dependencies ‘httr’, ‘rvest’, ‘xml2’ are not available <span class="cf">for</span> package ‘tidyverse’</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> removing ‘<span class="sc">/</span>usr<span class="sc">/</span>lib64<span class="sc">/</span>R<span class="sc">/</span>library<span class="sc">/</span>tidyverse’</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can install these Linux dependencies <code>curl</code>, <code>openssl</code>, and <code>libxml2</code> by:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install curl curl-devel <span class="at">-y</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install openssl openssl-devel <span class="at">-y</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install libxml2 libxml2-devel <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="install-git" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="install-git"><span class="header-section-number">10.4</span> Install Git</h3>
+<ul>
+<li>Install Git on VM instance:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install git <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>For smooth Gitting, you need to put the private key matching the public key in your GitHub account in the <code>~/.ssh</code> folder on the VM instance.</p></li>
+<li><p>Now you can <code>git clone</code> any repo to the VM instance to start working on a project. E.g.,</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucla-biostat203b-2020winter/ucla-biostat203b-2020winter.github.io.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="optional-install-julia" class="level3" data-number="10.5">
+<h3 data-number="10.5" class="anchored" data-anchor-id="optional-install-julia"><span class="header-section-number">10.5</span> (Optional) Install Julia</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install yum-utils <span class="at">-y</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum-config-manager <span class="at">--add-repo</span> https://copr.fedorainfracloud.org/coprs/nalimilan/julia/repo/epel-7/nalimilan-julia-epel-7.repo</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install julia <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="step-4-run-your-jobs" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="step-4-run-your-jobs"><span class="header-section-number">11</span> Step 4: run your jobs</h2>
+<ul>
+<li><p>Now you have R and R Studio on the VM instance.</p></li>
+<li><p>The simpliest way to synchronize your project files across machines is Git, e.g.,</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucla-biostat-203b/2022winter.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Set up and run your jobs as usual.</p></li>
+<li><p>You can check CPU usage on the GCP console.</p></li>
+<li><p>You can set notification when CPU usage falls below a threshold (so you know the job is done).</p></li>
+</ul>
+</section>
+<section id="step-5-transfer-results" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="step-5-transfer-results"><span class="header-section-number">12</span> Step 5: transfer results</h2>
+<ul>
+<li>Transfer results as usual: Git, scp, sftp.</li>
+</ul>
+</section>
+<section id="step-6-terminate-instances" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="step-6-terminate-instances"><span class="header-section-number">13</span> Step 6: terminate instance(s)</h2>
+<ul>
+<li>Don’t forget to terminate your instance(s)!</li>
+</ul>
+</section>
+<section id="go-forth-and-use-the-cloud" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="go-forth-and-use-the-cloud"><span class="header-section-number">14</span> Go forth and use the cloud</h2>
+<ul>
+<li><p>Using cloud (AWS, Azure, GCP, …) is easy, as far as we master the fundamentals such as Linux, scripting, SSH, keys, and so on.</p></li>
+<li><p>Easy to launch cluster instances or other heavily customized instances (SQL server, BigQuery, ML engine, Genomics, …).</p></li>
+<li><p>Massive computing at your fingertips.</p>
+<ul>
+<li>Amazon EC2 <a href="https://aws.amazon.com/ec2/instance-types/p2">P2 instances</a> offer on a single virtual machine 16 GPUs, with 40,000 parallel processing cores, and 732 GB memory, yielding <strong>70 teraflops</strong> of single precision floating point performance or <strong>23 teraflops</strong> of double-precision.</li>
+</ul>
+<p align="center">
+</p><p><img src="./amazon_p2.jpg" height="350"></p>
+<p></p>
+<ul>
+<li>GCP offers <a href="https://cloud.google.com/tpu/">TPU (tensor processing units)</a> for deep learning. Each Cloud TPU offers up to <strong>180 teraflops</strong> of computing performance as well as 64 gigabytes of ultra-high-bandwidth memory.</li>
+</ul>
+<p align="center">
+</p><p><img src="./gcp_tpu.png" height="350"></p>
+<p></p>
+<ul>
+<li>To put it in perspective, 180 teraflops is equivalent to the most powerful high performance cluster (HPC) in 2005, according to following <a href="https://www.samsi.info/wp-content/uploads/2017/02/SAMSI-0217_Dongarra.pdf">slide</a> by Jack Dongarra.</li>
+</ul>
+<p align="center">
+</p><p><img src="./hpc_top500.png" class="img-fluid" width="500"></p>
+<p></p></li>
+</ul>
+</section>
+<section id="final-word" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="final-word"><span class="header-section-number">15</span> Final word</h2>
+<blockquote class="blockquote">
+<p>Before requesting massive computing resources, always examine your code and algorithm. Most likely you can gain order of magnitude efficiency (say 100 folder speedup) by educated choice of algorithms and careful coding. You’ll see a dozen examples in Spring (Biostat 257).</p>
+</blockquote>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
