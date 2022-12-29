@@ -38,6 +38,6 @@ Recommended readings:
 | 5 | 2/7 strings and regex \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/09-strings/stringr.qmd), [html](../slides/09-strings/stringr.html)\], web scraping \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/10-scraping/scraping.qmd), [html](../slides/10-scraping/scraping.html)\] | 2/9 Lab | |  
 | 6 | 2/14 shiny for interactive graphics \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/11-shiny/shiny.qmd), [html](../slides/11-shiny/shiny.html)\] | 2/16  databases intro. \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/12-dbplyry/dbintro.qmd), [html](../slides/12-dbplyr/dbintro.html)\], dbplyr \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/12-dbplyry/dbplyry.qmd), [html](../slides/12-dbplyr/dbplyry.html)\] | HW3 |    
 | 7 | 2/21 cloud computing with GCP \[slides: [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/13-gcp/gcp.qmd), [html](../slides/13-gcp/gcp.html)\] | 2/23 Lab | |   
-| 8 | 2/28 cluster computing at UCLA, neural network intro. | 3/2 Lab | HW4 |    
+| 8 | 2/28 cluster computing at UCLA \[[tutorial](https://github.com/chris-german/Hoffman2Tutorials)\], neural network intro. | 3/2 Lab | HW4 |    
 | 9 | 3/7 neural network examples | 3/9 Lab | |   
 | 10 | 3/14 R programming (benchmark, debug, profile), Rcpp, parallel computing, R package, GPGPU in R | 3/16 Lab | | 
