@@ -22,6 +22,7 @@ knitr:
     cache: true
 ---
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```

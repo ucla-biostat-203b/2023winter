@@ -36,6 +36,7 @@ In this lecture we will learn:
 
 ## Machine information
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```
@@ -59,8 +60,8 @@ The `/mnt/mimiciv/1.0` folder on the teaching server contains the MIMIC-IV data.
 Display content of MIMIC-IV data files:
 ```{r}
 os <- sessionInfo()$running
-if (str_detect(os, "Linux")) {
-  mimic_path <- "/mnt/mimiciv/1.0"
+if (str_detect(os, "Ubuntu")) {
+  mimic_path <- "~/mimic"
 } else if (str_detect(os, "macOS")) {
   mimic_path <- "/Users/huazhou/Documents/Box Sync/MIMIC/mimic-iv-1.0"
 }

@@ -18,6 +18,7 @@ knitr:
     fig.align: 'center'
 ---
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```

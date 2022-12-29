@@ -23,6 +23,7 @@ knitr:
 runtime: shiny
 ---
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-28">
+<meta name="dcterms.date" content="2022-12-29">
 
 <title>Data Transformation With dplyr</title>
 <style>
@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 28, 2022</p>
+      <p class="date">December 29, 2022</p>
     </div>
   </div>
   
@@ -189,52 +189,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-1_41e8950dc7a7ddc6c8da31c6c404f528">
+<p>Display machine information for reproducibility.</p>
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur ... 10.16
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 22.04.1 LTS
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] nycflights13_1.0.2 forcats_0.5.2      stringr_1.5.0      dplyr_1.0.10      
- [5] purrr_1.0.0        readr_2.1.3        tidyr_1.2.1        tibble_3.1.8      
- [9] ggplot2_3.4.0      tidyverse_1.3.2   
-
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.0    xfun_0.35           haven_2.5.1        
- [4] gargle_1.2.1        colorspace_2.0-3    vctrs_0.5.1        
- [7] generics_0.1.3      htmltools_0.5.4     yaml_2.3.6         
-[10] utf8_1.2.2          rlang_1.0.6         pillar_1.8.1       
-[13] withr_2.5.0         glue_1.6.2          DBI_1.1.3          
-[16] dbplyr_2.2.1        modelr_0.1.10       readxl_1.4.1       
-[19] lifecycle_1.0.3     munsell_0.5.0       gtable_0.3.1       
-[22] cellranger_1.1.0    rvest_1.0.3         htmlwidgets_1.6.0  
-[25] evaluate_0.18       knitr_1.41          tzdb_0.3.0         
-[28] fastmap_1.1.0       fansi_1.0.3         broom_1.0.2        
-[31] backports_1.4.1     scales_1.2.1        googlesheets4_1.0.1
-[34] jsonlite_1.8.4      fs_1.5.2            hms_1.1.2          
-[37] digest_0.6.30       stringi_1.7.8       grid_4.2.2         
-[40] cli_3.4.1           tools_4.2.2         magrittr_2.0.3     
-[43] crayon_1.5.2        pkgconfig_2.0.3     ellipsis_0.3.2     
-[46] xml2_1.3.3          reprex_2.0.2        googledrive_2.0.0  
-[49] lubridate_1.9.0     timechange_0.1.1    assertthat_0.2.1   
-[52] rmarkdown_2.18      httr_1.4.4          rstudioapi_0.14    
-[55] R6_2.5.1            compiler_4.2.2     </code></pre>
+ [1] digest_0.6.31     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
+ [5] evaluate_0.19     rlang_1.0.6       stringi_1.7.8     cli_3.5.0        
+ [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.19    tools_4.2.2      
+[13] stringr_1.5.0     glue_1.6.2        htmlwidgets_1.6.0 xfun_0.35        
+[17] yaml_2.3.6        fastmap_1.1.0     compiler_4.2.2    htmltools_0.5.4  
+[21] knitr_1.41       </code></pre>
 </div>
 </div>
 <p>Load tidyverse</p>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-2_954a0024024b715243d98e9d7b4a2120">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A typical data science project:</p>
@@ -247,7 +235,7 @@ loaded via a namespace (and not attached):
 <li><p>Available from the nycflights13 package.</p></li>
 <li><p>336,776 flights that departed from New York City in 2013:</p></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-3_f9e51e49bcfaa197a98e5446b0a6631e">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"nycflights13"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -273,7 +261,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>To display more rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-4_5d98847d54a0de550634038192ab5a55">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -309,14 +297,14 @@ loaded via a namespace (and not attached):
 <ul>
 <li>To display all rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-5_b5b8635e0167e038e5cbae417e7a0899">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="fu">nrow</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Do <strong>not</strong> try this on the <code>flights</code> data, which has too many rows.</p>
 <ul>
 <li>To display more columns (variables):</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-6_4f05df002a9b46372ba5a739ad07888d">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -378,7 +366,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Flights on Jan 1st:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-7_b2131e72182f828044f9c4f918d58337">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as filter(flights, month == 1 &amp; day == 1)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(flights, month <span class="sc">==</span> <span class="dv">1</span>, day <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -405,7 +393,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Flights in Nov or Dec:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-8_54b291fb8b444e13c95333244d17f5a8">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(flights, month <span class="sc">==</span> <span class="dv">11</span> <span class="sc">|</span> month <span class="sc">==</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 55,403 × 19
@@ -433,7 +421,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>One row from each month:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-9_31b77d1dd97a4c61a2b9bdb22cd33379">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">distinct</span>(flights, month, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 19
@@ -460,7 +448,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>With <code>.keep_all = FALSE</code>, only distinct values of the variable are selected:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-10_81a84d7d074fa40d7545473a1209fd12">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">distinct</span>(flights, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 1
@@ -486,22 +474,22 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Randomly select <code>n</code> rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-11_750f4548b2f544ef250a1b841cf8d545">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>(flights, <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013     4     6      809        815      -6     951    1010     -19 US     
- 2  2013    10    26      759        800      -1    1044    1046      -2 DL     
- 3  2013     4     2      555        605     -10     841     910     -29 AA     
- 4  2013     2    10     1500       1444      16    1749    1744       5 B6     
- 5  2013    10    15     1316       1300      16    1431    1439      -8 EV     
- 6  2013     7    26     1038        844     114    1225    1104      81 EV     
- 7  2013    11    14     1858       1900      -2    2228    2251     -23 DL     
- 8  2013    10    22      752        755      -3    1048    1048       0 UA     
- 9  2013    11    30      655        700      -5    1019    1015       4 B6     
-10  2013     4    29      557        600      -3     758     758       0 EV     
+ 1  2013     7     8     1459       1359      60    1721    1636      45 UA     
+ 2  2013     8    20      834        840      -6    1100    1100       0 MQ     
+ 3  2013     7    12     1337       1325      12    1538    1545      -7 F9     
+ 4  2013    10    15      955        959      -4    1224    1230      -6 B6     
+ 5  2013     5     2     1956       2003      -7    2145    2214     -29 EV     
+ 6  2013    12    31     1553       1600      -7    1858    1851       7 B6     
+ 7  2013     5    13     1346       1344       2    1632    1621      11 B6     
+ 8  2013     9    25     1858       1900      -2    2144    2154     -10 UA     
+ 9  2013     1     1      840        845      -5    1053    1102      -9 DL     
+10  2013     8    31     1626       1630      -4    1927    1940     -13 AA     
 # … with 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
 #   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
 #   time_hour &lt;dttm&gt;, and abbreviated variable names ¹​sched_dep_time,
@@ -512,22 +500,22 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Randomly select fraction of rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-12_9c668e9c4f2796f420f05f60b385d50e">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_frac</span>(flights, <span class="fl">0.1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 33,678 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013     7    17     1411       1417      -6    1525    1541     -16 EV     
- 2  2013     9    19      827        830      -3    1128    1137      -9 UA     
- 3  2013     6    22     1923       1915       8    2159    2224     -25 UA     
- 4  2013    10    19     1847       1834      13    2149    2132      17 9E     
- 5  2013     6    30     2122       2100      22    2228    2212      16 US     
- 6  2013     4    26      824        830      -6     958    1019     -21 9E     
- 7  2013    10     8     2220       2137      43     111      27      44 B6     
- 8  2013     3     6     1633       1630       3    1939    1954     -15 B6     
- 9  2013     5    30      620        624      -4     729     746     -17 UA     
-10  2013     5     2     1131       1136      -5    1220    1234     -14 EV     
+ 1  2013     4    19     1332       1300      32    1447    1438       9 UA     
+ 2  2013     9    25     2241       2245      -4    2349    2356      -7 B6     
+ 3  2013     6    10     2158       2015     103      18    2236     102 EV     
+ 4  2013     7     3     1610       1529      41    1842    1840       2 UA     
+ 5  2013     1    10      958       1000      -2    1104    1121     -17 US     
+ 6  2013     5    14     1737       1745      -8    2021    2050     -29 AA     
+ 7  2013    12    11     2240       2245      -5    2350    2353      -3 B6     
+ 8  2013     1     3     1457       1456       1    1648    1624      24 9E     
+ 9  2013     3    15     2233       2230       3     200     212     -12 B6     
+10  2013    10    10      735        735       0    1005    1040     -35 DL     
 # … with 33,668 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
 #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
@@ -540,7 +528,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Select rows by position:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-13_4491f94c408b98a94d11bc5f3e2dcdcd">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(flights, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 19
@@ -560,7 +548,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>First rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-14_3e35144b6c49e2c3219b4648484718a8">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_head</span>(flights, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 19
@@ -580,7 +568,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Last rows:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-15_14e2ee1c0ab7664412ee26872a07e102">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_tail</span>(flights, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 19
@@ -601,7 +589,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Top <code>n</code> rows with the highest values:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-16_111321b644aeb2c30706b32416bfc87e">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># deprecated: top_n(flights, 5, wt = time_hour)</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This function is quick</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_max</span>(flights, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">order_by =</span> time_hour)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -623,7 +611,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Bottom <code>n</code> rows with lowest values:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-17_8afcb9934a7267fb81ac701c0f2ff1f3">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># deprecated: top_n(flights, -5, wt = time_hour)</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Why it takes REALLY long???</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># slice_max(flights, n = 5, order_by = desc(time_hour)) # is fast</span></span>
@@ -639,7 +627,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Sort in ascending order:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-18_4b557581062dd9f933b9bc5266d04d03">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(flights, year, month, day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -665,7 +653,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Sort in descending order:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-19_6e4cb0184603f3d90a4b0ee27cdc792d">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(flights, <span class="fu">desc</span>(arr_delay)) <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -722,7 +710,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Select columns by variable names:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-20_b344ee0e30a74e81acb2cbea00292036">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(flights, year, month, day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 3
@@ -744,14 +732,14 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Pull values of <em>one</em> column as a vector:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-21_a043bfa159b3c1e0d7a37afde2db8c6c">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pull</span>(flights, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <ul>
 <li>Select columns between two variables:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-22_649d188e522589d493d2bb31f4371fe7">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(flights, year<span class="sc">:</span>day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 3
@@ -774,7 +762,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Select columns <em>except</em> those between two variables:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-23_876d25bb11b1f78a89680b2b1f4d802b">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(flights, <span class="sc">-</span>(year<span class="sc">:</span>day))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 16
@@ -800,7 +788,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Select columns by positions:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-24_a7455ccae0577a19a54206cf0af5bb98">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(flights, <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 5
@@ -823,7 +811,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Move variables to the start of data frame:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-25_5998caa5189de41a3bb5babc5bd55ac6">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(flights, time_hour, air_time, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -863,7 +851,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Add variables <code>gain</code> and <code>speed</code>:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-26_91499108891ffafb5a649c4fbf0009a3">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="ot">&lt;-</span> </span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(flights, year<span class="sc">:</span>day, <span class="fu">ends_with</span>(<span class="st">"delay"</span>), distance, air_time)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>flights_sml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -884,7 +872,7 @@ loaded via a namespace (and not attached):
 # … with 336,766 more rows</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-27_6649f36b47a1486c719e81c237a9942c">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(flights_sml,</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">gain =</span> arr_delay <span class="sc">-</span> dep_delay,</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span></span>
@@ -910,7 +898,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Refer to columns that you’ve just created:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-28_5ac27838a9558f747cec43ead31901b9">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(flights_sml,</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">gain =</span> arr_delay <span class="sc">-</span> dep_delay,</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>,</span>
@@ -937,7 +925,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Only keep the new variables by <code>transmute()</code>:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-29_24f0a40e30c31a48d4abd851ebc7e873">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(flights,</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">gain =</span> arr_delay <span class="sc">-</span> dep_delay,</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>,</span>
@@ -964,19 +952,19 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>mutate_all()</code>: apply funs to all columns.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-30_d971c0413a497201c6006450b4e2c887">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_all</span>(data, <span class="fu">funs</span>(<span class="fu">log</span>(.), <span class="fu">log2</span>(.)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>mutate_at()</code>: apply funs to specific columns.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-31_93487898e918212464311c5e12a28606">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_at</span>(data, <span class="fu">vars</span>(<span class="sc">-</span>Species), <span class="fu">funs</span>(<span class="fu">log</span>(.)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>mutate_if()</code>: apply funs of one type</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-32_e0dbedfc2f2844dc93c887a3d3c46bd1">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_if</span>(data, is.numeric, <span class="fu">funs</span>(<span class="fu">log</span>(.)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -988,7 +976,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Mean of a variable:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-33_7f30ff507941547fa139dc5c7fdada12">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(flights, <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -1001,7 +989,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Convert a tibble into a grouped tibble:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-34_811991cc04f1cd2c352ba19e2a22ceb8">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>(by_day <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, year, month, day))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -1028,7 +1016,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Grouped summaries:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-35_bad9aa59c91a55d83a2b3f7e7ba7b58f">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(by_day, <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 365 × 4
@@ -1054,7 +1042,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Consider following analysis (find destinations excluding <code>HNL</code> that have &gt;20 flights, and calculate the average distances and arrival delay):</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-36_1552456c42bc5056b7439a59d6f98565">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>by_dest <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, dest)</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>delay <span class="ot">&lt;-</span> <span class="fu">summarise</span>(by_dest, <span class="at">count =</span> <span class="fu">n</span>(),</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dist =</span> <span class="fu">mean</span>(distance, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -1083,7 +1071,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Cleaner code using pipe <code>%&gt;%</code>:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-37_e4116bec3ba5501853a697985a0a19da">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>delays <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span> </span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -1114,7 +1102,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>ggplot2 accepts pipe too.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-38_01e398c44605e12cb24bd73354fbfcb4">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>delays <span class="sc">%&gt;%</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> delay)) <span class="sc">+</span></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> count), <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span> </span>
@@ -1135,7 +1123,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Location: <code>mean(x)</code>, <code>median(x)</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-39_e0d48819971442bddcf19b3d06d492d6">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dep_delay), <span class="sc">!</span><span class="fu">is.na</span>(arr_delay))</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>not_cancelled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1159,7 +1147,7 @@ loaded via a namespace (and not attached):
 #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-40_acf18cae78e6c0feb98b95f0355f4066">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">%&gt;%</span> </span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -1188,7 +1176,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Spread: <code>sd(x)</code>, <code>IQR(x)</code>, <code>mad(x)</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-41_76552620fbbd2fbfdf77690f9f14fad5">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># destinations with largest variation in distance</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span> </span>
@@ -1215,7 +1203,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Rank: <code>min(x)</code>, <code>quantile(x, 0.25)</code>, <code>max(x)</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-42_2b769a382fbf0700b364ce71546db7ec">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Earliest and latest flights on each day?</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">%&gt;%</span> </span>
@@ -1245,7 +1233,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Position: <code>first(x)</code>, <code>nth(x, 2)</code>, <code>last(x)</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-43_2bef611bf6267dfa77f523cc30c87c89">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">%&gt;%</span> </span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -1274,7 +1262,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Count: <code>n(x)</code>, <code>sum(!is.na(x))</code>, <code>n_distinct(x)</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-44_9764894003ae11e2af4badd09eef918c">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which destinations have the most carriers?</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span> </span>
@@ -1301,7 +1289,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-45_c523549af59d05a6ffe9d3a090b3fd01">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># which destination has most flights from NYC?</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">%&gt;%</span></span>
@@ -1327,7 +1315,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-46_d739c6c0e6666a31c5b261e21e20d087">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># which aircraft flew most in 2013?</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tailnum, <span class="at">wt =</span> distance) <span class="sc">%&gt;%</span></span>
@@ -1353,7 +1341,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-47_504986974c12ec137093ac6e5c56aaa4">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many flights left before 5am? (these usually indicate delayed</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="co"># flights from the previous day)</span></span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
@@ -1382,7 +1370,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-48_424d4f2a793c984c168dd3f891cf8b1d">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What proportion of flights are delayed by more than an hour?</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>not_cancelled <span class="sc">%&gt;%</span> </span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">%&gt;%</span> </span>
@@ -1413,7 +1401,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Recall the <code>flights_sml</code> tibble created earlier:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-49_cb666aebaca8fc0a034d5cf5fc744bea">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>flights_sml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 7
@@ -1435,7 +1423,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Find the worst members of each group:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-50_5b59b13dae1d9edd1a18ebafad8373d0">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="sc">%&gt;%</span> </span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">%&gt;%</span></span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">rank</span>(<span class="fu">desc</span>(arr_delay)) <span class="sc">&lt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1461,7 +1449,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Find all groups bigger than a threshold:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-51_cc27405b57ea7c5a8024e405f0c45796">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>(popular_dests <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span> </span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">365</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1490,7 +1478,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Standardise to compute per group metrics:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-52_f66910fccc7515e956f5ad4adde5a1e1">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>popular_dests <span class="sc">%&gt;%</span> </span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop_delay =</span> arr_delay <span class="sc">/</span> <span class="fu">sum</span>(arr_delay)) <span class="sc">%&gt;%</span></span>
@@ -1521,7 +1509,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>We already know a lot about flights:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-53_59c9bfb17eb5664578d70f2c8cd1c0be">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -1568,7 +1556,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>airlines:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-54_b22df1240938b77d3473d755d2c5a27b">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>airlines</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 2
@@ -1596,7 +1584,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>airports:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-55_35a132ea9fbdd2c7adec0a229a3a445a">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>airports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,458 × 8
@@ -1619,7 +1607,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>planes:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-56_7debc153d52ec6478c3cf9c97276558a">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>planes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,322 × 9
@@ -1642,7 +1630,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Weather:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-57_9e34ee43eab12902455e27d9b5015846">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1696,7 +1684,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-58_409fd0086d1dc5262756ad678702b909">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
 <span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
@@ -1712,7 +1700,7 @@ loaded via a namespace (and not attached):
 3     3 x3   </code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-59_016558c3bab9092cf8833e9185961131">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>(y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
 <span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
@@ -1740,7 +1728,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-60_dd18dd0f0008673306a5d2c5b51c14dc">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
@@ -1751,7 +1739,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 <p>Same as</p>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-61_523ce8263d0ffc4f0f5002a36d8d36f7">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1764,7 +1752,7 @@ loaded via a namespace (and not attached):
 <li>A <strong>left join</strong> keeps all observations in <code>x</code>.</li>
 </ul></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-62_2ebbe5263b739e791177e78271378709">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -1776,7 +1764,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 <pre><code>- A **right join** keeps all observations in `y`.</code></pre>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-63_33b35ef792061353c890811a6d6da552">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -1788,7 +1776,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 <pre><code>- A **full join** keeps all observations in `x` or `y`.</code></pre>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-64_17e6131da173fc0795ee5259df69f03d">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
@@ -1816,7 +1804,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-65_211df40d0aa1bed66f4baa5819e601cf">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
 <span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
@@ -1851,7 +1839,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-66_eb72dfec2f7b25d202772560b3031785">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
 <span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
@@ -1883,7 +1871,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Let’s create a narrower table from the flights data:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-67_0fccd4264d544775a0f0dd8e93a5f7c4">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
 <span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day, hour, origin, dest, tailnum, carrier)</span>
 <span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1907,7 +1895,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>We want to merge with the <code>weather</code> table:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-68_383f73dafc363bc1c404aaea7c601448">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26,115 × 15
@@ -1933,7 +1921,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>by = NULL</code> (default): use all variables that appear in both tables:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-69_95e963e16c86fe3a76ea10272266dc72">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as: flights2 %&gt;% left_join(weather)</span></span>
 <span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(flights2, weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1959,7 +1947,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>by = "x"</code>: use the common variable <code>x</code>:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-70_e922e265340da0c263a952601a3c1ef6">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as: flights2 %&gt;% left_join(weather)</span></span>
 <span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(flights2, planes, <span class="at">by =</span> <span class="st">"tailnum"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1985,7 +1973,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>by = c("a" = "b")</code>: match variable <code>a</code> in table <code>x</code> to the variable <code>b</code> in table <code>y</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-71_7c8e6b8a0a77e1b7137e8748c11bfc14">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as: flights2 %&gt;% left_join(weather)</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(flights2, airports, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"dest"</span> <span class="ot">=</span> <span class="st">"faa"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2014,7 +2002,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Top 10 most popular destinations:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-72_edd489ae72b78922305025271f78bed1">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>top_dest <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span></span>
 <span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
@@ -2047,7 +2035,7 @@ loaded via a namespace (and not attached):
 <p></p></li>
 </ul>
 <hr>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-73_98f9afaeb39f620144ecf0f818c80ef2">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semi_join</span>(flights, top_dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 141,145 × 19
@@ -2083,7 +2071,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li></li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-74_efd5ca39b9079f9eeaa08179c32f7e05">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
 <span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(planes, <span class="at">by =</span> <span class="st">"tailnum"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tailnum, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2111,7 +2099,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li>Generate two tables:</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-75_7c5bec9329762ee21079fbfa94446d9e">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>(df1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
 <span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">1</span>,</span>
@@ -2125,7 +2113,7 @@ loaded via a namespace (and not attached):
 2     2     1</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-76_c933e3a4ea179187a3a1236597239fa8">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>(df2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
 <span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,  <span class="dv">1</span>,</span>
@@ -2143,7 +2131,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>bind_rows(x, y)</code> stacks table <code>x</code> one on top of <code>y</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-77_ee79262d96365f7e568d6121c607fc5c">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
@@ -2158,7 +2146,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>intersect(x, y)</code> returns rows that appear in both <code>x</code> and <code>y</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-78_4c01e77aa86ff6579b59d275dac51f28">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
@@ -2171,7 +2159,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>union(x, y)</code> returns unique observations in <code>x</code> and <code>y</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-79_557caa6a8c7591023ce1d90e69cda30f">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">union</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -2186,7 +2174,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><code>setdiff(x, y)</code> returns rows that appear in <code>x</code> but not in <code>y</code>.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-80_39ee79189665c57d94c14d3da1e61528">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
@@ -2195,7 +2183,7 @@ loaded via a namespace (and not attached):
 1     2     1</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="dplyr_cache/html/unnamed-chunk-81_00b2f25b00e29cd2ab8f37c6d00353a7">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(df2, df1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2

@@ -2,7 +2,7 @@
 title: "Linux Basics"
 subtitle: "Biostat 203B"
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-10"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo

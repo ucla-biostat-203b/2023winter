@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-28">
+<meta name="dcterms.date" content="2022-12-29">
 
 <title>Import and Tidy Data</title>
 <style>
@@ -161,7 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 28, 2022</p>
+      <p class="date">December 29, 2022</p>
     </div>
   </div>
   
@@ -171,27 +171,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Display machine information for reproducibility.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur ... 10.16
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 22.04.1 LTS
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] digest_0.6.30     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
- [5] evaluate_0.18     rlang_1.0.6       stringi_1.7.8     cli_3.4.1        
- [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.18    tools_4.2.2      
+ [1] digest_0.6.31     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
+ [5] evaluate_0.19     rlang_1.0.6       stringi_1.7.8     cli_3.5.0        
+ [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.19    tools_4.2.2      
 [13] stringr_1.5.0     glue_1.6.2        htmlwidgets_1.6.0 xfun_0.35        
 [17] yaml_2.3.6        fastmap_1.1.0     compiler_4.2.2    htmltools_0.5.4  
 [21] knitr_1.41       </code></pre>
@@ -582,11 +588,11 @@ loaded via a namespace (and not attached):
 <pre><code># A tibble: 5 × 2
       x      y
   &lt;dbl&gt;  &lt;dbl&gt;
-1 0.497 -0.625
-2 0.528 -0.516
-3 0.642 -1.45 
-4 0.728 -0.391
-5 0.837  0.560</code></pre>
+1 0.927  0.430
+2 0.192 -1.50 
+3 0.897  0.744
+4 0.787  0.524
+5 0.466  0.182</code></pre>
 </div>
 </div>
 <ul>
@@ -595,11 +601,11 @@ loaded via a namespace (and not attached):
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4970975 0.5279095 0.6422383 0.7276936 0.8366302</code></pre>
+<pre><code>[1] 0.9274585 0.1922200 0.8968081 0.7865375 0.4659040</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4970975 0.5279095 0.6422383 0.7276936 0.8366302</code></pre>
+<pre><code>[1] 0.9274585 0.1922200 0.8968081 0.7865375 0.4659040</code></pre>
 </div>
 </div>
 <ul>
@@ -608,7 +614,7 @@ loaded via a namespace (and not attached):
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4970975 0.5279095 0.6422383 0.7276936 0.8366302</code></pre>
+<pre><code>[1] 0.9274585 0.1922200 0.8968081 0.7865375 0.4659040</code></pre>
 </div>
 </div>
 <ul>
@@ -617,11 +623,11 @@ loaded via a namespace (and not attached):
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> .<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4970975 0.5279095 0.6422383 0.7276936 0.8366302</code></pre>
+<pre><code>[1] 0.9274585 0.1922200 0.8968081 0.7865375 0.4659040</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> .[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4970975 0.5279095 0.6422383 0.7276936 0.8366302</code></pre>
+<pre><code>[1] 0.9274585 0.1922200 0.8968081 0.7865375 0.4659040</code></pre>
 </div>
 </div>
 </section>

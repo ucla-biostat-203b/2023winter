@@ -19,9 +19,10 @@ knitr:
     fig.width: 6
     fig.height: 4
     message: FALSE
-    cache: true
+    cache: false
 ---
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```

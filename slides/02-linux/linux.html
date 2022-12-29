@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-01-10">
+<meta name="dcterms.date" content="2022-12-29">
 
 <title>Linux Basics</title>
 <style>
@@ -198,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 10, 2023</p>
+      <p class="date">December 29, 2022</p>
     </div>
   </div>
   
@@ -454,10 +454,10 @@ Vi_Cheat_Sheet.pdf</code></pre>
 -rw-r--r-- 1 rstudio rstudio  11662 Jan  8  2018 linux_directory_structure.png
 -rw-r--r-- 1 rstudio rstudio  42472 Jan  7  2015 linux_filepermission_oct.png
 -rw-r--r-- 1 rstudio rstudio 102188 Jan  9  2018 linux_filepermission.png
-drwxr-xr-x 4 rstudio rstudio    128 Dec 28 00:08 linux_files
--rw-r--r-- 1 rstudio rstudio 104546 Dec 28 00:03 linux.html
--rw-r--r-- 1 rstudio rstudio  23466 Dec 28 00:11 linux.qmd
--rw-r--r-- 1 rstudio rstudio  23609 Dec 28 00:11 linux.rmarkdown
+drwxr-xr-x 3 rstudio rstudio     96 Dec 28 03:29 linux_files
+-rw-r--r-- 1 rstudio rstudio 104480 Dec 28 03:30 linux.html
+-rw-r--r-- 1 rstudio rstudio  23491 Dec 29 19:00 linux.qmd
+-rw-r--r-- 1 rstudio rstudio  23634 Dec 29 19:00 linux.rmarkdown
 -rw-r--r-- 1 rstudio rstudio  24684 Dec 11 06:29 linux.Rmd
 -rw-r--r-- 1 rstudio rstudio    381 Jan 15  2019 meanEst.R
 -rw-r--r-- 1 rstudio rstudio 437112 Jan  5  2021 redhat_kills_centos.png
@@ -474,7 +474,7 @@ drwxr-xr-x 4 rstudio rstudio    128 Dec 28 00:08 linux_files
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>total 2476
-drwxr-xr-x 24 rstudio rstudio    768 Dec 28 00:11 .
+drwxr-xr-x 24 rstudio rstudio    768 Dec 29 19:00 .
 drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
 -rw-r--r--  1 rstudio rstudio    258 Jan 16  2020 autoSim.R
 -rw-r--r--  1 rstudio rstudio   8196 Dec 11 06:31 .DS_Store
@@ -485,13 +485,13 @@ drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
 -rw-r--r--  1 rstudio rstudio  11662 Jan  8  2018 linux_directory_structure.png
 -rw-r--r--  1 rstudio rstudio  42472 Jan  7  2015 linux_filepermission_oct.png
 -rw-r--r--  1 rstudio rstudio 102188 Jan  9  2018 linux_filepermission.png
-drwxr-xr-x  4 rstudio rstudio    128 Dec 28 00:08 linux_files
--rw-r--r--  1 rstudio rstudio 104546 Dec 28 00:03 linux.html
--rw-r--r--  1 rstudio rstudio  23466 Dec 28 00:11 linux.qmd
--rw-r--r--  1 rstudio rstudio  23609 Dec 28 00:11 linux.rmarkdown
+drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
+-rw-r--r--  1 rstudio rstudio 104480 Dec 28 03:30 linux.html
+-rw-r--r--  1 rstudio rstudio  23491 Dec 29 19:00 linux.qmd
+-rw-r--r--  1 rstudio rstudio  23634 Dec 29 19:00 linux.rmarkdown
 -rw-r--r--  1 rstudio rstudio  24684 Dec 11 06:29 linux.Rmd
 -rw-r--r--  1 rstudio rstudio    381 Jan 15  2019 meanEst.R
--rw-r--r--  1 rstudio rstudio   4089 Dec 28 00:10 .RData
+-rw-r--r--  1 rstudio rstudio   4082 Dec 28 03:29 .RData
 -rw-r--r--  1 rstudio rstudio 437112 Jan  5  2021 redhat_kills_centos.png
 -rw-r--r--  1 rstudio rstudio      0 Jan  8  2019 .Rhistory
 -rw-r--r--  1 rstudio rstudio 141962 Jan  6  2015 Richard_Stallman_2013.png
@@ -889,9 +889,9 @@ screenshot_top.png</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'^d'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>drwxr-xr-x 24 rstudio rstudio    768 Dec 28 00:11 .
+<pre><code>drwxr-xr-x 24 rstudio rstudio    768 Dec 29 19:00 .
 drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
-drwxr-xr-x  4 rstudio rstudio    128 Dec 28 00:08 linux_files</code></pre>
+drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files</code></pre>
 </div>
 </div>
 </section>
@@ -1147,12 +1147,12 @@ messagebus,regular</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  PID TTY          TIME CMD
- 2397 ?        00:00:24 rsession
- 5412 ?        00:00:00 quarto
- 5419 ?        00:00:10 deno
- 7101 ?        00:00:01 R
- 7213 ?        00:00:00 sh
- 7214 ?        00:00:00 ps</code></pre>
+  297 ?        00:00:12 rsession
+  787 ?        00:00:00 quarto
+  794 ?        00:00:02 deno
+  799 ?        00:00:01 R
+  908 ?        00:00:00 sh
+  909 ?        00:00:00 ps</code></pre>
 </div>
 </div>
 <ul>
@@ -1162,16 +1162,17 @@ messagebus,regular</code></pre>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-root         1     0  0 Dec27 ?        00:00:00 s6-svscan -t0 /var/run/s6/services
-root        35     1  0 Dec27 ?        00:00:00 s6-supervise s6-fdholderd
-root       255     1  0 Dec27 ?        00:00:00 s6-supervise rstudio
-rstudio+   259   255  0 Dec27 ?        00:00:41 /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
-rstudio   2397   259  1 Dec27 ?        00:00:24 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 123B5E8B --r-restore-workspace 2 --r-run-rprofile 2
-rstudio   5412  2397  0 00:02 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio   5419  5412  2 00:02 ?        00:00:10 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio   7101  5419 90 00:11 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
-rstudio   7215  7101  0 00:11 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf' 2&gt;&amp;1
-rstudio   7216  7215  0 00:11 ?        00:00:00 ps -eaf</code></pre>
+root         1     0  0 18:53 ?        00:00:00 s6-svscan -t0 /var/run/s6/services
+root        38     1  0 18:53 ?        00:00:00 s6-supervise s6-fdholderd
+root       252     1  0 18:53 ?        00:00:00 s6-supervise rstudio
+rstudio+   262   252  1 18:53 ?        00:00:04 /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
+rstudio    297   262  3 18:53 ?        00:00:12 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 5D314FBD --r-restore-workspace 2 --r-run-rprofile 2
+rstudio    616   297  0 18:56 pts/0    00:00:00 bash -l
+rstudio    787   297  0 19:00 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    794   787 60 19:00 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    799   794 50 19:00 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
+rstudio    910   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf' 2&gt;&amp;1
+rstudio    911   910  0 19:00 ?        00:00:00 ps -eaf</code></pre>
 </div>
 </div>
 <ul>
@@ -1180,9 +1181,9 @@ rstudio   7216  7215  0 00:11 ?        00:00:00 ps -eaf</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span> <span class="kw">|</span> <span class="fu">grep</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>rstudio   7217  7101  0 00:11 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf | grep python' 2&gt;&amp;1
-rstudio   7218  7217  0 00:11 ?        00:00:00 bash -c ps -eaf | grep python
-rstudio   7220  7218  0 00:11 ?        00:00:00 grep python</code></pre>
+<pre><code>rstudio    912   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf | grep python' 2&gt;&amp;1
+rstudio    913   912  0 19:00 ?        00:00:00 bash -c ps -eaf | grep python
+rstudio    915   913  0 19:00 ?        00:00:00 grep python</code></pre>
 </div>
 </div>
 <ul>
@@ -1192,7 +1193,7 @@ rstudio   7220  7218  0 00:11 ?        00:00:00 grep python</code></pre>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fp</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-root         1     0  0 Dec27 ?        00:00:00 s6-svscan -t0 /var/run/s6/services</code></pre>
+root         1     0  0 18:53 ?        00:00:00 s6-svscan -t0 /var/run/s6/services</code></pre>
 </div>
 </div>
 <ul>
@@ -1202,12 +1203,13 @@ root         1     0  0 Dec27 ?        00:00:00 s6-svscan -t0 /var/run/s6/servic
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fu</span> rstudio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-rstudio   2397   259  1 Dec27 ?        00:00:24 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 123B5E8B --r-restore-workspace 2 --r-run-rprofile 2
-rstudio   5412  2397  0 00:02 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio   5419  5412  2 00:02 ?        00:00:10 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio   7101  5419 91 00:11 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
-rstudio   7223  7101  0 00:11 ?        00:00:00 sh -c 'bash'  -c 'ps -fu rstudio' 2&gt;&amp;1
-rstudio   7224  7223  0 00:11 ?        00:00:00 ps -fu rstudio</code></pre>
+rstudio    297   262  3 18:53 ?        00:00:12 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 5D314FBD --r-restore-workspace 2 --r-run-rprofile 2
+rstudio    616   297  0 18:56 pts/0    00:00:00 bash -l
+rstudio    787   297  0 19:00 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    794   787 60 19:00 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    799   794 50 19:00 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
+rstudio    918   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -fu rstudio' 2&gt;&amp;1
+rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 </div>
 </div>
 </section>
@@ -1487,7 +1489,7 @@ estMeanPrimes(x)</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> runSim.R n=100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.05624855</code></pre>
+<pre><code>[1] 0.03089551</code></pre>
 </div>
 </div>
 </section>
@@ -1502,7 +1504,7 @@ estMeanPrimes(x)</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nohup</span> Rscript runSim.R n=100 <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.08369185</code></pre>
+<pre><code>[1] -0.1564427</code></pre>
 </div>
 </div>
 <p>The <code>&amp;</code> at the end of the command instructs Linux to run this command in background, so we gain control of the terminal immediately.</p>

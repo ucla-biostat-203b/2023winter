@@ -21,9 +21,12 @@ knitr:
     message: FALSE
     cache: true
 ---
+
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```
+Load tidyverse and related packages.
 ```{r}
 library(tidyverse)
 library(lubridate)

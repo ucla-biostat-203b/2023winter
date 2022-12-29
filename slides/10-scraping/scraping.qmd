@@ -22,11 +22,11 @@ knitr:
     cache: true
 ---
 
+Display machine information for reproducibility.
 ```{r}
 sessionInfo()
 ```
-
-Load tidyverse and other packages for this lecture:
+Load tidyverse and other packages for this lecture.
 ```{r}
 library("tidyverse")
 library("rvest")
