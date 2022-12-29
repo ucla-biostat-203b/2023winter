@@ -2,7 +2,7 @@
 title: "Course Introduction"
 subtitle: "Biostat 203B"
 author: "Dr. Hua Zhou @ UCLA"
-date: '2023-01-10'
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -24,6 +24,10 @@ csl: "../apa.csl"
 - My favorite definition of a *data scientist*:
 
 > A data scientist is someone who is better at statistics than any software engineer and better at software engineering than any statistician.
+
+``` {shortcodes=false}
+{{< tweet user="josh_wills" id="198093512149958656" >}}
+```
 
 ## Big data in 1990s
 
