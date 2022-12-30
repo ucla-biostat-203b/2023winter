@@ -54,7 +54,7 @@ Source: [IBM](http://www.ibmbigdatahub.com/infographic/four-vs-big-data).
 
 ## Who are hiring data scientists?
 
-Following tables is based on a survey of 403 students who earned a master's degree in statistics, biostatistics, or a related field (actuarial science, data science, informatics, math with stats focus) during the 2019--2020 academic year.
+Following tables are based on a survey of 403 students who earned a master's degree in statistics, biostatistics, or a related field (actuarial science, data science, informatics, math with stats focus) during the 2019--2020 academic year.
 
 <p align="center">
 <img src="./ms-employment-sector.png" width="500"/>
