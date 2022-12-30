@@ -1,7 +1,9 @@
+# Sample usage: 
+#
 # docker build . -t huazhou/ucla_biostat_203b_2023w
-# docker run -it -p 8888:8888 -v /Users/huazhou/Documents/Box\ Sync/MIMIC/mimic-iv-1.0:/srv/mimic-iv huazhou/lange_symposium_workshop_2022
 # docker-compose up
-
+# docker image push huazhou/ucla_biostat_203b_2023w
+#
 # https://rocker-project.org/images/versioned/rstudio.html
 # ubuntu: 22.04 (jammy), R: 4.2.2, Python: 3.10
 FROM rocker/geospatial:4.2.2

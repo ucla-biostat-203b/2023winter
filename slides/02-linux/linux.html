@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-29">
+<meta name="dcterms.date" content="2022-12-30">
 
 <title>Linux Basics</title>
 <style>
@@ -198,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 29, 2022</p>
+      <p class="date">December 30, 2022</p>
     </div>
   </div>
   
@@ -208,12 +208,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Display machine information for reproducibility:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 22.04.1 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] digest_0.6.31     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
+ [5] evaluate_0.19     rlang_1.0.6       stringi_1.7.8     cli_3.5.0        
+ [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.19    tools_4.2.2      
+[13] stringr_1.5.0     glue_1.6.2        htmlwidgets_1.6.0 xfun_0.35        
+[17] yaml_2.3.6        fastmap_1.1.0     compiler_4.2.2    htmltools_0.5.4  
+[21] knitr_1.41       </code></pre>
+</div>
+</div>
 <section id="preface" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="preface"><span class="header-section-number">1</span> Preface</h2>
 <ul>
-<li><p>This html is rendered from <code>linux.qmd</code> on Linux Ubuntu 22.04 (jammy).</p></li>
-<li><p>To practice the Linux commands, we can either use Binder (in cloud) or Docker on your own computer (will be covered in this Thursday’s lab).</p></li>
-<li><p>In this lecture, most code chunks contains <code>bash</code> commands instead of R code.</p></li>
+<li>This html is rendered from <code>linux.qmd</code> on Linux Ubuntu 22.04 (jammy).
+<ul>
+<li><p>Mac users can render <code>linux.qmd</code> directly. Some tools such as <code>tree</code> and <code>locate</code> need to be installed (follow the error messages).</p></li>
+<li><p>Windows users need to install WSL (Windows Subsystem for Linux) to render <code>linux.qmd</code> using Ubuntu. Some tools such as <code>tree</code> and <code>locate</code> need to be installed (follow the error messages).</p></li>
+<li><p>Both Mac and Windows users can also use Docker to render <code>linux.qmd</code> within a Ubuntu container.</p></li>
+</ul></li>
+<li>In this lecture, most code chunks are <code>bash</code> commands instead of R code.</li>
 </ul>
 </section>
 <section id="why-linux" class="level2" data-number="2">
@@ -224,7 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Things break; when they break using Linux, it’s easy to fix.</p></li>
 <li><p>Scalability: portable devices (Android, iOS), laptops, servers, clusters, and super computers.</p>
 <ul>
-<li>E.g. UCLA Hoffmann2 cluster runs on Linux; most machines in cloud (AWS, Azure, GCP) run on Linux.</li>
+<li>E.g. UCLA Hoffmann2 cluster runs on Linux; most machines in cloud (AWS, Azure, GCP) run on Linux.<br>
+</li>
 </ul></li>
 <li><p>Cost: it’s free!</p></li>
 </ul>
@@ -239,12 +276,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <img src="./redhat_kills_centos.png" height="200" width="300">
 </p>
 <ul>
-<li><p>The teaching server for this class runs CentOS 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).</p></li>
+<li><p>UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2023-01-01).</p></li>
 <li><p>MacOS was originally derived from Unix/Linux (Darwin kernel). It is POSIX compliant. Most shell commands we review here apply to MacOS terminal as well. Windows/DOS, unfortunately, is a totally different breed.</p></li>
-<li><p>Show distribution/version on Linux:</p></li>
+<li><p>Show operating system (OS) type:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/<span class="pp">*</span>-release</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$OSTYPE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>linux-gnu</code></pre>
+</div>
+</div>
+<ul>
+<li>Show distribution/version on Linux:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># only on Linux terminal</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/<span class="pp">*</span>-release</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=22.04
@@ -268,13 +315,13 @@ UBUNTU_CODENAME=jammy</code></pre>
 <li>Show distribution/version on MacOS:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># only on Mac terminal</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sw_vers</span> <span class="at">-productVersion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># only on Mac terminal</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sw_vers</span> <span class="at">-productVersion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># only on Mac terminal</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">system_profiler</span> SPSoftwareDataType</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># only on Mac terminal</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">system_profiler</span> SPSoftwareDataType</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="linux-shells" class="level2" data-number="4">
@@ -290,7 +337,7 @@ UBUNTU_CODENAME=jammy</code></pre>
 <li><p>Determine the current shell:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/bin/bash</code></pre>
 </div>
@@ -299,7 +346,7 @@ UBUNTU_CODENAME=jammy</code></pre>
 <li>List available shells:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shells</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shells</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># /etc/shells: valid login shells
 /bin/sh
@@ -315,15 +362,16 @@ UBUNTU_CODENAME=jammy</code></pre>
 <ul>
 <li>Change to another shell:</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> bash <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> bash <span class="at">-l</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>-l</code> option indicates it should be a login shell.</p>
 <ul>
 <li>Change your login shell permanently:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> /bin/bash [USERNAME]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> /bin/bash [USERNAME]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then log out and log in.</p>
 </section>
@@ -344,8 +392,8 @@ UBUNTU_CODENAME=jammy</code></pre>
 <h3 data-number="4.3" class="anchored" data-anchor-id="man-is-mans-best-friend"><span class="header-section-number">4.3</span> <code>man</code> is man’s best friend</h3>
 <p>Online help for shell commands: <code>man [COMMANDNAME]</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display documentation for the ls command</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display the first 30 lines of documentation for the ls command</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> ls <span class="kw">|</span> <span class="fu">head</span> <span class="at">-30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>This system has been minimized by removing packages and content that are
 not required on a system that users do not log into.
@@ -369,8 +417,8 @@ command. You will still need to ensure the 'man-db' package is installed.</code>
 <code>tree -L levels</code> display levels directories deep.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display only directories in levels 1, 2 from root directory</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> <span class="at">-d</span> <span class="at">-L</span> 1 /</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display only directories in levels 1, 2 from root directory</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> <span class="at">-d</span> <span class="at">-L</span> 1 /</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[01;34m/[0m
 ├── [01;36mbin[0m -&gt; [01;34musr/bin[0m
@@ -407,7 +455,7 @@ command. You will still need to ensure the 'man-db' package is installed.</code>
 <li>Where am I? <code>pwd</code> prints absolute path to the current working directory:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/home/rstudio/203b-lecture/slides/02-linux</code></pre>
 </div>
@@ -416,7 +464,7 @@ command. You will still need to ensure the 'man-db' package is installed.</code>
 <li>What’s in the current director? <code>ls</code> lists contents of a directory:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>autoSim.R
 Emacs_Reference_Card.pdf
@@ -443,9 +491,9 @@ Vi_Cheat_Sheet.pdf</code></pre>
 <li><code>ls -l</code> lists detailed contents of a directory:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total 2460
+<pre><code>total 2636
 -rw-r--r-- 1 rstudio rstudio    258 Jan 16  2020 autoSim.R
 -rw-r--r-- 1 rstudio rstudio 110345 Jan 11  2015 Emacs_Reference_Card.pdf
 -rw-r--r-- 1 rstudio rstudio 157353 Jan  4  2019 IDRE_Winter_2019_Workshops.pdf
@@ -454,10 +502,10 @@ Vi_Cheat_Sheet.pdf</code></pre>
 -rw-r--r-- 1 rstudio rstudio  11662 Jan  8  2018 linux_directory_structure.png
 -rw-r--r-- 1 rstudio rstudio  42472 Jan  7  2015 linux_filepermission_oct.png
 -rw-r--r-- 1 rstudio rstudio 102188 Jan  9  2018 linux_filepermission.png
-drwxr-xr-x 3 rstudio rstudio     96 Dec 28 03:29 linux_files
--rw-r--r-- 1 rstudio rstudio 104480 Dec 28 03:30 linux.html
--rw-r--r-- 1 rstudio rstudio  23491 Dec 29 19:00 linux.qmd
--rw-r--r-- 1 rstudio rstudio  23634 Dec 29 19:00 linux.rmarkdown
+drwxr-xr-x 3 rstudio rstudio     96 Dec 30 08:16 linux_files
+-rw-r--r-- 1 rstudio rstudio 285980 Dec 30 08:16 linux.html
+-rw-r--r-- 1 rstudio rstudio  24072 Dec 30 08:17 linux.qmd
+-rw-r--r-- 1 rstudio rstudio  24209 Dec 30 08:17 linux.rmarkdown
 -rw-r--r-- 1 rstudio rstudio  24684 Dec 11 06:29 linux.Rmd
 -rw-r--r-- 1 rstudio rstudio    381 Jan 15  2019 meanEst.R
 -rw-r--r-- 1 rstudio rstudio 437112 Jan  5  2021 redhat_kills_centos.png
@@ -471,10 +519,10 @@ drwxr-xr-x 3 rstudio rstudio     96 Dec 28 03:29 linux_files
 <li><code>ls -al</code> lists all contents of a directory, including those start with <code>.</code> (hidden folders):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total 2476
-drwxr-xr-x 24 rstudio rstudio    768 Dec 29 19:00 .
+<pre><code>total 2652
+drwxr-xr-x 24 rstudio rstudio    768 Dec 30 08:17 .
 drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
 -rw-r--r--  1 rstudio rstudio    258 Jan 16  2020 autoSim.R
 -rw-r--r--  1 rstudio rstudio   8196 Dec 11 06:31 .DS_Store
@@ -485,13 +533,13 @@ drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
 -rw-r--r--  1 rstudio rstudio  11662 Jan  8  2018 linux_directory_structure.png
 -rw-r--r--  1 rstudio rstudio  42472 Jan  7  2015 linux_filepermission_oct.png
 -rw-r--r--  1 rstudio rstudio 102188 Jan  9  2018 linux_filepermission.png
-drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
--rw-r--r--  1 rstudio rstudio 104480 Dec 28 03:30 linux.html
--rw-r--r--  1 rstudio rstudio  23491 Dec 29 19:00 linux.qmd
--rw-r--r--  1 rstudio rstudio  23634 Dec 29 19:00 linux.rmarkdown
+drwxr-xr-x  3 rstudio rstudio     96 Dec 30 08:16 linux_files
+-rw-r--r--  1 rstudio rstudio 285980 Dec 30 08:16 linux.html
+-rw-r--r--  1 rstudio rstudio  24072 Dec 30 08:17 linux.qmd
+-rw-r--r--  1 rstudio rstudio  24209 Dec 30 08:17 linux.rmarkdown
 -rw-r--r--  1 rstudio rstudio  24684 Dec 11 06:29 linux.Rmd
 -rw-r--r--  1 rstudio rstudio    381 Jan 15  2019 meanEst.R
--rw-r--r--  1 rstudio rstudio   4082 Dec 28 03:29 .RData
+-rw-r--r--  1 rstudio rstudio   4084 Dec 30 08:16 .RData
 -rw-r--r--  1 rstudio rstudio 437112 Jan  5  2021 redhat_kills_centos.png
 -rw-r--r--  1 rstudio rstudio      0 Jan  8  2019 .Rhistory
 -rw-r--r--  1 rstudio rstudio 141962 Jan  6  2015 Richard_Stallman_2013.png
@@ -529,7 +577,7 @@ drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
 <li><p><code>groups [USERNAME]</code> shows which group(s) a user belongs to:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groups</span> rstudio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groups</span> <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>rstudio : rstudio sudo staff</code></pre>
 </div>
@@ -553,30 +601,30 @@ drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
 <li><code>locate</code> locates a file by name (need <code>mlocate</code> program installed):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locate</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locate</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>find</code> is similar to <code>locate</code> but has more functionalities, e.g., select files by age, size, permissions, …. , and is ubiquitous.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># search within current folder</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># search within current folder</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>linux.qmd</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># search within the home folder</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ~ <span class="at">-name</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># search within the parent folder</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> .. <span class="at">-name</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>/home/rstudio/203b-lecture/slides/02-linux/linux.qmd</code></pre>
+<pre><code>../02-linux/linux.qmd</code></pre>
 </div>
 </div>
 <ul>
 <li><code>which</code> locates a program (executable file):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/usr/local/bin/R</code></pre>
 </div>
@@ -634,8 +682,8 @@ drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
 <li></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all png files in current folder</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="pp">*</span>.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all png files in current folder</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="pp">*</span>.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-rw-r--r-- 1 rstudio rstudio 321281 Jan 10  2018 key_authentication_1.png
 -rw-r--r-- 1 rstudio rstudio  96119 Jan  9  2018 key_authentication_2.png
@@ -665,7 +713,7 @@ drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files
 <li><code>cat</code> prints the contents of a file:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## parsing command arguments
 for (arg in commandArgs(TRUE)) {
@@ -701,7 +749,7 @@ estMeanPrimes(x)</code></pre>
 <li><code>head</code> prints the first 10 lines of a file:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## parsing command arguments
 for (arg in commandArgs(TRUE)) {
@@ -717,7 +765,7 @@ isPrime = function(n) {
 </div>
 <p><code>head -l</code> prints the first <span class="math inline">\(l\)</span> lines of a file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-15</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-15</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## parsing command arguments
 for (arg in commandArgs(TRUE)) {
@@ -740,7 +788,7 @@ isPrime = function(n) {
 <li><code>tail</code> prints the last 10 lines of a file:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n = length(x)
   ind = sapply(1:n, isPrime)
@@ -756,7 +804,7 @@ estMeanPrimes(x)</code></pre>
 </div>
 <p><code>tail -l</code> prints the last <span class="math inline">\(l\)</span> lines of a file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-15</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-15</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  return (TRUE)
 }
@@ -790,9 +838,9 @@ estMeanPrimes(x)</code></pre>
 <li><code>|</code> sends output from one command as input of another command.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total 2460
+<pre><code>total 2636
 -rw-r--r-- 1 rstudio rstudio    258 Jan 16  2020 autoSim.R
 -rw-r--r-- 1 rstudio rstudio 110345 Jan 11  2015 Emacs_Reference_Card.pdf
 -rw-r--r-- 1 rstudio rstudio 157353 Jan  4  2019 IDRE_Winter_2019_Workshops.pdf
@@ -822,11 +870,11 @@ estMeanPrimes(x)</code></pre>
 <li>Show lines that contain string <code>CentOS</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quotes not necessary if not a regular expression</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'CentOS'</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quotes not necessary if not a regular expression</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'CentOS'</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>- RHEL/CentOS is popular on servers. (In December 2020, Red Hat terminated the development of CentOS Linux distribution.)
-- The teaching server for this class runs CentOS 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).
+- UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2023-01-01).
 - Show lines that contain string `CentOS`:
 grep 'CentOS' linux.qmd
 grep 'CentOS' *.qmd
@@ -839,10 +887,10 @@ sed 's/CentOS/RHEL/' linux.qmd | grep RHEL</code></pre>
 <li>Search multiple text files:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'CentOS'</span> <span class="pp">*</span>.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'CentOS'</span> <span class="pp">*</span>.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>- RHEL/CentOS is popular on servers. (In December 2020, Red Hat terminated the development of CentOS Linux distribution.)
-- The teaching server for this class runs CentOS 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).
+- UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2023-01-01).
 - Show lines that contain string `CentOS`:
 grep 'CentOS' linux.qmd
 grep 'CentOS' *.qmd
@@ -855,23 +903,23 @@ sed 's/CentOS/RHEL/' linux.qmd | grep RHEL</code></pre>
 <li>Show matching line numbers:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">'CentOS'</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">'CentOS'</span> linux.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>43:- RHEL/CentOS is popular on servers. (In December 2020, Red Hat terminated the development of CentOS Linux distribution.)
-49:- The teaching server for this class runs CentOS 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).
-341:- Show lines that contain string `CentOS`:
-344:grep 'CentOS' linux.qmd
-349:grep 'CentOS' *.qmd
-354:grep -n 'CentOS' linux.qmd
-371:- Replace `CentOS` by `RHEL` in a text file:
-373:sed 's/CentOS/RHEL/' linux.qmd | grep RHEL</code></pre>
+<pre><code>50:- RHEL/CentOS is popular on servers. (In December 2020, Red Hat terminated the development of CentOS Linux distribution.)
+56:- UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2023-01-01).
+352:- Show lines that contain string `CentOS`:
+355:grep 'CentOS' linux.qmd
+360:grep 'CentOS' *.qmd
+365:grep -n 'CentOS' linux.qmd
+382:- Replace `CentOS` by `RHEL` in a text file:
+384:sed 's/CentOS/RHEL/' linux.qmd | grep RHEL</code></pre>
 </div>
 </div>
 <ul>
 <li>Find all files in current directory with <code>.png</code> extension:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'.png$'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'.png$'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>key_authentication_1.png
 key_authentication_2.png
@@ -887,11 +935,11 @@ screenshot_top.png</code></pre>
 <li>Find all directories in the current directory:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'^d'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'^d'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>drwxr-xr-x 24 rstudio rstudio    768 Dec 29 19:00 .
+<pre><code>drwxr-xr-x 24 rstudio rstudio    768 Dec 30 08:17 .
 drwxr-xr-x 22 rstudio rstudio    704 Mar  9  2022 ..
-drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files</code></pre>
+drwxr-xr-x  3 rstudio rstudio     96 Dec 30 08:16 linux_files</code></pre>
 </div>
 </div>
 </section>
@@ -902,10 +950,10 @@ drwxr-xr-x  3 rstudio rstudio     96 Dec 28 03:29 linux_files</code></pre>
 <li><p>Replace <code>CentOS</code> by <code>RHEL</code> in a text file:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/CentOS/RHEL/'</span> linux.qmd <span class="kw">|</span> <span class="fu">grep</span> RHEL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/CentOS/RHEL/'</span> linux.qmd <span class="kw">|</span> <span class="fu">grep</span> RHEL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>- RHEL/RHEL is popular on servers. (In December 2020, Red Hat terminated the development of CentOS Linux distribution.)
-- The teaching server for this class runs RHEL 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).
+- UCLA Hoffman2 cluster runs RHEL 7.9.2009 (as of 2023-01-01).
 - Show lines that contain string `RHEL`:
 grep 'RHEL' linux.qmd
 grep 'RHEL' *.qmd
@@ -922,7 +970,7 @@ sed 's/RHEL/RHEL/' linux.qmd | grep RHEL</code></pre>
 <li><p>First let’s display the content of the file <code>/etc/passwd</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -955,7 +1003,7 @@ messagebus:x:103:104::/nonexistent:/usr/sbin/nologin</code></pre>
 <li>Print sorted list of login names:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{ print $1 }'</span> /etc/passwd <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{ print $1 }'</span> /etc/passwd <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>_apt
 backup
@@ -973,21 +1021,21 @@ mail</code></pre>
 <li>Print number of lines in a file, as <code>NR</code> stands for Number of Rows:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'END { print NR }'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'END { print NR }'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>24</code></pre>
 </div>
 </div>
 <p>or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>24 /etc/passwd</code></pre>
 </div>
 </div>
 <p>or (not displaying file name)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>24</code></pre>
 </div>
@@ -996,7 +1044,7 @@ mail</code></pre>
 <li>Print login names with UID in range <code>1000-1035</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{if ($3 &gt;= 1000 &amp;&amp; $3 &lt;= 1047) print}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{if ($3 &gt;= 1000 &amp;&amp; $3 &lt;= 1047) print}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>rstudio:x:1000:1000::/home/rstudio:/bin/bash</code></pre>
 </div>
@@ -1005,7 +1053,7 @@ mail</code></pre>
 <li>Print login names and log-in shells in comma-separated format:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{OFS = ","} {print $1, $7}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">'{OFS = ","} {print $1, $7}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root,/bin/bash
 daemon,/usr/sbin/nologin
@@ -1037,9 +1085,9 @@ messagebus,/usr/sbin/nologin</code></pre>
 <li>Print login names and indicate those with UID&gt;1000 as <code>vip</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="at">-v</span> status=<span class="st">""</span> <span class="st">'{OFS = ","} </span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="st">{if ($3 &gt;= 1000) status="vip"; else status="regular"} </span></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="st">{print $1, status}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="at">-v</span> status=<span class="st">""</span> <span class="st">'{OFS = ","} </span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="st">{if ($3 &gt;= 1000) status="vip"; else status="regular"} </span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="st">{print $1, status}'</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root,regular
 daemon,regular
@@ -1144,72 +1192,70 @@ messagebus,regular</code></pre>
 <li><p>Each process has Process ID (PID), Username (UID), Parent process ID (PPID), Time and data process started (STIME), time running (TIME), etc.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  PID TTY          TIME CMD
-  297 ?        00:00:12 rsession
-  787 ?        00:00:00 quarto
-  794 ?        00:00:02 deno
-  799 ?        00:00:01 R
-  908 ?        00:00:00 sh
-  909 ?        00:00:00 ps</code></pre>
+  297 ?        00:00:04 rsession
+  418 ?        00:00:00 quarto
+  425 ?        00:00:02 deno
+  431 ?        00:00:01 R
+  544 ?        00:00:00 sh
+  545 ?        00:00:00 ps</code></pre>
 </div>
 </div>
 <ul>
 <li>All current running processes:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-root         1     0  0 18:53 ?        00:00:00 s6-svscan -t0 /var/run/s6/services
-root        38     1  0 18:53 ?        00:00:00 s6-supervise s6-fdholderd
-root       252     1  0 18:53 ?        00:00:00 s6-supervise rstudio
-rstudio+   262   252  1 18:53 ?        00:00:04 /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
-rstudio    297   262  3 18:53 ?        00:00:12 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 5D314FBD --r-restore-workspace 2 --r-run-rprofile 2
-rstudio    616   297  0 18:56 pts/0    00:00:00 bash -l
-rstudio    787   297  0 19:00 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio    794   787 60 19:00 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio    799   794 50 19:00 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
-rstudio    910   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf' 2&gt;&amp;1
-rstudio    911   910  0 19:00 ?        00:00:00 ps -eaf</code></pre>
+root         1     0  0 08:16 ?        00:00:00 s6-svscan -t0 /var/run/s6/services
+root        38     1  0 08:16 ?        00:00:00 s6-supervise s6-fdholderd
+root       252     1  0 08:16 ?        00:00:00 s6-supervise rstudio
+rstudio+   255   252  1 08:16 ?        00:00:00 /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
+rstudio    297   255 11 08:16 ?        00:00:04 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token B98BF8DC --r-restore-workspace 2 --r-run-rprofile 2
+rstudio    418   297  0 08:17 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    425   418 68 08:17 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    431   425 69 08:17 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
+rstudio    546   431  0 08:17 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf' 2&gt;&amp;1
+rstudio    547   546  0 08:17 ?        00:00:00 ps -eaf</code></pre>
 </div>
 </div>
 <ul>
 <li>All Python processes:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span> <span class="kw">|</span> <span class="fu">grep</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-eaf</span> <span class="kw">|</span> <span class="fu">grep</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>rstudio    912   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf | grep python' 2&gt;&amp;1
-rstudio    913   912  0 19:00 ?        00:00:00 bash -c ps -eaf | grep python
-rstudio    915   913  0 19:00 ?        00:00:00 grep python</code></pre>
+<pre><code>rstudio    548   431  0 08:17 ?        00:00:00 sh -c 'bash'  -c 'ps -eaf | grep python' 2&gt;&amp;1
+rstudio    549   548  0 08:17 ?        00:00:00 bash -c ps -eaf | grep python
+rstudio    551   549  0 08:17 ?        00:00:00 grep python</code></pre>
 </div>
 </div>
 <ul>
 <li>Process with PID=1:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fp</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fp</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-root         1     0  0 18:53 ?        00:00:00 s6-svscan -t0 /var/run/s6/services</code></pre>
+root         1     0  0 08:16 ?        00:00:00 s6-svscan -t0 /var/run/s6/services</code></pre>
 </div>
 </div>
 <ul>
 <li>All processes owned by a user:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fu</span> rstudio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-fu</span> <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>UID        PID  PPID  C STIME TTY          TIME CMD
-rstudio    297   262  3 18:53 ?        00:00:12 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token 5D314FBD --r-restore-workspace 2 --r-run-rprofile 2
-rstudio    616   297  0 18:56 pts/0    00:00:00 bash -l
-rstudio    787   297  0 19:00 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio    794   787 60 19:00 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
-rstudio    799   794 50 19:00 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
-rstudio    918   799  0 19:00 ?        00:00:00 sh -c 'bash'  -c 'ps -fu rstudio' 2&gt;&amp;1
-rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
+rstudio    297   255 11 08:16 ?        00:00:04 /usr/lib/rstudio-server/bin/rsession -u rstudio --session-use-secure-cookies 0 --session-root-path / --session-same-site 0 --session-use-file-storage 1 --launcher-token B98BF8DC --r-restore-workspace 2 --r-run-rprofile 2
+rstudio    418   297  0 08:17 ?        00:00:00 /bin/bash /usr/lib/rstudio-server/bin/quarto/bin/quarto preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    425   418 69 08:17 ?        00:00:02 /usr/lib/rstudio-server/bin/quarto/bin/tools/deno-x86_64-unknown-linux-gnu/deno run --unstable --no-config --cached-only --allow-read --allow-write --allow-run --allow-env --allow-net --allow-ffi --no-check --importmap=/usr/lib/rstudio-server/bin/quarto/bin/vendor/import_map.json /usr/lib/rstudio-server/bin/quarto/bin/quarto.js preview linux.qmd --to html --no-watch-inputs --no-browse
+rstudio    431   425 70 08:17 ?        00:00:01 /usr/local/lib/R/bin/exec/R --no-save --no-restore --no-echo --no-restore --file=/usr/lib/rstudio-server/bin/quarto/share/rmd/rmd.R
+rstudio    554   431  0 08:17 ?        00:00:00 sh -c 'bash'  -c 'ps -fu $USER' 2&gt;&amp;1
+rstudio    555   554  0 08:17 ?        00:00:00 ps -fu rstudio</code></pre>
 </div>
 </div>
 </section>
@@ -1218,24 +1264,27 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <ul>
 <li>Kill process with PID=1001:</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="bu">kill</span> 1001</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="bu">kill</span> 1001</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Kill all R processes.</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">killall</span> <span class="at">-r</span> R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">killall</span> <span class="at">-r</span> R</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="top" class="level3" data-number="8.4">
 <h3 data-number="8.4" class="anchored" data-anchor-id="top"><span class="header-section-number">8.4</span> <code>top</code></h3>
 <ul>
 <li><code>top</code> prints realtime process information (very useful).</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="ex">top</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="ex">top</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p align="center">
 <img src="./screenshot_top.png" height="400">
 </p>
@@ -1250,12 +1299,17 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <h3 data-number="9.1" class="anchored" data-anchor-id="ssh"><span class="header-section-number">9.1</span> SSH</h3>
 <p>SSH (secure shell) is the dominant cryptographic network protocol for secure network connection via an insecure network.</p>
 <ul>
-<li>On Linux or Mac terminal, access the teaching server by</li>
+<li>On Linux or Mac terminal, access a Linux machine by</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> [USERNAME]@server.ucla-biostat-203b.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Replace above <code>[USERNAME]</code> by your account user name on teaching server.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> [USERNAME]@[IP_ADDRESS]</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace above <code>[USERNAME]</code> by your account user name on the Linux machine and <code>[IP_ADDRESS]</code> by the machine’s ip address. For example, to connect to the Hoffman2 cluster at UCLA</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> huazhou@hoffman2.idre.ucla.edu</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>For Windows users, there are at least three ways: (1) (highly recommended) <a href="https://git-scm.com/download/win">Git Bash</a> which is included in Git for Windows, (2) (not recommended) <a href="http://www.putty.org">PuTTY</a> program (free), or (3) (may be an overkill for this class) use WSL for Windows to install a full fledged Linux system within Windows.</li>
 </ul>
@@ -1294,7 +1348,7 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <li>On Linux, Mac, or Windows Git Bash, to generate a key pair:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> rsa <span class="at">-f</span> ~/.ssh/[KEY_FILENAME] <span class="at">-C</span> [USERNAME]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> rsa <span class="at">-f</span> ~/.ssh/[KEY_FILENAME] <span class="at">-C</span> [USERNAME]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>- `[KEY_FILENAME]` is the name that you want to use for your SSH key files. For example, a filename of `id_rsa` generates a private key file named `id_rsa` and a public key file named `id_rsa.pub`.  
 
@@ -1309,22 +1363,22 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <li>The permission of the public key <code>~/.ssh/id_rsa.pub</code> should be <code>644 (-rw-r--r--)</code>.</li>
 </ul>
 <p>::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 700 ~/.ssh</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/[KEY_FILENAME]</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 644 ~/.ssh/[KEY_FILENAME].pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 700 ~/.ssh</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/[KEY_FILENAME]</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 644 ~/.ssh/[KEY_FILENAME].pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>:::</p>
 <p>Note Windows is different, it doesn’t allow change of permissions.</p></li>
 <li><p>Append the public key to the <code>~/.ssh/authorized_keys</code> file of any Linux machine we want to SSH to, e.g.,</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/[KEY_FILENAME] [USERNAME]@server.ucla-biostat-203b.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/[KEY_FILENAME] [USERNAME]@[IP_ADDRESS]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Make sure the permission of the <code>authorized_keys</code> file is <code>600 (-rw-------)</code>.</p>
 <ul>
 <li>Test your new key.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/[KEY_FILENAME] [USERNAME]@server.ucla-biostat-203b.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/[KEY_FILENAME] [USERNAME]@[IP_ADDRESS]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>From now on, you don’t need password each time you connect from your machine to the teaching server.</p></li>
@@ -1335,15 +1389,17 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <section id="transfer-files-between-machines" class="level3" data-number="9.5">
 <h3 data-number="9.5" class="anchored" data-anchor-id="transfer-files-between-machines"><span class="header-section-number">9.5</span> Transfer files between machines</h3>
 <ul>
-<li><p><code>scp</code> securely transfers files between machines using SSH.</p>
-<p>::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co">## copy file from local to remote</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> [LOCALFILE] [USERNAME]@server.ucla-biostat-203b.com:/[PATH_TO_FOLDER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
-<p>::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co">## copy file from remote to local</span></span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> [USERNAME]@server.ucla-biostat-203b.com:/[PATH_TO_FILE] [PATH_TO_LOCAL_FOLDER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p></li>
+<li><code>scp</code> securely transfers files between machines using SSH.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co">## copy file from local to remote</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> [LOCALFILE] [USERNAME]@[IP_ADDRESS]:/[PATH_TO_FOLDER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co">## copy file from remote to local</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> [USERNAME]@[IP_ADDRESS]:/[PATH_TO_FILE] [PATH_TO_LOCAL_FOLDER]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
 <li><p><code>sftp</code> is FTP via SSH.</p></li>
 <li><p><code>Globus</code> is GUI program for securely transferring files between machines. To use Globus you will have to go to <a href="https://www.globus.org/" class="uri">https://www.globus.org/</a> and login through UCLA by selecting your existing organizational login as UCLA. Then you will need to download their Globus Connect Personal software, then set your laptop as an endpoint. Very detailed instructions can be found at <a href="https://www.hoffman2.idre.ucla.edu/file-transfer/globus/" class="uri">https://www.hoffman2.idre.ucla.edu/file-transfer/globus/</a>.</p></li>
 <li><p>GUIs for Windows (WinSCP) or Mac (Cyberduck).</p></li>
@@ -1371,7 +1427,7 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <li><p>Then run R script by</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"script.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"script.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="batch-mode" class="level3" data-number="10.2">
@@ -1382,19 +1438,19 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 \]</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>To run your R code non-interactively aka in batch mode, we have at least two options:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># default output to meanEst.Rout</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># default output to meanEst.Rout</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># output to stdout</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># output to stdout</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> meanEst.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Typically automate batch calls using a scripting language, e.g., Python, Perl, and shell script.</li>
@@ -1406,43 +1462,43 @@ rstudio    919   918  0 19:00 ?        00:00:00 ps -fu rstudio</code></pre>
 <li>Specify arguments in <code>R CMD BATCH</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH <span class="st">'--args mu=1 sig=2 kap=3'</span> script.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH <span class="st">'--args mu=1 sig=2 kap=3'</span> script.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Specify arguments in <code>Rscript</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> script.R mu=1 sig=2 kap=3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> script.R mu=1 sig=2 kap=3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Parse command line arguments using magic formula</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (arg <span class="cf">in</span> <span class="fu">commandArgs</span>(<span class="cn">TRUE</span>)) {</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>arg))</span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (arg <span class="cf">in</span> <span class="fu">commandArgs</span>(<span class="cn">TRUE</span>)) {</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>arg))</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>in R script. After calling the above code, all command line arguments will be available in the global namespace.</p>
 <ul>
 <li>To understand the magic formula <code>commandArgs</code>, run R by:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> <span class="st">'--args mu=1 sig=2 kap=3'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> <span class="st">'--args mu=1 sig=2 kap=3'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and then issue commands in R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">commandArgs</span>()</span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">commandArgs</span>(<span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">commandArgs</span>()</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">commandArgs</span>(<span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Understand the magic formula <code>parse</code> and <code>eval</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">parse</span>(<span class="at">text =</span> <span class="st">"x=3"</span>)</span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="st">"x=3"</span>))</span>
-<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a><span class="fu">parse</span>(<span class="at">text =</span> <span class="st">"x=3"</span>)</span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="st">"x=3"</span>))</span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><a href="https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/runSim.R"><code>runSim.R</code></a> has components: (1) <strong>command argument parser</strong>, (2) method implementation, (3) data generator with unspecified parameter <code>n</code>, and (4) estimation based on generated data.</li>
@@ -1483,13 +1539,13 @@ estMeanPrimes(x)</code></pre>
 <li>Call <code>runSim.R</code> with sample size <code>n=100</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH <span class="st">'--args n=100'</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD BATCH <span class="st">'--args n=100'</span> runSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> runSim.R n=100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> runSim.R n=100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.03089551</code></pre>
+<pre><code>[1] -0.3604002</code></pre>
 </div>
 </div>
 </section>
@@ -1502,9 +1558,9 @@ estMeanPrimes(x)</code></pre>
 <li><p>Run <code>runSim.R</code> in background and writes output to <code>nohup.out</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nohup</span> Rscript runSim.R n=100 <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nohup</span> Rscript runSim.R n=100 <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.1564427</code></pre>
+<pre><code>[1] 0.2461959</code></pre>
 </div>
 </div>
 <p>The <code>&amp;</code> at the end of the command instructs Linux to run this command in background, so we gain control of the terminal immediately.</p>
@@ -1545,7 +1601,7 @@ How to parallelize the job?</li>
 <li><p>Let’s demonstrate using the script <a href="https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/autoSim.R">autoSim.R</a></p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> autoSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> autoSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># autoSim.R
 
@@ -1563,7 +1619,7 @@ for (n in nVals) {
 <li></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> autoSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> autoSim.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sysCall=nohup Rscript runSim.R n=100 &gt; n100.txt"
 [1] "sysCall=nohup Rscript runSim.R n=200 &gt; n200.txt"

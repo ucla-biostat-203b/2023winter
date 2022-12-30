@@ -15,13 +15,21 @@ bibliography: "../bib-HZ.bib"
 csl: "../apa.csl"
 ---
 
+Display machine information for reproducibility:
+```{r}
+sessionInfo()
+```
+
 ## Preface
 
-- This html is rendered from `linux.qmd` on Linux Ubuntu 22.04 (jammy). 
+- This html is rendered from `linux.qmd` on Linux Ubuntu 22.04 (jammy).  
+    - Mac users can render `linux.qmd` directly. Some tools such as `tree` and `locate` need to be installed (follow the error messages). 
+    
+    - Windows users need to install WSL (Windows Subsystem for Linux) to render `linux.qmd` using Ubuntu. Some tools such as `tree` and `locate` need to be installed (follow the error messages).  
+    
+    - Both Mac and Windows users can also use Docker to render `linux.qmd` within a Ubuntu container.
 
-- To practice the Linux commands, we can either use Binder (in cloud) or Docker on your own computer (will be covered in this Thursday's lab).
-
-- In this lecture, most code chunks  contains `bash` commands instead of R code. 
+- In this lecture, most code chunks are `bash` commands instead of R code. 
 
 ## Why Linux
 
@@ -33,7 +41,6 @@ Linux is _the_ most common platform for scientific computing and deployment of d
 
 - Scalability: portable devices (Android, iOS), laptops, servers, clusters, and super computers.
     - E.g. UCLA Hoffmann2 cluster runs on Linux; most machines in cloud (AWS, Azure, GCP) run on Linux.  
-    
 - Cost: it's free!
 
 ## [Distributions of Linux](http://upload.wikimedia.org/wikipedia/commons/1/1b/Linux_Distribution_Timeline.svg)
@@ -46,24 +53,28 @@ Linux is _the_ most common platform for scientific computing and deployment of d
   <img src="./redhat_kills_centos.png" height="200" width="300">
 </p>
 
-- The teaching server for this class runs CentOS 7. UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2022-01-01).
+- UCLA Hoffman2 cluster runs CentOS 7.9.2009 (as of 2023-01-01).
 
 - MacOS was originally derived from Unix/Linux (Darwin kernel). It is POSIX compliant. Most shell commands we review here apply to MacOS terminal as well. Windows/DOS, unfortunately, is a totally different breed.
 
-- Show distribution/version on Linux:
+- Show operating system (OS) type:
 ```{bash}
+echo $OSTYPE
+```
+
+- Show distribution/version on Linux:
+```{bash, eval = Sys.info()['sysname'] == "Linux"}
+# only on Linux terminal
 cat /etc/*-release
 ```
 
 - Show distribution/version on MacOS:
-```{bash}
-#| eval: false
+```{bash, eval = Sys.info()['sysname'] == "Darwin"}
 # only on Mac terminal
 sw_vers -productVersion
 ```
 or
-```{bash, eval=FALSE}
-#| eval: false
+```{bash, eval = Sys.info()['sysname'] == "Darwin"}
 # only on Mac terminal
 system_profiler SPSoftwareDataType
 ```
@@ -93,7 +104,7 @@ cat /etc/shells
 ```
 
 - Change to another shell:
-```{bash}
+```{{bash}}
 #| eval: false
 exec bash -l
 ```
@@ -128,8 +139,8 @@ Bash provides the following standard completion for the Linux users by default. 
 
 Online help for shell commands: `man [COMMANDNAME]`.
 ```{bash}
-# display documentation for the ls command
-man ls
+# display the first 30 lines of documentation for the ls command
+man ls | head -30
 ```
 
 ## Navigate file system
@@ -207,7 +218,7 @@ ls -al
 
 - `groups [USERNAME]` shows which group(s) a user belongs to:
 ```{bash}
-groups rstudio
+groups $USER
 ```
 
 ### Manipulate files and directories
@@ -239,8 +250,8 @@ locate linux.qmd
 find linux.qmd
 ```
 ```{bash}
-# search within the home folder
-find ~ -name linux.qmd
+# search within the parent folder
+find .. -name linux.qmd
 ```
 
 - `which` locates a program (executable file):
@@ -501,19 +512,19 @@ ps -fp 1
 
 - All processes owned by a user:
 ```{bash}
-ps -fu rstudio
+ps -fu $USER
 ```
 
 ### Kill processes
 
 - Kill process with PID=1001:
-```{bash}
+``` {{bash}}
 #| eval: false
 kill 1001
 ```
 
 - Kill all R processes.
-```{bash}
+``` {{bash}}
 #| eval: false
 killall -r R
 ```
@@ -521,7 +532,7 @@ killall -r R
 ### `top`
 
 - `top` prints realtime process information (very useful).
-```{bash}
+```{{bash}}
 #| eval: false
 top
 ```
@@ -538,12 +549,16 @@ top
 
 SSH (secure shell) is the dominant cryptographic network protocol for secure network connection via an insecure network.
 
-- On Linux or Mac terminal, access the teaching server by
-```{bash}
+- On Linux or Mac terminal, access a Linux machine by
+```{{bash}}
 #| eval: false
-ssh [USERNAME]@server.ucla-biostat-203b.com
+ssh [USERNAME]@[IP_ADDRESS]
 ```
-Replace above `[USERNAME]` by your account user name on teaching server.
+Replace above `[USERNAME]` by your account user name on the Linux machine and `[IP_ADDRESS]` by the machine's ip address. For example, to connect to the Hoffman2 cluster at UCLA
+```{{bash}}
+#| eval: false
+ssh huazhou@hoffman2.idre.ucla.edu
+```
 
 - For Windows users, there are at least three ways: (1) (highly recommended) [Git Bash](https://git-scm.com/download/win) which is included in Git for Windows, (2) (not recommended) [PuTTY](http://www.putty.org) program (free), or (3) (may be an overkill for this class)  use WSL for Windows to install a full fledged Linux system within Windows.
 
@@ -606,14 +621,14 @@ ssh-keygen -t rsa -f ~/.ssh/[KEY_FILENAME] -C [USERNAME]
 - Append the public key to the `~/.ssh/authorized_keys` file of any Linux machine we want to SSH to, e.g.,
 ```{bash}
 #| eval: false
-ssh-copy-id -i ~/.ssh/[KEY_FILENAME] [USERNAME]@server.ucla-biostat-203b.com
+ssh-copy-id -i ~/.ssh/[KEY_FILENAME] [USERNAME]@[IP_ADDRESS]
 ```
 Make sure the permission of the `authorized_keys` file is `600 (-rw-------)`.
 
 - Test your new key.
 ```{bash}
 #| eval: false
-ssh -i ~/.ssh/[KEY_FILENAME] [USERNAME]@server.ucla-biostat-203b.com
+ssh -i ~/.ssh/[KEY_FILENAME] [USERNAME]@[IP_ADDRESS]
 ```
 
 - From now on, you don't need password each time you connect from your machine to the teaching server.
@@ -625,16 +640,16 @@ ssh -i ~/.ssh/[KEY_FILENAME] [USERNAME]@server.ucla-biostat-203b.com
 ### Transfer files between machines
 
 - `scp` securely transfers files between machines using SSH.
-    ```{bash}
-    #| eval: false
-    ## copy file from local to remote
-    scp [LOCALFILE] [USERNAME]@server.ucla-biostat-203b.com:/[PATH_TO_FOLDER]
-    ```
-    ```{bash}
-    #| eval: false
-    ## copy file from remote to local
-    scp [USERNAME]@server.ucla-biostat-203b.com:/[PATH_TO_FILE] [PATH_TO_LOCAL_FOLDER]
-    ```
+```{bash}
+#| eval: false
+## copy file from local to remote
+scp [LOCALFILE] [USERNAME]@[IP_ADDRESS]:/[PATH_TO_FOLDER]
+```
+```{bash}
+#| eval: false
+## copy file from remote to local
+scp [USERNAME]@[IP_ADDRESS]:/[PATH_TO_FILE] [PATH_TO_LOCAL_FOLDER]
+```
 
 - `sftp` is FTP via SSH.
 
