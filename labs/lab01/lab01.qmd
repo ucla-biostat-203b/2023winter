@@ -223,7 +223,7 @@ Much of homework and in class examples are demonstrated on the MIMIC-IV v1.0 dat
 #| eval: false
 ln -s /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic
 ```
-Your homework solution should always reading data from `~/mimic`. This is critical for Tomoki and me to reproduce your homework.
+Your homework solution should always read data from `~/mimic`. This is critical for Tomoki and me to reproduce your homework.
 ```{bash}
 ls ~/mimic
 ```
