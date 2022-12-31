@@ -20,7 +20,7 @@ Office hours: Tue, Thu 5pm-6pm @ Zoom <https://ucla.zoom.us/j/97364661679> and C
 
 ## Course Reader
 
-Tomoki Okuno <tomokiokuno0528@ucla.edu> assists with grading.   
+Tomoki Okuno <tomokiokuno0528@ucla.edu>.  
 Office hours: Fri 5:30pm-6:30m @ Zoom <https://ucla.zoom.us/j/97364661679>   
 
 ## Course Description
@@ -55,7 +55,7 @@ There will be no midterm and final exams.
 
 ## Final Grade
 
-Grades will be based on the homework (70%) + class attendance and participation (30%). Auditors must earn a respectable D to gain recording of this course.
+Grades will be based on the homework (70%) + class attendance, pop quizzes, and participation (Slack, office hours) (30%). Auditors must earn a respectable D to gain recording of this course.
 
 ## UCLA ADA Policy 
 
