@@ -478,7 +478,7 @@ Source: [Editor War](http://en.wikipedia.org/wiki/Editor_war) on Wikipedia.
 
 - Statisticians/data scientists write a lot of code. Critical to adopt a good IDE that goes beyond code editing: syntax highlighting, executing code within editor, debugging, profiling, version control, etc.
 
-- **RStudio**, Eclipse, Emacs, Matlab, Visual Studio, etc.
+- **RStudio**, Eclipse, Emacs, Matlab, Visual Studio, **VS Code**, etc.
 
 ## Processes
 
@@ -549,7 +549,7 @@ top
 
 SSH (secure shell) is the dominant cryptographic network protocol for secure network connection via an insecure network.
 
-- On Linux or Mac terminal, access a Linux machine by
+- On Linux or Mac Terminal, access a Linux machine by
 ```{{bash}}
 #| eval: false
 ssh [USERNAME]@[IP_ADDRESS]
@@ -560,7 +560,7 @@ Replace above `[USERNAME]` by your account user name on the Linux machine and `[
 ssh huazhou@hoffman2.idre.ucla.edu
 ```
 
-- For Windows users, there are at least three ways: (1) (highly recommended) [Git Bash](https://git-scm.com/download/win) which is included in Git for Windows, (2) (not recommended) [PuTTY](http://www.putty.org) program (free), or (3) (may be an overkill for this class)  use WSL for Windows to install a full fledged Linux system within Windows.
+- For Windows users, there are at least three ways: (1) (recommended) [Git Bash](https://git-scm.com/download/win) which is included in Git for Windows, (2) (not recommended) [PuTTY](http://www.putty.org) program (free), or (3) (highly recommended)  use WSL for Windows to install a full fledged Linux system within Windows.
 
 ### Advantages of keys over password
 
@@ -586,7 +586,7 @@ ssh huazhou@hoffman2.idre.ucla.edu
 
 - _Public key_. Put on the machine(s) you want to log in.
 
-- _Private key_. Put on your own computer. Consider this as the actual key in your pocket; **never give private key to others**. For fun: 
+- _Private key_. Put on your own computer. Consider this as the actual key in your pocket; **never give private keys to others**.  
 
 {{< video https://www.youtube.com/embed/S8K464ImU0c >}}
 
@@ -601,6 +601,8 @@ ssh huazhou@hoffman2.idre.ucla.edu
 #| eval: false
 ssh-keygen -t rsa -f ~/.ssh/[KEY_FILENAME] -C [USERNAME]
 ```   
+
+-  
     - `[KEY_FILENAME]` is the name that you want to use for your SSH key files. For example, a filename of `id_rsa` generates a private key file named `id_rsa` and a public key file named `id_rsa.pub`.  
     
     - `[USERNAME]` is the user for whom you will apply this SSH key.   
@@ -611,11 +613,12 @@ ssh-keygen -t rsa -f ~/.ssh/[KEY_FILENAME] -C [USERNAME]
     - The permission for the `~/.ssh` folder should be `700 (drwx------)`.
     - The permission of the private key `~/.ssh/id_rsa` should be `600 (-rw-------)`.
     - The permission of the public key `~/.ssh/id_rsa.pub` should be `644 (-rw-r--r--)`.
-    ```{bash, eval=FALSE}
-    chmod 700 ~/.ssh
-    chmod 600 ~/.ssh/[KEY_FILENAME]
-    chmod 644 ~/.ssh/[KEY_FILENAME].pub
-    ```
+```{bash}
+#| eval: false
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/[KEY_FILENAME]
+chmod 644 ~/.ssh/[KEY_FILENAME].pub
+```
     Note Windows is different, it doesn't allow change of permissions.
 
 - Append the public key to the `~/.ssh/authorized_keys` file of any Linux machine we want to SSH to, e.g.,
