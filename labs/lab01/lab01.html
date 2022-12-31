@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
+<meta name="dcterms.date" content="2022-12-30">
+
+<title>Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="lab01_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab01_files/libs/quarto-html/quarto.js"></script>
+<script src="lab01_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab01_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab01_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab01_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab01_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab01_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab01_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab01_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#r-quarto-and-rstudio" id="toc-r-quarto-and-rstudio" class="nav-link active" data-scroll-target="#r-quarto-and-rstudio"><span class="toc-section-number">1</span>  R, Quarto, and RStudio</a></li>
+  <li><a href="#terminal-and-bash-shell" id="toc-terminal-and-bash-shell" class="nav-link" data-scroll-target="#terminal-and-bash-shell"><span class="toc-section-number">2</span>  Terminal and Bash shell</a></li>
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github"><span class="toc-section-number">3</span>  Git and GitHub</a>
+  <ul>
+  <li><a href="#git-clone-and-git-pull-course-materials" id="toc-git-clone-and-git-pull-course-materials" class="nav-link" data-scroll-target="#git-clone-and-git-pull-course-materials"><span class="toc-section-number">3.1</span>  <code>git clone</code> and <code>git pull</code> course materials</a></li>
+  <li><a href="#set-up-github-repo-for-203b-homework" id="toc-set-up-github-repo-for-203b-homework" class="nav-link" data-scroll-target="#set-up-github-repo-for-203b-homework"><span class="toc-section-number">3.2</span>  Set up GitHub repo for 203B homework</a></li>
+  </ul></li>
+  <li><a href="#ssh-and-keys" id="toc-ssh-and-keys" class="nav-link" data-scroll-target="#ssh-and-keys"><span class="toc-section-number">4</span>  SSH and keys</a>
+  <ul>
+  <li><a href="#ssh-client" id="toc-ssh-client" class="nav-link" data-scroll-target="#ssh-client"><span class="toc-section-number">4.1</span>  SSH client</a></li>
+  <li><a href="#ssh-keys" id="toc-ssh-keys" class="nav-link" data-scroll-target="#ssh-keys"><span class="toc-section-number">4.2</span>  SSH keys</a></li>
+  </ul></li>
+  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker"><span class="toc-section-number">5</span>  Docker</a></li>
+  <li><a href="#mimic" id="toc-mimic" class="nav-link" data-scroll-target="#mimic"><span class="toc-section-number">6</span>  MIMIC</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC</h1>
+<p class="subtitle lead">Biostat 203B</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Hua Zhou @ UCLA </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 30, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This tutorial is for Mac users. It goes through the process of installing the software environment (R, Quarto, RStudio, Git, SSH, Docker) for reproducing 203B course materials and working on 203B homework.</p>
+<p>For Windows users, please first read the <a href="https://ucla-biostat-203b.github.io/2023winter/labs/lab01/lab01_windows.html">tutorial</a> to install <code>Git for Windows</code>, which ships with <code>Git Bash</code>. Then most bash commands in this tutorial will work in <code>Git Bash</code>.</p>
+<section id="r-quarto-and-rstudio" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> R, Quarto, and RStudio</h1>
+<ul>
+<li>Download and install R v4.2.2 or later <a href="https://cran.rstudio.com" class="uri">https://cran.rstudio.com</a>.</li>
+</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Mac users be aware that <code>R-x.x.x-arm64.pkg</code> is for Apple silicon CPUs (M1/M2) and <code>R-x.x.x.pkg</code> is for Intel CPUs.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Windows users also need to install the Rtools.</p>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Download and install Quarto CLI v1.2.280 or later <a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a>.</p></li>
+<li><p>Download and install RStudio Desktop v2022.12 or later <a href="https://rstudio.com/products/rstudio/#Desktop" class="uri">https://rstudio.com/products/rstudio/#Desktop</a></p></li>
+</ul>
+</section>
+<section id="terminal-and-bash-shell" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Terminal and Bash shell</h1>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows Git Bash</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Windows WSL</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<ul>
+<li><p>Open the <code>Terminal</code> app. You can find <code>Terminal</code> from <code>LaunchPad</code> -&gt; <code>Other</code>, or from <code>Spotlight Search</code> (type Terminal). For convenience, you can pin the Terminal program to the Dock.</p></li>
+<li><p>Check that current shell is Bash</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>If necessary, change default shell to Bash by following command in Terminal. Then close the Terminal window and reopen it.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> /bin/bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ul>
+<li><p>Download and install <a href="https://gitforwindows.org/"><code>Git for Windows</code></a> v2.39 or later. Accept the default settings during the installation process.</p></li>
+<li><p><code>Git Bash</code> program is available as a component of <code>Git for Windows</code>. It provides a basic Bash shell and packages many commonly used Linux programs.</p></li>
+<li><p>Instruct RStudio to use <code>Git Bash</code> as terminal: Tools -&gt; Global Options… -&gt; Terminal -&gt; New terminals open with -&gt; Git Bash.</p></li>
+</ul>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>The WSL (Windows Subsystem for Linux) is a more complete Linux solution for Windows users.</p>
+<ul>
+<li><p>Install WSL following <a href="https://learn.microsoft.com/en-us/windows/wsl/install">instructions</a>.</p></li>
+<li><p>A standalone Ubuntu system is available after WSL installation.</p></li>
+<li><p>Instruct RStudio to use WSL as terminal: Tools -&gt; Global Options… -&gt; Terminal -&gt; New terminals open with -&gt; WSL.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="git-and-github" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Git and GitHub</h1>
+<ul>
+<li>Check whether <code>git</code> command is available in Terminal.</li>
+</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>If <code>git</code> is not available, follow the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">instructions</a> <code>Installing on macOS</code> section to install it.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><code>git</code> is included in either <code>Git Bash</code> or WSL Ubuntu.</p>
+</div>
+</div>
+</div>
+<section id="git-clone-and-git-pull-course-materials" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="git-clone-and-git-pull-course-materials"><span class="header-section-number">3.1</span> <code>git clone</code> and <code>git pull</code> course materials</h2>
+<ul>
+<li>In Terminal (Mac Terminal, Git Bash, or WSL), you can <code>git clone</code> a copy of course materials by</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucla-biostat-203b/2023winter.git ~/203b-lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This command clones the GitHub repository to a folder called <code>203b-lecture</code> under your home directory. You can clone multiple copies to different locations on the same machine if you want. Since this GitHub repository is frequently updated, you can sync the local copy on your computer with the repository on GitHub by running</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>within the <code>203b-lecture</code> folder.</p>
+<ul>
+<li><p>Navigate to the <code>203b-lecture</code> folder, double click the <code>2023winter.Rproj</code> file to open the project in RStudio. Within RStudio, you can navigate to the <code>slides</code> folder to open and render <code>qmd</code> files.</p>
+<p>You can also perform the majority of daily Git operations within RStudio.</p></li>
+</ul>
+</section>
+<section id="set-up-github-repo-for-203b-homework" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="set-up-github-repo-for-203b-homework"><span class="header-section-number">3.2</span> Set up GitHub repo for 203B homework</h2>
+<ul>
+<li><p>Apply for the <a href="https://education.github.com/pack">Student Developer Pack</a> at GitHub using your UCLA email. You’ll get GitHub Pro account with unlimited public and private repositories for free.</p></li>
+<li><p>On <a href="https://github.com/" class="uri">https://github.com/</a>, create a <strong>private</strong> repository <code>biostat-203b-2023-winter</code> and add <code>Hua-Zhou</code> and <code>tomokiokuno0528</code> as your collaborators with write permission. This repository is for submitting your 203B homework.</p></li>
+<li><p>In Terminal (Mac Terminal, Git Bash, or WSL), you can run</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone [SSH_ADDRESS] ~/203b-hw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>to clone your homework repository to a folder called <code>203b-hw</code> under your home directory on your computer. <code>[SSH_ADDRESS]</code> is obtained by clicking the menu <code>&lt;&gt; Code</code> -&gt; <code>SSH</code> on the repository page on GitHub.</p>
+</section>
+</section>
+<section id="ssh-and-keys" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> SSH and keys</h1>
+<section id="ssh-client" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="ssh-client"><span class="header-section-number">4.1</span> SSH client</h2>
+<ul>
+<li><p>SSH client should be available in Terminal (Mac Terminal, Git Bash, or WSL) by default.</p></li>
+<li><p>In Terminal, the command to connect to a Linux machine is</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> [USERNAME]@[IP_ADDRESS]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Replace <code>[USERNAME]</code> in the command by your actual user name on the Linux machine you are connecting to. If you cannot connect, you may not have an account. For example, to connect to <strong>my</strong> account on the Hoffman2 cluster at UCLA</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> huazhou@hoffman2.idre.ucla.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ssh-keys" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="ssh-keys"><span class="header-section-number">4.2</span> SSH keys</h2>
+<ul>
+<li>First check whether you already have keys on your local machine. If you don’t have <code>~/.ssh</code> folder, that means you have never used SSH before.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> ~/.ssh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>If no SSH keys yet, generate a pair of RSA keys
+<ul>
+<li>Method 1: Generate keys on Terminal, following the <a href="https://ucla-biostat-203b.github.io/2023winter/slides/02-linux/linux.html#steps-to-generate-keys">instructions in lecture notes</a>.<br>
+</li>
+<li>Method 2: Use RStudio to generate keys. <code>Tools</code> -&gt; <code>Global Options...</code> -&gt; <code>Git/SVN</code>. Using either method, make sure keys are in the default location <code>~/.ssh/</code></li>
+</ul></li>
+<li>Make sure the permission for the key files are correct.</li>
+</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Windows Git Bash</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Windows WSL</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<ul>
+<li><p>The permission for the <code>~/.ssh</code> folder should be <code>700 (drwx------)</code>.</p></li>
+<li><p>The permission for the private key <code>~/.ssh/id_rsa</code> should be <code>600 (-rw-------)</code>.</p></li>
+<li><p>The permission for the public key <code>~/.ssh/id_rsa.pub</code> should be <code>644 (-rw-r--r--)</code>.</p></li>
+</ul>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<ul>
+<li><p>The permission for the <code>~/.ssh</code> folder can be <code>755 (drwxr-xr-x)</code>.</p></li>
+<li><p>The permission for the private key <code>~/.ssh/id_rsa</code> can be <code>644 (-rw-r--r--)</code>.</p></li>
+<li><p>The permission for the public key <code>~/.ssh/id_rsa.pub</code> can be <code>644 (-rw-r--r--)</code>.</p></li>
+</ul>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<ul>
+<li><p>The permission for the <code>~/.ssh</code> folder should be <code>700 (drwx------)</code>.</p></li>
+<li><p>The permission for the private key <code>~/.ssh/id_rsa</code> should be <code>600 (-rw-------)</code>.</p></li>
+<li><p>The permission for the public key <code>~/.ssh/id_rsa.pub</code> should be <code>644 (-rw-r--r--)</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Upload the public SSH key to GitHub: Click the user Avatar on top right corner -&gt; Settings -&gt; SSH and GPG keys -&gt; New SSH key.</p>
+<p>After setting up SSH key, you can <code>git push</code> your local commits to GitHub repo seamlessly without inputting passwords.</p></li>
+</ul>
+</section>
+</section>
+<section id="docker" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Docker</h1>
+<p>A customized Docker container provides a self-contained Linux Ubuntu environment for reproducing materials in this course.</p>
+<ul>
+<li><p>Download and install the Docker Desktop <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a>.</p></li>
+<li><p>Open Terminal (Mac Terminal, Git Bash, or WSL) at the <code>/Docker</code> folder of course material. Type</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build . <span class="at">-t</span> huazhou/ucla_biostat_203b_2023w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>to build the Docker image for this class. This takes up to 10 minutes depending on internet connection.</p>
+<ul>
+<li><p>Modify the <code>volumes</code> section of the <code>docker-compose.yml</code> file to map the <code>203b-lecture</code>, <code>203-hw</code>, and <code>mimic</code> folders on your computer to the home directory in the Ubuntu system in Docker container.</p></li>
+<li><p>Type</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>to run the Docker container.</p>
+<ul>
+<li>Point your browser to <code>localhost:8787</code> to connect to the RStudio Server running on the Ubuntu system.</li>
+</ul>
+</section>
+<section id="mimic" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> MIMIC</h1>
+<p>Much of homework and in class examples are demonstrated on the MIMIC-IV v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB, need UCLA log in), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Your homework solution should always reading data from <code>~/mimic</code>. This is critical for Tomoki and me to reproduce your homework.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>LICENSE.txt
+MIMIC-reduce-chartevents
+SHA256SUMS.txt
+core
+hosp
+icu
+index.html</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
