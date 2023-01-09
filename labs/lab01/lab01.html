@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-30">
+<meta name="dcterms.date" content="2023-01-09">
 
 <title>Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC</title>
 <style>
@@ -122,7 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ssh-client" id="toc-ssh-client" class="nav-link" data-scroll-target="#ssh-client"><span class="toc-section-number">4.1</span>  SSH client</a></li>
   <li><a href="#ssh-keys" id="toc-ssh-keys" class="nav-link" data-scroll-target="#ssh-keys"><span class="toc-section-number">4.2</span>  SSH keys</a></li>
   </ul></li>
-  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker"><span class="toc-section-number">5</span>  Docker</a></li>
+  <li><a href="#docker-optional" id="toc-docker-optional" class="nav-link" data-scroll-target="#docker-optional"><span class="toc-section-number">5</span>  Docker (optional)</a></li>
   <li><a href="#mimic" id="toc-mimic" class="nav-link" data-scroll-target="#mimic"><span class="toc-section-number">6</span>  MIMIC</a></li>
   </ul>
 </nav>
@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 30, 2022</p>
+      <p class="date">January 9, 2023</p>
     </div>
   </div>
   
@@ -161,8 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This tutorial is for Mac users. It goes through the process of installing the software environment (R, Quarto, RStudio, Git, SSH, Docker) for reproducing 203B course materials and working on 203B homework.</p>
-<p>For Windows users, please first read the <a href="https://ucla-biostat-203b.github.io/2023winter/labs/lab01/lab01_windows.html">tutorial</a> to install <code>Git for Windows</code>, which ships with <code>Git Bash</code>. Then most bash commands in this tutorial will work in <code>Git Bash</code>.</p>
+<p>This tutorial goes through the process of installing the software environment (R, Quarto, RStudio, Git, SSH, Docker) for reproducing 203B course materials and working on 203B homework.</p>
 <section id="r-quarto-and-rstudio" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> R, Quarto, and RStudio</h1>
 <ul>
@@ -172,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Mac users be aware that <code>R-x.x.x-arm64.pkg</code> is for Apple silicon CPUs (M1/M2) and <code>R-x.x.x.pkg</code> is for Intel CPUs.</p>
+<p>Mac users be aware that <code>R-x.x.x-arm64.pkg</code> is for Apple Silicon CPUs (M1/M2) and <code>R-x.x.x.pkg</code> is for Intel CPUs.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Windows users also need to install the Rtools.</p>
@@ -198,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>If necessary, change default shell to Bash by following command in Terminal. Then close the Terminal window and reopen it.</li>
+<li>If necessary, change default shell to Bash by the following command in Terminal. Then close the Terminal window and reopen it.</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chsh</span> <span class="at">-s</span> /bin/bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -241,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="git-clone-and-git-pull-course-materials" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="git-clone-and-git-pull-course-materials"><span class="header-section-number">3.1</span> <code>git clone</code> and <code>git pull</code> course materials</h2>
 <ul>
-<li>In Terminal (Mac Terminal, Git Bash, or WSL), you can <code>git clone</code> a copy of course materials by</li>
+<li>In Terminal (Mac Terminal, Windows Git Bash, or Windows WSL), you can <code>git clone</code> a copy of course materials by</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucla-biostat-203b/2023winter.git ~/203b-lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -261,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Apply for the <a href="https://education.github.com/pack">Student Developer Pack</a> at GitHub using your UCLA email. You’ll get GitHub Pro account with unlimited public and private repositories for free.</p></li>
 <li><p>On <a href="https://github.com/" class="uri">https://github.com/</a>, create a <strong>private</strong> repository <code>biostat-203b-2023-winter</code> and add <code>Hua-Zhou</code> and <code>tomokiokuno0528</code> as your collaborators with write permission. This repository is for submitting your 203B homework.</p></li>
-<li><p>In Terminal (Mac Terminal, Git Bash, or WSL), you can run</p></li>
+<li><p>In Terminal (Mac Terminal, Windows Git Bash, or Windows WSL), you can run</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone [SSH_ADDRESS] ~/203b-hw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -274,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="ssh-client" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="ssh-client"><span class="header-section-number">4.1</span> SSH client</h2>
 <ul>
-<li><p>SSH client should be available in Terminal (Mac Terminal, Git Bash, or WSL) by default.</p></li>
+<li><p>SSH client should be available in Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) by default.</p></li>
 <li><p>In Terminal, the command to connect to a Linux machine is</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -294,13 +293,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> ~/.ssh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>If no SSH keys yet, generate a pair of RSA keys
+<li><p>If no SSH keys yet, generate a pair of RSA keys</p>
 <ul>
 <li>Method 1: Generate keys on Terminal, following the <a href="https://ucla-biostat-203b.github.io/2023winter/slides/02-linux/linux.html#steps-to-generate-keys">instructions in lecture notes</a>.<br>
 </li>
-<li>Method 2: Use RStudio to generate keys. <code>Tools</code> -&gt; <code>Global Options...</code> -&gt; <code>Git/SVN</code>. Using either method, make sure keys are in the default location <code>~/.ssh/</code></li>
-</ul></li>
-<li>Make sure the permission for the key files are correct.</li>
+<li>Method 2: Use RStudio to generate keys. <code>Tools</code> -&gt; <code>Global Options...</code> -&gt; <code>Git/SVN</code>.</li>
+</ul>
+<p>Using either method, make sure keys are in the default location <code>~/.ssh/</code></p></li>
+<li><p>Make sure the permission for the key files are correct.</p></li>
 </ul>
 <div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Windows Git Bash</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Windows WSL</a></li></ul>
@@ -334,12 +334,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </section>
 </section>
-<section id="docker" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Docker</h1>
+<section id="docker-optional" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Docker (optional)</h1>
 <p>A customized Docker container provides a self-contained Linux Ubuntu environment for reproducing materials in this course.</p>
 <ul>
 <li><p>Download and install the Docker Desktop <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a>.</p></li>
-<li><p>Open Terminal (Mac Terminal, Git Bash, or WSL) at the <code>/Docker</code> folder of course material. Type</p></li>
+<li><p>Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the <code>/Docker</code> folder of course material. Type</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build . <span class="at">-t</span> huazhou/ucla_biostat_203b_2023w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -359,7 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="mimic" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> MIMIC</h1>
-<p>Much of homework and in class examples are demonstrated on the MIMIC-IV v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB, need UCLA log in), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
+<p>Much of homework and in class examples are demonstrated on the <a href="https://physionet.org/content/mimiciv/1.0/">MIMIC-IV</a> v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB, need UCLA log in), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
