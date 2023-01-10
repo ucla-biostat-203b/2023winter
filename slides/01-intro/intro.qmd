@@ -74,15 +74,37 @@ A position posted by Genetech.
 
 ## Course description
 
--   This course introduces some computing skills and software tools for handling potentially big public health data in a reproducible way.
+- This course introduces some computing skills and software tools for handling potentially big public health data in a reproducible way.
 
--   Read [syllabus](https://ucla-biostat-203b.github.io/2023winter/syllabus/syllabus.html) and [schedule](https://ucla-biostat-203b.github.io/2023winter/schedule/schedule.html) for a tentative list of topics and course logistics.
+- This is _not_ a machine learning course. 
+
+- Read [syllabus](https://ucla-biostat-203b.github.io/2023winter/syllabus/syllabus.html) and [schedule](https://ucla-biostat-203b.github.io/2023winter/schedule/schedule.html) for a tentative list of topics and course logistics.
 
 ## Why R?
 
 <p align="center">
 <img src="./ms-employment-software.png" width="500"/>
 </p>
+
+If time permits, I'll add some Python code in the lectures.
+
+## What I expect from you
+
+- You are curious and are excited about "figuring stuff out".
+
+- You are proficient in coding and debugging (or are ready to work to get there).
+
+- You are willing to ask questions. 
+
+## What you can expect from me
+
+- I value your learning experience and process. 
+
+- I'm flexible with respect to the topics we cover. 
+
+- I'm happy to share my professional connections.
+
+- I'll try my best to be responsive in class, in office hours, and on Slack.
 
 ## More (free) UCLA resources for learning data science
 
@@ -91,4 +113,3 @@ A position posted by Genetech.
 -   QCBio workshops: <https://qcb.ucla.edu/collaboratory/workshops/>
 
 ## References
-

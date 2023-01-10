@@ -690,17 +690,18 @@ source("script.R")
 
 ### Batch mode
 
-- Demo script [`meanEst.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/meanEst.R) implements an (terrible) estimator of mean
+- Demo script [`meanEst.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/02-linux/meanEst.R) implements an (terrible) estimator of mean
 $$
   {\widehat \mu}_n = \frac{\sum_{i=1}^n x_i 1_{i \text{ is prime}}}{\sum_{i=1}^n 1_{i \text{ is prime}}}.
 $$
 ```{bash}
-#| eval: false
+#| eval: true
 cat meanEst.R
 ```
 
 - To run your R code non-interactively aka in batch mode, we have at least two options:
 ```{bash}
+#! eval: false
 # default output to meanEst.Rout
 R CMD BATCH meanEst.R
 ```
@@ -758,7 +759,7 @@ eval(parse(text = "x=3"))
 print(x)
 ```
 
-- [`runSim.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/runSim.R) has components: (1) **command argument parser**, (2) method implementation, (3) data generator with unspecified parameter `n`, and (4) estimation based on generated data.
+- [`runSim.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/02-linux/runSim.R) has components: (1) **command argument parser**, (2) method implementation, (3) data generator with unspecified parameter `n`, and (4) estimation based on generated data.
 ```{bash}
 #| echo: false
 cat runSim.R
@@ -766,6 +767,7 @@ cat runSim.R
 
 - Call `runSim.R` with sample size `n=100`:
 ```{bash}
+#| eval: false
 R CMD BATCH '--args n=100' runSim.R
 ```
 or
@@ -807,7 +809,7 @@ The `&` at the end of the command instructs Linux to run this command in backgro
 
 ### Use R to call R
 
-R in conjuction with `nohup` (or `screen`) can be used to orchestrate a large simulation study.
+R in conjunction with `nohup` (or `screen`) can be used to orchestrate a large simulation study.
 
 - It can be more elegant, transparent, and robust to parallelize jobs corresponding to different scenarios (e.g., different generative models) outside of the code used to do statistical computation.
 
@@ -816,7 +818,7 @@ R in conjuction with `nohup` (or `screen`) can be used to orchestrate a large si
 - Python in many ways makes a better _glue_.
 
 - Suppose we have 
-    - [`runSim.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/runSim.R) which runs a simulation based on command line argument `n`.  
+    - [`runSim.R`](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/02-linux/runSim.R) which runs a simulation based on command line argument `n`.  
     - A large collection of `n` values that we want to use in our simulation study.  
     - Access to a server with 128 cores.  
 How to parallelize the job?    
@@ -825,7 +827,7 @@ How to parallelize the job?
 
 - Option 2 (smarter): automate calls using R and `nohup`. 
 
-- Let's demonstrate using the script [autoSim.R](https://raw.githubusercontent.com/ucla-biostat-203b/2022winter/main/slides/02-linux/autoSim.R)
+- Let's demonstrate using the script [autoSim.R](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/02-linux/autoSim.R)
 ```{bash}
 cat autoSim.R
 ```
