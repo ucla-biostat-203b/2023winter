@@ -17,6 +17,9 @@ Slack channel: <https://uclabiostat20-upm3051.slack.com>
 Invitation link: <https://join.slack.com/t/uclabiostat20-upm3051/shared_invite/zt-1lbqugiva-cM~EbB3wV5~5F8lgazK3Tg>
 
 Recommended readings:  
+
+* [_50 years of data sicence_](https://ucla-biostat-257.github.io/2022spring/readings/Donoho15FiftyYearsDataScience.pdf) by David Donoho (2015).  
+
 * _Reproducible Research with R and RStudio_ (3rd ed) by Christopher Gandrud: [Amazon](https://www.amazon.com/Reproducible-Research-RStudio-Chapman-Hall-dp-0367144026/dp/0367144026/ref=dp_ob_title_bk), [GitHub repo](https://github.com/christophergandrud/Rep-Res-Book).  
 * [_Happy Git with R_](http://happygitwithr.com) by Jenny Bryan.  
 * [_Quarto documentation_](https://quarto.org/docs/guide/).  
