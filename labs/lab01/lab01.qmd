@@ -1,5 +1,5 @@
 ---
-title: "Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC"
+title: "Lab 1: R, RStudio, Quarto, Git, SSH, Keys, and MIMIC"
 subtitle: Biostat 203B
 author: "Dr. Hua Zhou @ UCLA"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -67,15 +67,23 @@ chsh -s /bin/bash
 
 - Instruct RStudio to use `Git Bash` as terminal: Tools -> Global Options... -> Terminal -> New terminals open with -> Git Bash.
 
-## Windows WSL
+- Note that `Git Bash` is not a Linux system. It's a Windows program that emulates a Bash shell, but lacks many Linux commands. `Git Bash` does not have a separate Linux file system. It piggybacks on the Windows file system, thus cannot do Linux-style file permission control. The user home of `Git Bash` is same as the user home on Windows, e.g., `/c/Users/[USERNAME]`.
+
+## Windows WSL (recommended)
 
 The WSL (Windows Subsystem for Linux) is a more complete Linux solution for Windows users. 
 
 - Install WSL following [instructions](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-- A standalone Ubuntu system is available after WSL installation.
+- A standalone Ubuntu system is available after WSL installation. Look for icon ![Ubuntu](https://assets.ubuntu.com/v1/ce518a18-CoF-2022_solid+O.svg){width=25}.
 
 - Instruct RStudio to use WSL as terminal: Tools -> Global Options... -> Terminal -> New terminals open with -> WSL.
+
+- WSL is full Linux system. It has its own Linux file system, separate from the Windows file system. The user home is at `/home/[USERNAME]` within the Linux file system. 
+
+    - Within WSL, it is easy to access the files in Windows file system, which is mounted at `/mnt/c` on WSL. For the example, the file `/c/Users/[USERNAME]/file` is available within WSL at `/mnt/c/Users/[USERNAME]/file`. 
+    
+    - Within Windows, it is easy to access the files in the WSL file system from the Linux tab in File Explorer. 
 
 :::
 
@@ -215,7 +223,7 @@ to run the Docker container.
 
 - Point your browser to `localhost:8787` to connect to the RStudio Server running on the Ubuntu system.
 
-# MIMIC
+# MIMIC Data
 
 Much of homework and in class examples are demonstrated on the [MIMIC-IV](https://physionet.org/content/mimiciv/1.0/) v1.0 data set. Download the data to your computer from  [here](https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9) (7.76 GB, need UCLA log in), and make it available at `~/mimic`. For example, you can create a symbolic link by
 ```{bash}

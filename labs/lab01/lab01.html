@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-01-09">
+<meta name="dcterms.date" content="2023-01-11">
 
-<title>Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC</title>
+<title>Lab 1: R, RStudio, Quarto, Git, SSH, Keys, and MIMIC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -123,7 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#ssh-keys" id="toc-ssh-keys" class="nav-link" data-scroll-target="#ssh-keys"><span class="toc-section-number">4.2</span>  SSH keys</a></li>
   </ul></li>
   <li><a href="#docker-optional" id="toc-docker-optional" class="nav-link" data-scroll-target="#docker-optional"><span class="toc-section-number">5</span>  Docker (optional)</a></li>
-  <li><a href="#mimic" id="toc-mimic" class="nav-link" data-scroll-target="#mimic"><span class="toc-section-number">6</span>  MIMIC</a></li>
+  <li><a href="#mimic-data" id="toc-mimic-data" class="nav-link" data-scroll-target="#mimic-data"><span class="toc-section-number">6</span>  MIMIC Data</a></li>
   </ul>
 </nav>
 </div>
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 1: R, RStudio, Git, SSH, Keys, and MIMIC</h1>
+<h1 class="title">Lab 1: R, RStudio, Quarto, Git, SSH, Keys, and MIMIC</h1>
 <p class="subtitle lead">Biostat 203B</p>
 </div>
 
@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2023</p>
+      <p class="date">January 11, 2023</p>
     </div>
   </div>
   
@@ -186,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="terminal-and-bash-shell" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Terminal and Bash shell</h1>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows Git Bash</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Windows WSL</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows Git Bash</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Windows WSL (recommended)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <ul>
@@ -208,14 +208,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Download and install <a href="https://gitforwindows.org/"><code>Git for Windows</code></a> v2.39 or later. Accept the default settings during the installation process.</p></li>
 <li><p><code>Git Bash</code> program is available as a component of <code>Git for Windows</code>. It provides a basic Bash shell and packages many commonly used Linux programs.</p></li>
 <li><p>Instruct RStudio to use <code>Git Bash</code> as terminal: Tools -&gt; Global Options… -&gt; Terminal -&gt; New terminals open with -&gt; Git Bash.</p></li>
+<li><p>Note that <code>Git Bash</code> is not a Linux system. It’s a Windows program that emulates a Bash shell, but lacks many Linux commands. <code>Git Bash</code> does not have a separate Linux file system. It piggybacks on the Windows file system, thus cannot do Linux-style file permission control. The user home of <code>Git Bash</code> is same as the user home on Windows, e.g., <code>/c/Users/[USERNAME]</code>.</p></li>
 </ul>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <p>The WSL (Windows Subsystem for Linux) is a more complete Linux solution for Windows users.</p>
 <ul>
 <li><p>Install WSL following <a href="https://learn.microsoft.com/en-us/windows/wsl/install">instructions</a>.</p></li>
-<li><p>A standalone Ubuntu system is available after WSL installation.</p></li>
+<li><p>A standalone Ubuntu system is available after WSL installation. Look for icon <img src="https://assets.ubuntu.com/v1/ce518a18-CoF-2022_solid+O.svg" class="img-fluid" width="25" alt="Ubuntu">.</p></li>
 <li><p>Instruct RStudio to use WSL as terminal: Tools -&gt; Global Options… -&gt; Terminal -&gt; New terminals open with -&gt; WSL.</p></li>
+<li><p>WSL is full Linux system. It has its own Linux file system, separate from the Windows file system. The user home is at <code>/home/[USERNAME]</code> within the Linux file system.</p>
+<ul>
+<li><p>Within WSL, it is easy to access the files in Windows file system, which is mounted at <code>/mnt/c</code> on WSL. For the example, the file <code>/c/Users/[USERNAME]/file</code> is available within WSL at <code>/mnt/c/Users/[USERNAME]/file</code>.</p></li>
+<li><p>Within Windows, it is easy to access the files in the WSL file system from the Linux tab in File Explorer.</p></li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -357,8 +363,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Point your browser to <code>localhost:8787</code> to connect to the RStudio Server running on the Ubuntu system.</li>
 </ul>
 </section>
-<section id="mimic" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> MIMIC</h1>
+<section id="mimic-data" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> MIMIC Data</h1>
 <p>Much of homework and in class examples are demonstrated on the <a href="https://physionet.org/content/mimiciv/1.0/">MIMIC-IV</a> v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB, need UCLA log in), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
