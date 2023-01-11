@@ -1,7 +1,7 @@
 ---
 title: "Biostat 203B Homework 1"
-subtitle: Due Jan 20 @ 11:59PM
-author: Your Name
+subtitle: Due Jan 27 @ 11:59PM
+author: Your Name and UID
 format:
   html:
     theme: cosmo
@@ -34,9 +34,9 @@ sessionInfo()
 
 2. Create a **private** repository `biostat-203b-2023-winter` and add `Hua-Zhou` and `tomokiokuno0528` as your collaborators with write permission.
 
-3. Top directories of the repository should be `hw1`, `hw2`, ... Maintain two branches `main` and `develop`. The `develop` branch will be your main playground, the place where you develop solution (code) to homework problems and write up report. The `main` branch will be your presentation area. Submit your homework files (Quarto file `qmd`, `html` file converted by Quarto, all code and extra data sets to reproduce results) in `main` branch.
+3. Top directories of the repository should be `hw1`, `hw2`, ... Maintain two branches `master` and `develop`. The `develop` branch will be your main playground, the place where you develop solution (code) to homework problems and write up report. The `master` branch will be your presentation area. Submit your homework files (Quarto file `qmd`, `html` file converted by Quarto, all code and extra data sets to reproduce results) in `main` branch.
 
-4. After each homework due date, course reader and instructor will check out your `main` branch for grading. Tag each of your homework submissions with tag names `hw1`, `hw2`, ... Tagging time will be used as your submission time. That means if you tag your `hw1` submission after deadline, penalty points will be deducted for late submission.
+4. After each homework due date, course reader and instructor will check out your `master` branch for grading. Tag each of your homework submissions with tag names `hw1`, `hw2`, ... Tagging time will be used as your submission time. That means if you tag your `hw1` submission after deadline, penalty points will be deducted for late submission.
 
 5. After this course, you can make this repository public and use it to demonstrate your skill sets on job market.
 
@@ -53,7 +53,7 @@ ls -l ~/mimic
 ```
 Please, do **not** put these data files into Git; they are big. Do **not** copy them into your directory. Do **not** decompress the gz data files. These create unnecessary big files on storage and are not big data friendly practices. Just read from the data folder `~/mimic` directly in following exercises. 
 
-    Use Bash commands to answer following questions.
+  Use Bash commands to answer following questions.
 
 2. Display the contents in the folders `core`, `hosp`, `icu`. Why are these data files distributed as `.csv.gz` files instead of `.csv` (comma separated values) files? Read the page <https://mimic.mit.edu/docs/iv/> to understand what's in each folder.
 
@@ -109,7 +109,7 @@ echo 'hello, world' >> test2.txt
 # Usage: bash middle.sh filename end_line num_lines
 head -n "$2" "$1" | tail -n "$3"
 ```
-Using `chmod` make the file executable by the owner, and run 
+Using `chmod` to make the file executable by the owner, and run
 ```{bash}
 #| eval: false
 ./middle.sh pg42671.txt 20 5
