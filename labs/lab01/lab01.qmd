@@ -197,6 +197,34 @@ ls -al ~/.ssh
 
 - Upload the public SSH key to GitHub: Click the user Avatar on top right corner -> Settings -> SSH and GPG keys -> New SSH key. 
 
+In your local machine terminal, you may copy the public key to the clipboard by following command.
+
+::: {.panel-tabset}
+
+## Mac
+
+```{bash}
+#| eval: false
+pbcopy ~/.ssh/id_rsa.pub
+```
+
+## Windows
+
+```{bash}
+#| eval: false
+clip < ~/.ssh/id_rsa.pub
+```
+
+## Linux
+
+If the `xclip` and `xsel` are installed, then we can use
+```{bash}
+#| eval: false
+xclip -selection clipboard ~/.ssh/id_rsa.pub
+```
+
+:::
+
     After setting up SSH key, you can `git push` your local commits to GitHub repo seamlessly without inputting passwords. 
 
 # Docker (optional)
