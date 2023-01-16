@@ -116,7 +116,7 @@ Git is a **distributed** version control system:
 
     - Mac: follow instructions at <https://www.atlassian.com/git/tutorials/install-git>.
 
-    - Windows: [Git for Windows](https://gitforwindows.org) (GUI) aka Git Bash.
+    - Windows: [Git for Windows](https://gitforwindows.org) (GUI) aka `Git Bash` or `Windows WSL`.
 
 - RStudio supports Git.
     
