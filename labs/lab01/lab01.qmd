@@ -134,6 +134,8 @@ git clone [SSH_ADDRESS] ~/203b-hw
 ```
 to clone your homework repository to a folder called `203b-hw` under your home directory on your computer. `[SSH_ADDRESS]` is obtained by clicking the menu `<> Code` -> `SSH` on the repository page on GitHub.
 
+- Alternatively, you can also use RStudio to git clone: `File` -> `New Project...` -> `Version Control` -> `Git` -> input `Repository URL:`, `Project directory name:` (203b-hw).
+
 # SSH and keys
 
 ## SSH client
@@ -225,7 +227,9 @@ xclip -selection clipboard ~/.ssh/id_rsa.pub
 
 :::
 
-    After setting up SSH key, you can `git push` your local commits to GitHub repo seamlessly without inputting passwords. 
+- On local machine, instruct RStudio to use the public key just generated: `Tools` -> `Global Options...` -> `Git/SVN` -> `SSH key:`.
+
+- After setting up SSH key, you can `git push` your local commits to GitHub repo seamlessly without inputting passwords. 
 
 # Docker (optional)
 
@@ -233,27 +237,27 @@ A customized Docker container provides a self-contained Linux Ubuntu environment
 
 - Download and install the Docker Desktop <https://www.docker.com/products/docker-desktop/>.  
 
-- Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the `/Docker` folder of course material. Type
-```{bash}
-#| eval: false
-docker build . -t huazhou/ucla_biostat_203b_2023w
-```
-to build the Docker image for this class. This takes up to 10 minutes depending on internet connection. 
+- Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the `/Docker` folder of course material.
 
-- Modify the `volumes` section of the `docker-compose.yml` file to map the `203b-lecture`, `203-hw`, and `mimic` folders on your computer to the home directory in the Ubuntu system in Docker container.
-
-- Type
+- To run a Docker container, we first modify the `volumes` section of the `docker-compose.yml` file to map the `203b-lecture`, `203-hw`, and `mimic` folders on your computer to the home directory in the Ubuntu system in Docker container. Then type
 ```{bash}
 #| eval: false
 docker compose up
 ```
-to run the Docker container. 
+to run the Docker container. This can take up to 10 minutes depending on internet connection. 
 
 - Point your browser to `localhost:8787` to connect to the RStudio Server running on the Ubuntu system.
 
+- **Advanced:** Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the `/Docker` folder of course material. Modify the `Dockerfile` according to your needs. Type
+```{bash}
+#| eval: false
+docker build . -t huazhou/ucla_biostat_203b_2023w
+```
+to build the new Docker image. 
+
 # MIMIC Data
 
-Much of homework and in class examples are demonstrated on the [MIMIC-IV](https://physionet.org/content/mimiciv/1.0/) v1.0 data set. Download the data to your computer from  [here](https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9) (7.76 GB, need UCLA log in), and make it available at `~/mimic`. For example, you can create a symbolic link by
+Much of homework and in class examples are demonstrated on the [MIMIC-IV](https://physionet.org/content/mimiciv/1.0/) v1.0 data set. Download the data to your computer from [here](https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9) (7.76 GB), and make it available at `~/mimic`. For example, you can create a symbolic link by
 ```{bash}
 #| eval: false
 ln -s /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-01-12">
+<meta name="dcterms.date" content="2023-01-15">
 
 <title>Lab 1: R, RStudio, Quarto, Git, SSH, Keys, and MIMIC</title>
 <style>
@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 12, 2023</p>
+      <p class="date">January 15, 2023</p>
     </div>
   </div>
   
@@ -272,6 +272,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone [SSH_ADDRESS] ~/203b-hw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>to clone your homework repository to a folder called <code>203b-hw</code> under your home directory on your computer. <code>[SSH_ADDRESS]</code> is obtained by clicking the menu <code>&lt;&gt; Code</code> -&gt; <code>SSH</code> on the repository page on GitHub.</p>
+<ul>
+<li>Alternatively, you can also use RStudio to git clone: <code>File</code> -&gt; <code>New Project...</code> -&gt; <code>Version Control</code> -&gt; <code>Git</code> -&gt; input <code>Repository URL:</code>, <code>Project directory name:</code> (203b-hw).</li>
+</ul>
 </section>
 </section>
 <section id="ssh-and-keys" class="level1" data-number="4">
@@ -359,7 +362,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<pre><code>After setting up SSH key, you can `git push` your local commits to GitHub repo seamlessly without inputting passwords. </code></pre>
+<ul>
+<li><p>On local machine, instruct RStudio to use the public key just generated: <code>Tools</code> -&gt; <code>Global Options...</code> -&gt; <code>Git/SVN</code> -&gt; <code>SSH key:</code>.</p></li>
+<li><p>After setting up SSH key, you can <code>git push</code> your local commits to GitHub repo seamlessly without inputting passwords.</p></li>
+</ul>
 </section>
 </section>
 <section id="docker-optional" class="level1" data-number="5">
@@ -367,33 +373,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A customized Docker container provides a self-contained Linux Ubuntu environment for reproducing materials in this course.</p>
 <ul>
 <li><p>Download and install the Docker Desktop <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a>.</p></li>
-<li><p>Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the <code>/Docker</code> folder of course material. Type</p></li>
+<li><p>Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the <code>/Docker</code> folder of course material.</p></li>
+<li><p>To run a Docker container, we first modify the <code>volumes</code> section of the <code>docker-compose.yml</code> file to map the <code>203b-lecture</code>, <code>203-hw</code>, and <code>mimic</code> folders on your computer to the home directory in the Ubuntu system in Docker container. Then type</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>to run the Docker container. This can take up to 10 minutes depending on internet connection.</p>
+<ul>
+<li><p>Point your browser to <code>localhost:8787</code> to connect to the RStudio Server running on the Ubuntu system.</p></li>
+<li><p><strong>Advanced:</strong> Open Terminal (Mac Terminal, Windows Git Bash, or Windows WSL) at the <code>/Docker</code> folder of course material. Modify the <code>Dockerfile</code> according to your needs. Type</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build . <span class="at">-t</span> huazhou/ucla_biostat_203b_2023w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>to build the Docker image for this class. This takes up to 10 minutes depending on internet connection.</p>
-<ul>
-<li><p>Modify the <code>volumes</code> section of the <code>docker-compose.yml</code> file to map the <code>203b-lecture</code>, <code>203-hw</code>, and <code>mimic</code> folders on your computer to the home directory in the Ubuntu system in Docker container.</p></li>
-<li><p>Type</p></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>to run the Docker container.</p>
-<ul>
-<li>Point your browser to <code>localhost:8787</code> to connect to the RStudio Server running on the Ubuntu system.</li>
-</ul>
+<p>to build the new Docker image.</p>
 </section>
 <section id="mimic-data" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> MIMIC Data</h1>
-<p>Much of homework and in class examples are demonstrated on the <a href="https://physionet.org/content/mimiciv/1.0/">MIMIC-IV</a> v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB, need UCLA log in), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
+<p>Much of homework and in class examples are demonstrated on the <a href="https://physionet.org/content/mimiciv/1.0/">MIMIC-IV</a> v1.0 data set. Download the data to your computer from <a href="https://ucla.box.com/s/id1qge4ehykjtbeio927ofxi4zhy13z9">here</a> (7.76 GB), and make it available at <code>~/mimic</code>. For example, you can create a symbolic link by</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /PATH/TO/YOUR/MIMIC_FOLDER ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Your homework solution should always read data from <code>~/mimic</code>. This is critical for Tomoki and me to reproduce your homework.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/mimic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>LICENSE.txt
 MIMIC-reduce-chartevents
