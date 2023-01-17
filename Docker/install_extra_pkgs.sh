@@ -19,6 +19,7 @@ function apt_install() {
 
 # install extra Ubuntu packages
 apt_install \
+    bsdmainutils \
     mlocate \
     tree
 
