@@ -45,9 +45,25 @@ A typical data science project:
 <img src="./data-science.png" height="300">
 </p>
 
-## [Tidyverse](https://www.tidyverse.org)
+## Tidyverse
 
-- `tidyverse` is a collection of R packages that make data wrangling easy.
+::: {.panel-tabset}
+
+#### R
+
+- [tidyverse](https://www.tidyverse.org/) is a collection of R packages for data ingestion, wrangling, and visualization.
+
+<p align="center">
+<img src="./tidyverse_pkgs.jpeg" width="450">
+</p>
+
+<p align="center">
+<img src="./tidyverse_categories.png" width="450">
+</p>
+
+- The lead developer Hadley Wickham won the 2019 _COPSS Presidents’ Award_ (the Nobel Prize of Statistics) 
+
+> for influential work in statistical computing, visualization, graphics, and data analysis; for developing and implementing an impressively comprehensive computational infrastructure for data analysis through R software; for making statistical thinking and computing accessible to large audience; and for enhancing an appreciation for the important role of statistics among data scientists.
 
 - Install `tidyverse` from RStudio menu `Tools -> Install Packages...` or
 
@@ -61,6 +77,22 @@ install.packages("tidyverse")
 ```{r}
 library("tidyverse")
 ```
+
+#### Python
+
+The [pandas](https://pandas.pydata.org/) package is the Python analog of tidyverse.
+
+![pandas](https://pandas.pydata.org/static/img/pandas.svg){width=200}
+
+Follow the [installation instructions](https://pandas.pydata.org/getting_started.html) to install pandas package in Python.
+
+#### Julia
+
+The [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) package and the [JuliaData ecosystem](https://github.com/JuliaData) is the Julia analog of tidyverse.
+
+Install DataFrames.jl by:
+
+:::
 
 ## Tibble | r4ds chapter 10
 
