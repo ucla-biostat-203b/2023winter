@@ -2,7 +2,7 @@
 title: "Git and GitHub"
 subtitle: "Biostat 203B"
 author: "Dr. Hua Zhou @ UCLA"
-date: "2023-01-17"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
@@ -241,7 +241,7 @@ On [GitHub.com](https://github.com):
 
 - Obtain [Student Developer Pack](https://education.github.com/pack).
 
-- Create a private repository `biostat-203b-2023-winter`. Add `Hua-Zhou` and `maschepps` as your collaborators with write permission.
+- Create a private repository `biostat-203b-2023-winter`. Add `Hua-Zhou` and `tomokiokuno0528` as your collaborators with write permission.
 
 On your local machine: 
 
