@@ -19,9 +19,31 @@ knitr:
 ---
 
 Display machine information for reproducibility.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 sessionInfo()
 ```
+
+#### Python
+
+```{python}
+import IPython
+print(IPython.sys_info())
+```
+
+#### Julia
+
+```{julia}
+#| eval: true
+using InteractiveUtils
+versioninfo()
+```
+
+:::
 
 ## Outline
 
@@ -91,6 +113,15 @@ Follow the [installation instructions](https://pandas.pydata.org/getting_started
 The [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) package and the [JuliaData ecosystem](https://github.com/JuliaData) is the Julia analog of tidyverse.
 
 Install DataFrames.jl by:
+```{{ julia }}
+add DataFrames
+```
+in the package mode or
+```{{ julia }}
+using Pkg
+Pkg.add("DatamFrames")
+```
+in Julia REPL.
 
 :::
 
@@ -102,6 +133,8 @@ Install DataFrames.jl by:
 
 ### Create tibbles
 
+#### Convert between dataframe in base R and tibble
+
 <p align="center">
 <img src="./iris_dataset.jpg">
 </p>
@@ -109,7 +142,7 @@ Install DataFrames.jl by:
 - `iris` is a data frame available in base R:
 
 ```{r}
-# a regular data frame
+# By default, R displays ALL rows of a regular data frame!
 iris
 ```
 
@@ -124,7 +157,14 @@ as_tibble(iris)
 as.data.frame(tb)
 ```
 
-- Create tibble from individual vectors. Note values for y are recycled:
+#### Construct tibbles by columns
+
+- Create tibble/dataframe from individual vectors. Note values for `y` are recycled:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 tibble(
   x = 1:5, 
@@ -133,7 +173,43 @@ tibble(
 )
 ```
 
-- Transposed tibbles:
+#### Python
+
+```{python}
+# Load the pandas library
+import pandas as pd
+# Load numpy for array manipulation
+import numpy as np
+
+# Create DataFrame from a dictionary
+df = pd.DataFrame({'x': np.linspace(1, 5, 5), 'y': np.ones(5)})
+df['z'] = df['x']**2 + df['y']
+df
+```
+
+#### Julia
+
+```{julia}
+using DataFrames
+
+df = DataFrame(
+  x = 1:5,
+  y = 1,
+);
+df[!, :z] = df[!, :x].^2 + df[!, :y];
+df
+```
+
+:::
+
+#### Construct tibbles by rows
+
+- Transposed tibbles, or constracut dataframe by rows:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 tribble(
   ~x, ~y, ~z,
@@ -142,10 +218,46 @@ tribble(
   "b", 1, 8.5
 )
 ```
+
+#### Python
+
+```{python}
+# Initialize list of lists
+data = [['a', 2, 3.6], ['b', 1, 8.5]]
+# Create DataFrame
+df = pd.DataFrame(data, columns = ['x', 'y', 'z'])
+df
+```
+
+#### Julia
+
+In Julia, we can [build a DataFrame row by row](https://dataframes.juliadata.org/stable/man/getting_started/#Constructing-Row-by-Row) by `push`ing tuples
+```{julia}
+df = DataFrame(x = String[], y = Int[], z = Float64[]);
+push!(df, ("a", 2, 3.6));
+push!(df, ("b", 1, 8.5));
+df
+```
+or dictionary
+```{julia}
+df = DataFrame(x = String[], y = Int[], z = Float64[]);
+push!(df, Dict(:x => "a", :y => 2, :z => 3.6));
+push!(df, Dict(:x => "b", :y => 1, :z => 8.5));
+df
+```
+If you want to add rows at the beginning of a data frame use `pushfirst!` and to insert a row in an arbitrary location use `insert!`.
+
+You can also add whole tables to a data frame using the `append!` and `prepend!` functions.
+
+:::
   
 ### Printing of a tibble
 
-- By default, tibble prints the first 10 rows and all columns that fit on screen.
+::: {.panel-tabset}
+
+#### R
+
+- By default, tibble prints the first 10 rows and all columns _that fit on screen_.
 ```{r}
 nycflights13::flights
 ```
@@ -155,16 +267,42 @@ nycflights13::flights
 nycflights13::flights %>% 
   print(n = 10, width = Inf)
 ```
-Here we see the **pipe operator** `%>%` pipes the output from previous command to the (first) agument of the next command.
-
-----
+Here we see the **pipe operator** `%>%` pipes the output from previous command to the (first) argument of the next command.
 
 - To change the default print setting:
     - `options(tibble.print_max = n, tibble.print_min = m)`: if more than `m` rows, print only `n` rows.
     - `options(dplyr.print_min = Inf)`: print all row.
     - `options(tibble.width = Inf)`: print all columns.
 
+#### Python
+
+Pandas by default displays 10 rows and limits the number of columns to the display area.
+```{python}
+from nycflights13 import flights
+flights
+```
+We can override this behavior by
+```{python}
+pd.set_option("display.max_rows", 50)
+pd.set_option("display.max_columns", 20)
+
+flights
+```
+
+
+#### Julia
+
+By default DataFrames.jl limits the number of rows and columns when displaying a data frame in a Jupyter Notebook to 25 and 100, respectively. You can override this behavior by changing the values of the `ENV["DATAFRAMES_COLUMNS"]` and `ENV["DATAFRAMES_ROWS"]` variables to hold the maximum number of columns and rows of the output. All columns or rows will be printed if those numbers are equal or lower than 0.
+
+:::
+
 ### Subsetting
+
+#### Extract columns
+
+::: {.panel-tabset}
+
+#### R
 
 - Create a tibble with two columns.
 ```{r}
@@ -177,24 +315,144 @@ df
 
 - Extract a column by name:
 ```{r}
+# Return a vector
 df$x
+# Return a vector
 df[["x"]]
+# Return a tibble
+df[, "x"]
 ```
 
-- Extract a column by position：
+- Extract a column by position. Remember R indexing starts from 1!
 ```{r}
-df[[1]]
+# Return a tibble
+df[, 1] 
+# Return a vector
+df[[1]] 
 ```
 
 - Pipe:
 ```{r}
+# Return a vector
 df %>% .$x
+# Return a vector
 df %>% .[["x"]]
 ```
 
+- Access multiple columns at once.
+```{r}
+# Return a tibble
+df[, c("x", "y")]
+# Return a tibble
+df[c("x", "y")]
+# Return a tibble
+df[c(1, 2)]
+# Return a tibble
+df %>% .[c("x", "y")]
+```
+
+#### Python
+
+- Create a tibble with two columns.
+```{python}
+df = pd.DataFrame({'x': np.random.rand(5), 'y': np.random.randn(5)});
+df
+```
+
+- Extract a column by name (`loc`):
+```{python}
+df.loc[:, "x"]
+```
+
+- Extract a column by position (`iloc`). Remember Python indexing starts from 0!.
+```{python}
+df.iloc[:, 0]
+```
+
+- Access multiple columns at once.
+```{python}
+df.loc[:, ['x', 'y']]
+df.iloc[:, [0, 1]]
+```
+
+#### Julia
+
+- Create a DataFrame with two columns.
+```{julia}
+df = DataFrame(x = rand(5), y = randn(5))
+```
+
+- Extract a column by name:
+```{julia}
+# Return a vector
+df.x
+df."x"
+# Return a vector
+df[!, :x]  # does not make a copy
+df[!, "x"] # does not make a copy
+# Return a vector
+df[:, :x]  # make a copy!
+df[:, "x"] # make a copy!
+```
+
+- Extract a column by position. Remember Julia indexing starts from 1!
+```{julia}
+# Return a vector
+df[!, 1]  # does not make a copy
+# Return a vector
+df[:, 1]  # make a copy!
+```
+
+- Pipe:
+```{julia}
+using Pipe
+
+# Return a vector
+@pipe df |> _[!, :x]
+# Return a dataframe
+@pipe df |> select(_, :x)
+```
+
+- Access multiple columns at once.
+```{julia}
+# Return a dataframe
+df[!, [:x, :y]]
+# Return a dataframe
+@pipe df |> select(_, [:x, :y])
+```
+:::
+
+#### Extract rows
+
+::: {.panel-tabset}
+
+#### R
+
+Access row(s) by index(es).
+```{r}
+df[1,]
+```
+
+#### Python
+
+Access row(s) by index(es).
+```{python}
+df.iloc[0]
+```
+
+#### Julia
+
+Access row(s) by index(es).
+```{julia}
+df[1, :]
+```
+
+:::
+
 ## Data import | r4ds chapter 11
 
-### readr
+### readr (R), pandas (Python) and CSV.jl (Julia)
+
 
 - readr package implements functions that turn flat files into tibbles.
 
@@ -209,17 +467,26 @@ df %>% .[["x"]]
 head heights.csv
 ```
 
+::: {.panel-tabset}
+
+#### R
+
 - Read from a local file [heights.csv](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv):
 ```{r}
-heights <- read_csv("heights.csv")
-heights
+heights <- read_csv("heights.csv") %>% print(width = Inf)
 ```
 
-- We are curious about relation between `earn` and `height` and `sex`
+- Read from a url:
 ```{r}
-ggplot(data = heights) + 
-  geom_point(mapping = aes(x = height, y = earn, color = sex))
+heights <- read_csv("https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv") %>%
+  print(width = Inf)
 ```
+
+<!-- - We are curious about relation between `earn` and `height` and `sex` -->
+<!-- ```{r} -->
+<!-- ggplot(data = heights) +  -->
+<!--   geom_point(mapping = aes(x = height, y = earn, color = sex)) -->
+<!-- ``` -->
 
 - Read from inline csv file:
 ```{r}
@@ -258,7 +525,190 @@ read_csv("1,2,3\n4,5,6", col_names = c("x", "y", "z"))
 read_csv("a,b,c\n1,2,.", na = ".")
 ```
 
+#### Python
+
+- Read from a local file [heights.csv](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv):
+```{python}
+heights = pd.read_csv("heights.csv")
+heights
+```
+
+- Read from a url:
+```{python}
+import io
+import requests
+
+url = "https://raw.githubusercontent.com/ucla-econ-425t/2023winter/master/slides/data/Boston.csv"
+s = requests.get(url).content
+heights = pd.read_csv(io.StringIO(s.decode('utf-8')), index_col = 0)
+heights
+```
+
+- Read from inline csv file:
+```{python}
+from io import StringIO
+
+pd.read_csv(
+  StringIO("""a,b,c
+  1,2,3
+  4,5,6""")
+  )
+```
+
+- Skip first `n` lines:
+```{python}
+pd.read_csv(
+  StringIO(
+  """The first line of metadata
+  The second line of metadata
+  x,y,z
+  1,2,3"""
+  ), 
+  skiprows = 2
+  )
+```
+
+- Skip comment lines:
+```{python}
+pd.read_csv(
+  StringIO(
+  """# A comment I want to skip
+  x,y,z
+  1,2,3"""
+  ), 
+  comment = "#")
+```
+    
+- No header line:
+```{python}
+pd.read_csv(
+  StringIO("""1,2,3\n4,5,6"""), 
+  header = None
+  )
+```
+
+- No header line and specify column names:
+```{python}
+pd.read_csv(
+  StringIO("""1,2,3\n4,5,6"""), 
+  names = ["x", "y", "z"]
+  )
+```
+    
+- Specify the symbol representing missing values:
+```{python}
+pd.read_csv(
+  StringIO("""a,b,c\n1,2,."""), 
+  na_values = ["."]
+  )
+```
+
+#### Julia
+
+- Read from a local file [heights.csv](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv):
+```{julia}
+using CSV
+
+# Make a copy
+heights = CSV.File("heights.csv") |> DataFrame
+
+# Not make a copy (DataFrame takes direct ownership of CSV.File's columns)
+heights = CSV.read("heights.csv", DataFrame)
+```
+
+- Read from a url:
+```{julia}
+using HTTP
+
+http_response = HTTP.get("https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv");
+heights = CSV.File(http_response.body) |> DataFrame
+```
+
+- Read from inline csv file:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  a,b,c
+  1,2,3
+  4,5,6
+  """)
+) |> DataFrame
+```
+
+- Skip first `n` lines:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  The first line of metadata
+  The second line of metadata
+  x,y,z
+  1,2,3
+  """),
+  header = 3,
+  skipto = 4
+  ) |> DataFrame
+```
+
+- Skip comment lines:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  # A comment I want to skip
+  x,y,z
+  1,2,3
+  """),
+  comment = "#"
+  ) |> DataFrame
+```
+    
+- No header line:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  1,2,3
+  4,5,6
+  """),
+  header = 0
+  ) |> DataFrame
+```
+
+- No header line and specify column names:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  1,2,3
+  4,5,6
+  """),
+  header = ["x", "y", "z"]
+  ) |> DataFrame
+```
+    
+- Specify the symbol representing missing values:
+```{julia}
+CSV.File(
+  IOBuffer("""
+  a,b,c
+  1,2,.
+  """),
+  missingstring = "."
+  ) |> DataFrame
+```
+
+:::
+
+::: {.callout-tip}
+## RTFM
+
+Modern text file parsers (`read_csv` in tidyverse and Pandas, `CSV.File` in CSV.jl) have rich functionalities. It's a good idea to browse the documentation before ingesting text data files. It can save tons of data cleaning time.
+:::
+
 ### Writing to a file
+
+Assume there is a tibble/dataframe `challenge` in the R/Python/Julia workspace.
+
+::: {.panel-tabset}
+
+#### R
 
 - Write to csv:
 ```{r}
@@ -273,12 +723,33 @@ write_rds(challenge, "challenge.rds")
 read_rds("challenge.rds")
 ```
 
+#### Python
+
+- Write to csv:
+```{python}
+#| eval: false
+challenge.to_csv("challenge.csv")
+```
+
+#### Julia
+
+- Write to csv:
+```{julia}
+#| eval: false
+challenge |> CSV.write("challenge.csv")
+```
+
+:::
+
 ### Excel files
 
 <p align="center">
 <img src="./mathlife.jpeg" height="500">
 </p>
 
+::: {.panel-tabset}
+
+#### R
 
 - readxl package (part of tidyverse) reads both xls and xlsx files:
 ```{r}
@@ -339,6 +810,114 @@ read_excel("datasets.xlsx", na = "setosa")
 
 - Writing Excel files: `openxlsx` and `writexl` packages.
 
+#### Python
+
+- Panda package can read xls files, after installing the `xlrd` package:
+```{python}
+# xls file
+pd.read_excel("datasets.xls")
+```
+- Panda package can read xlsx files, after installing the `openpyxl` package:
+```{python}
+# xlsx file
+pd.read_excel("datasets.xlsx")
+```
+    
+<!-- - List the sheet name: -->
+<!-- ```{r} -->
+<!-- excel_sheets("datasets.xlsx") -->
+<!-- ``` -->
+
+- Read in a specific sheet by name or number:
+```{python}
+pd.read_excel("datasets.xlsx", sheet_name = "mtcars")
+```
+
+```{python}
+pd.read_excel("datasets.xlsx", sheet_name = 1)
+```
+
+- Control subset of cells to read:
+```{python}
+# first 3 rows
+pd.read_excel("datasets.xlsx", nrows = 3)
+```
+    
+- Excel range. I don't know how to do this except
+```{python}
+pd.read_excel("datasets.xlsx", nrows = 4, usecols = "C:E")
+```
+
+```{python}
+# first 4 rows
+pd.read_excel("datasets.xlsx", nrows = 4)
+```
+
+```{python}
+# columns B-D
+pd.read_excel("datasets.xlsx", usecols = "B:D")
+```
+
+```{python}
+# sheet
+pd.read_excel(
+  "datasets.xlsx", 
+  sheet_name = "mtcars", 
+  nrows = 5, 
+  usecols = "B:D"
+  )
+```
+
+- Specify `NA`s:
+```{python}
+pd.read_excel("datasets.xlsx", na_values = "setosa")
+```
+
+- Writing Excel files:
+```{python}
+#| eval: false
+challenge.to_excel("challenge.xls")
+```
+
+#### Julia
+
+XLSX.jl package handles the excel sheets in Julia.
+
+- Read a `xlsx` file:
+```{julia}
+using XLSX
+
+# Read directly
+XLSX.readtable("datasets.xlsx", "iris") |> DataFrame
+```
+XLSX does not support old format `xls` files.
+
+- List the sheet names:
+```{julia}
+xf = XLSX.readxlsx("datasets.xlsx");
+XLSX.sheetnames(xf)
+```
+- Read in a specific sheet by name:
+```{julia}
+# Read directly
+XLSX.readtable("datasets.xlsx", "mtcars") |> DataFrame
+# Get a reference
+xf["iris"]
+```
+- Control subset of cells to read:
+```{julia}
+# Columns C-E
+xf["mtcars"]["C:E"]
+
+# Range
+xf["mtcars!C1:E4"]
+xf["mtcars"]["C1:E4"]
+XLSX.readdata("datasets.xlsx", "mtcars!C1:E4")
+```
+
+:::
+
+
 ### Other types of data
 
 - **haven** reads SPSS, Stata, and SAS files.
@@ -368,38 +947,33 @@ There are three interrelated rules which make a dataset tidy:
 </p>
 
 
-- Example table1
+- Example table1 is tidy.
 ```{r}
 table1
 ```
-is tidy.
 
-- Example table2
+- Example table2 is not tidy.
 ```{r}
 table2
 ```
-is not tidy.
 
-- Example table3
+- Example table3 is not tidy.
 ```{r}
 table3
 ```
-is not tidy.
 
-- Example table4a
+- Example table4a is not tidy.
 ```{r}
 table4a
 ```
-is not tidy.    
 
-- Example table4b
+- Example table4b is not tidy.
 ```{r}
 table4b
 ```
-is not tidy.
 
 
-### Gathering (pivot_longer)
+### pivot_longer (gathering)
 
 <p align="center">
 <img src="./tidy-9.png" height="200">
@@ -428,7 +1002,7 @@ tidy4b <- table4b %>%
 left_join(tidy4a, tidy4b)
 ```
 
-### Spreading (pivot_wider)
+### pivot_wider (spreading)
 
 <p align="center">
 <img src="./tidy-8.png" height="200">
@@ -485,4 +1059,26 @@ table5
 ```{r}
 table5 %>% 
   unite(new, century, year, sep = "")
+```
+
+### Drop missing values and/or duplicate rows
+
+- Here's a tibble with some missing values and duplicated rows:
+```{r}
+df = tibble(
+  country = c("Afghanistan", "Afghanistan", "Brazil", "China"),
+  year = c(1999, 1999, 1999, NA),
+  cases = c(745, 745, NA, 212258)
+) %>% print()
+```
+
+- To drop all rows with missing values
+```{r}
+df %>% drop_na()
+```
+
+- To remove duplicate rows
+```{r}
+df %>%
+  distinct()
 ```
