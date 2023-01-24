@@ -948,29 +948,156 @@ There are three interrelated rules which make a dataset tidy:
 
 
 - Example table1 is tidy.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table1
 ```
+#### Python
+
+```{python}
+table1 = pd.DataFrame({
+    'country': ['Afghanistan', 'Afghanistan', 'Brazil', 'Brazil', 'China', 'China'],
+    'year': [1999, 2000, 1999, 2000, 1999, 2000],
+    'cases': [745, 2666, 37737, 80488, 212258, 213766],
+    'population': [19987071, 20595360, 172006362, 174504898, 1272915272, 1280428583]
+})
+table1
+```
+
+#### Julia
+
+```{julia}
+table1 = DataFrame(
+    country = ["Afghanistan", "Afghanistan", "Brazil", "Brazil", "China", "China"],
+    year = [1999, 2000, 1999, 2000, 1999, 2000],
+    cases = [745, 2666, 37737, 80488, 212258, 213766],
+    population = [19987071, 20595360, 172006362, 174504898, 1272915272, 1280428583]
+)
+```
+
+:::
+
 
 - Example table2 is not tidy.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table2
 ```
 
+#### Python
+
+```{python}
+table2 = pd.DataFrame({
+    'country': ['Afghanistan', 'Afghanistan', 'Afghanistan', 'Afghanistan', 'Brazil', 'Brazil', 'Brazil', 'Brazil', 'China', 'China', 'China', 'China'],
+    'year': [1999, 1999, 2000, 2000, 1999, 1999, 2000, 2000, 1999, 1999, 2000, 2000,],
+    'type': ['cases', 'population', 'cases', 'population', 'cases', 'population', 'cases', 'population', 'cases', 'population', 'cases', 'population'],
+    'count': [745, 19987071, 2666, 20595360, 37737, 172006362, 80488, 174504898, 212258, 1272915272, 213766, 1280428583]
+})
+table2
+```
+
+#### Julia
+
+```{julia}
+table2 = DataFrame(
+    country = ["Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", "Brazil", "Brazil", "Brazil", "Brazil", "China", "China", "China", "China"],
+    year = [1999, 1999, 2000, 2000, 1999, 1999, 2000, 2000, 1999, 1999, 2000, 2000,],
+    type = ["cases", "population", "cases", "population", "cases", "population", "cases", "population", "cases", "population", "cases", "population"],
+    count = [745, 19987071, 2666, 20595360, 37737, 172006362, 80488, 174504898, 212258, 1272915272, 213766, 1280428583]
+)
+```
+
+:::
+
 - Example table3 is not tidy.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table3
 ```
 
-- Example table4a is not tidy.
-```{r}
-table4a
+#### Python
+
+```{python}
+table3 = pd.DataFrame({
+    'country': ['Afghanistan', 'Afghanistan', 'Brazil', 'Brazil', 'China', 'China'],
+    'year': [1999, 2000, 1999, 2000, 1999, 2000],
+    'rate': ['745/19987071', '2666/20595360', '37737/172006362', '80488/174504898', '212258/1272915272', '213766/1280428583']
+})
+table3
 ```
 
-- Example table4b is not tidy.
+#### Julia
+
+```{julia}
+table3 = DataFrame(
+    country = ["Afghanistan", "Afghanistan", "Brazil", "Brazil", "China", "China"],
+    year = [1999, 2000, 1999, 2000, 1999, 2000],
+    rate = ["745/19987071", "2666/20595360", "37737/172006362", "80488/174504898", "212258/1272915272", "213766/1280428583"]
+)
+```
+
+:::
+
+- table4a and table4b are not tidy.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
+table4a
 table4b
 ```
+
+#### Python
+
+```{python}
+table4a = pd.DataFrame({
+    'country': ['Afghanistan', 'Brazil', 'China'],
+    '1999': [745, 37737, 212258],
+    '2000': [2666, 80488, 213766]
+})
+table4a
+
+table4b = pd.DataFrame({
+    'country': ['Afghanistan', 'Brazil', 'China'],
+    '1999': [19987071, 172006362, 1272915272],
+    '2000': [20595360, 174504898, 1280428583]
+})
+table4b
+```
+
+#### Julia
+
+```{julia}
+table4a = DataFrame(
+    country = ["Afghanistan", "Brazil", "China"],
+    y1999 = [745, 37737, 212258],
+    y2000 = [2666, 80488, 213766]
+);
+rename!(table4a, Dict(:y1999 => Symbol("1999"), :y2000 => Symbol("2000")))
+
+table4b = DataFrame(
+    country = ["Afghanistan", "Brazil", "China"],
+    y1999 = [19987071, 172006362, 1272915272],
+    y2000 = [20595360, 174504898, 1280428583]
+);
+rename!(table4b, Dict(:y1999 => Symbol("1999"), :y2000 => Symbol("2000")))
+```
+
+:::
 
 
 ### pivot_longer (gathering)
@@ -986,12 +1113,42 @@ table4a %>%
 ```
     
 - `gather` function has been superseded by `pivot_longer`    
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table4a %>%
   pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
 ```
 
+#### Python
+
+```{python}
+tidy4a = table4a.melt(
+  id_vars = ['country'],
+  value_vars = ['1999', '2000'],
+  var_name = 'year',
+  value_name = 'cases'
+)
+tidy4a
+```
+
+#### Julia
+
+```{julia}
+tidy4a = @pipe stack(table4a, ["1999", "2000"]) |> rename!(_, Dict(:variable => :year, :value => :cases))
+```
+
+:::
+
 - We can gather table4b too and then join them
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 tidy4a <- table4a %>% 
   pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
@@ -1001,6 +1158,37 @@ tidy4b <- table4b %>%
 # gather(`1999`, `2000`, key = "year", value = "population")
 left_join(tidy4a, tidy4b)
 ```
+
+#### Python
+
+```{python}
+tidy4b = table4b.melt(
+    id_vars = ['country'],
+    value_vars = ['1999', '2000'],
+    var_name = 'year',
+    value_name = 'population'
+    )
+tidy4b
+
+tidy4a.merge(
+    tidy4b,
+    on = ['country', 'year'],
+    how = 'left'
+    )
+```
+
+#### Julia
+
+
+```{julia}
+tidy4b = @pipe stack(table4b, ["1999", "2000"]) |> rename!(_, Dict(:variable => :year, :value => :population))
+```
+
+```{julia}
+leftjoin!(tidy4a, tidy4b, on = [:country, :year])
+```
+
+:::
 
 ### pivot_wider (spreading)
 
@@ -1015,10 +1203,33 @@ table2 %>%
 ```
 
 - `spread` function has been superseded by `pivot_wider`
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table2 %>%
   pivot_wider(names_from = type, values_from = count)
 ```
+
+#### Python
+
+```{python}
+table2.pivot(
+    index = ['country', 'year'],
+    columns = 'type',
+    values = 'count'
+)
+```
+
+#### Julia
+
+```{julia}
+unstack(table2, :type, :count)
+```
+
+:::
 
 ### Separating
 
@@ -1026,7 +1237,10 @@ table2 %>%
 <img src="./tidy-17.png" height="200">
 </p>
 
-- 
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table3 %>% 
   separate(rate, into = c("cases", "population"))
@@ -1044,13 +1258,33 @@ table3 %>%
   separate(year, into = c("century", "year"), sep = 2)
 ```
 
+#### Python
+
+```{python}
+table3[['cases', 'population']] = table3['rate'].apply(lambda x: pd.Series(str(x).split("/")))
+```
+
+#### Julia
+
+```{julia}
+using SplitApplyCombine
+
+table3
+insertcols!(table3, ([:cases, :population] .=> invert(split.(table3.rate, "/")))..., makeunique = true)
+```
+
+:::
+
 ### Unite
 
 <p align="center">
 <img src="./tidy-18.png" height="200">
 </p>
 
-- 
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 table5
 ```
@@ -1061,9 +1295,47 @@ table5 %>%
   unite(new, century, year, sep = "")
 ```
 
+#### Python
+
+```{python}
+table5 = pd.DataFrame({
+    'country': ['Afghanistan', 'Afghanistan', 'Brazil', 'Brazil', 'China', 'China'],
+    'century': ['19', '20', '19', '20', '19', '20'],
+    'year': ['99', '00', '99', '00', '99', '00'],
+    'rate': ['745/19987071', '2666/20595360', '37737/172006362', '80488/174504898', '212258/1272915272', '213766/1280428583']
+})
+table5
+```
+
+```{python}
+table5['new'] = table5['century'] + table5['year']
+table5
+```
+
+#### Julia
+
+```{julia}
+table5 = DataFrame(
+    country = ["Afghanistan", "Afghanistan", "Brazil", "Brazil", "China", "China"],
+    century = ["19", "20", "19", "20", "19", "20"],
+    year = ["99", "00", "99", "00", "99", "00"],
+    rate = ["745/19987071", "2666/20595360", "37737/172006362", "80488/174504898", "212258/1272915272", "213766/1280428583"]
+)
+
+table5[!, :new] = parse.(Int, string.(table5[!, :century]) .* string.(table5[!, :year]));
+table5
+```
+
+:::
+
 ### Drop missing values and/or duplicate rows
 
 - Here's a tibble with some missing values and duplicated rows:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 df = tibble(
   country = c("Afghanistan", "Afghanistan", "Brazil", "China"),
@@ -1072,13 +1344,74 @@ df = tibble(
 ) %>% print()
 ```
 
+#### Python
+
+```{python}
+df = pd.DataFrame({
+    'country': ["Afghanistan", "Afghanistan", "Brazil", "China"],
+    'year': [1999, 1999, 1999, None],
+    'cases': [745, 745, None, 212258]
+})
+df
+```
+
+#### Julia
+
+```{julia}
+df = DataFrame(
+    country = ["Afghanistan", "Afghanistan", "Brazil", "China"],
+    year = [1999, 1999, 1999, missing],
+    cases = [745, 745, missing, 212258]
+)
+```
+
+:::
+
 - To drop all rows with missing values
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 df %>% drop_na()
 ```
 
+#### Python
+
+```{python}
+df.dropna()
+```
+
+#### Julia
+
+```{julia}
+dropmissing(df)
+```
+
+:::
+
 - To remove duplicate rows
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 df %>%
   distinct()
 ```
+
+#### Python
+
+```{python}
+df.drop_duplicates()
+```
+
+#### Julia
+
+```{julia}
+unique(df)
+```
+
+:::

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-01-22">
+<meta name="dcterms.date" content="2023-01-24">
 
 <title>Import and Tidy Data</title>
 <style>
@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 22, 2023</p>
+      <p class="date">January 24, 2023</p>
     </div>
   </div>
   
@@ -876,11 +876,11 @@ Environment:
 <pre><code># A tibble: 5 × 2
        x      y
    &lt;dbl&gt;  &lt;dbl&gt;
-1 0.599   1.50 
-2 0.0180 -0.809
-3 0.601   1.18 
-4 0.808   1.20 
-5 0.571  -0.653</code></pre>
+1 0.108  -1.46 
+2 0.186   0.558
+3 0.0828  0.307
+4 0.590  -0.388
+5 0.652   0.527</code></pre>
 </div>
 </div>
 <ul>
@@ -890,12 +890,12 @@ Environment:
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.59888722 0.01796069 0.60110946 0.80847365 0.57121139</code></pre>
+<pre><code>[1] 0.10750759 0.18606920 0.08283841 0.58996868 0.65188917</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.59888722 0.01796069 0.60110946 0.80847365 0.57121139</code></pre>
+<pre><code>[1] 0.10750759 0.18606920 0.08283841 0.58996868 0.65188917</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a tibble</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -903,11 +903,11 @@ Environment:
 <pre><code># A tibble: 5 × 1
        x
    &lt;dbl&gt;
-1 0.599 
-2 0.0180
-3 0.601 
-4 0.808 
-5 0.571 </code></pre>
+1 0.108 
+2 0.186 
+3 0.0828
+4 0.590 
+5 0.652 </code></pre>
 </div>
 </div>
 <ul>
@@ -920,16 +920,16 @@ Environment:
 <pre><code># A tibble: 5 × 1
        x
    &lt;dbl&gt;
-1 0.599 
-2 0.0180
-3 0.601 
-4 0.808 
-5 0.571 </code></pre>
+1 0.108 
+2 0.186 
+3 0.0828
+4 0.590 
+5 0.652 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="dv">1</span>]] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.59888722 0.01796069 0.60110946 0.80847365 0.57121139</code></pre>
+<pre><code>[1] 0.10750759 0.18606920 0.08283841 0.58996868 0.65188917</code></pre>
 </div>
 </div>
 <ul>
@@ -939,12 +939,12 @@ Environment:
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> .<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.59888722 0.01796069 0.60110946 0.80847365 0.57121139</code></pre>
+<pre><code>[1] 0.10750759 0.18606920 0.08283841 0.58996868 0.65188917</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> .[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.59888722 0.01796069 0.60110946 0.80847365 0.57121139</code></pre>
+<pre><code>[1] 0.10750759 0.18606920 0.08283841 0.58996868 0.65188917</code></pre>
 </div>
 </div>
 <ul>
@@ -957,11 +957,11 @@ Environment:
 <pre><code># A tibble: 5 × 2
        x      y
    &lt;dbl&gt;  &lt;dbl&gt;
-1 0.599   1.50 
-2 0.0180 -0.809
-3 0.601   1.18 
-4 0.808   1.20 
-5 0.571  -0.653</code></pre>
+1 0.108  -1.46 
+2 0.186   0.558
+3 0.0828  0.307
+4 0.590  -0.388
+5 0.652   0.527</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a tibble</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>df[<span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -969,11 +969,11 @@ Environment:
 <pre><code># A tibble: 5 × 2
        x      y
    &lt;dbl&gt;  &lt;dbl&gt;
-1 0.599   1.50 
-2 0.0180 -0.809
-3 0.601   1.18 
-4 0.808   1.20 
-5 0.571  -0.653</code></pre>
+1 0.108  -1.46 
+2 0.186   0.558
+3 0.0828  0.307
+4 0.590  -0.388
+5 0.652   0.527</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a tibble</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>df[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -981,11 +981,11 @@ Environment:
 <pre><code># A tibble: 5 × 2
        x      y
    &lt;dbl&gt;  &lt;dbl&gt;
-1 0.599   1.50 
-2 0.0180 -0.809
-3 0.601   1.18 
-4 0.808   1.20 
-5 0.571  -0.653</code></pre>
+1 0.108  -1.46 
+2 0.186   0.558
+3 0.0828  0.307
+4 0.590  -0.388
+5 0.652   0.527</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a tibble</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> .[<span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -993,11 +993,11 @@ Environment:
 <pre><code># A tibble: 5 × 2
        x      y
    &lt;dbl&gt;  &lt;dbl&gt;
-1 0.599   1.50 
-2 0.0180 -0.809
-3 0.601   1.18 
-4 0.808   1.20 
-5 0.571  -0.653</code></pre>
+1 0.108  -1.46 
+2 0.186   0.558
+3 0.0828  0.307
+4 0.590  -0.388
+5 0.652   0.527</code></pre>
 </div>
 </div>
 </div>
@@ -1010,11 +1010,11 @@ Environment:
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          x         y
-0  0.109129  0.754829
-1  0.117019  0.025453
-2  0.139896  0.631080
-3  0.652603 -0.412860
-4  0.409194  0.924782</code></pre>
+0  0.103438 -0.412540
+1  0.687038  0.568114
+2  0.256873  0.503413
+3  0.741686  0.418050
+4  0.776991 -0.135919</code></pre>
 </div>
 </div>
 <ul>
@@ -1023,11 +1023,11 @@ Environment:
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>df.loc[:, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0    0.109129
-1    0.117019
-2    0.139896
-3    0.652603
-4    0.409194
+<pre><code>0    0.103438
+1    0.687038
+2    0.256873
+3    0.741686
+4    0.776991
 Name: x, dtype: float64</code></pre>
 </div>
 </div>
@@ -1037,11 +1037,11 @@ Name: x, dtype: float64</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>df.iloc[:, <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0    0.109129
-1    0.117019
-2    0.139896
-3    0.652603
-4    0.409194
+<pre><code>0    0.103438
+1    0.687038
+2    0.256873
+3    0.741686
+4    0.776991
 Name: x, dtype: float64</code></pre>
 </div>
 </div>
@@ -1052,20 +1052,20 @@ Name: x, dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>df.loc[:, [<span class="st">'x'</span>, <span class="st">'y'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          x         y
-0  0.109129  0.754829
-1  0.117019  0.025453
-2  0.139896  0.631080
-3  0.652603 -0.412860
-4  0.409194  0.924782</code></pre>
+0  0.103438 -0.412540
+1  0.687038  0.568114
+2  0.256873  0.503413
+3  0.741686  0.418050
+4  0.776991 -0.135919</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>df.iloc[:, [<span class="dv">0</span>, <span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          x         y
-0  0.109129  0.754829
-1  0.117019  0.025453
-2  0.139896  0.631080
-3  0.652603 -0.412860
-4  0.409194  0.924782</code></pre>
+0  0.103438 -0.412540
+1  0.687038  0.568114
+2  0.256873  0.503413
+3  0.741686  0.418050
+4  0.776991 -0.135919</code></pre>
 </div>
 </div>
 </div>
@@ -1077,14 +1077,14 @@ Name: x, dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(x <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">5</span>), y <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5×2 DataFrame
- Row │ x          y
-     │ Float64    Float64
-─────┼───────────────────────
-   1 │ 0.665261    1.82069
-   2 │ 0.0259017  -0.0226677
-   3 │ 0.775183   -0.301979
-   4 │ 0.357088    0.735415
-   5 │ 0.699338   -0.616357</code></pre>
+ Row │ x         y
+     │ Float64   Float64
+─────┼─────────────────────
+   1 │ 0.171555  -0.468751
+   2 │ 0.569575  -0.734772
+   3 │ 0.987339  -1.71398
+   4 │ 0.791704  -0.454047
+   5 │ 0.370515  -2.44531</code></pre>
 </div>
 </div>
 <ul>
@@ -1095,58 +1095,58 @@ Name: x, dtype: float64</code></pre>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>df.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>df.<span class="st">"x"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>df[!, <span class="op">:</span>x]  <span class="co"># does not make a copy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df[!, <span class="st">"x"</span>] <span class="co"># does not make a copy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>df[<span class="op">:</span>, <span class="op">:</span>x]  <span class="co"># make a copy!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>df[<span class="op">:</span>, <span class="st">"x"</span>] <span class="co"># make a copy!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 </div>
 <ul>
@@ -1157,21 +1157,21 @@ Name: x, dtype: float64</code></pre>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>df[!, <span class="fl">1</span>]  <span class="co"># does not make a copy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a vector</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>df[<span class="op">:</span>, <span class="fl">1</span>]  <span class="co"># make a copy!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 </div>
 <ul>
@@ -1184,11 +1184,11 @@ Name: x, dtype: float64</code></pre>
 <span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@pipe</span> df <span class="op">|&gt;</span> _[!, <span class="op">:</span>x]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-element Vector{Float64}:
- 0.6652614254961673
- 0.02590166904429081
- 0.7751825594174075
- 0.3570877996026345
- 0.6993376669764378</code></pre>
+ 0.17155458056169604
+ 0.5695746648584686
+ 0.9873393589385444
+ 0.791703974673431
+ 0.37051471104988</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a dataframe</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@pipe</span> df <span class="op">|&gt;</span> <span class="fu">select</span>(_, <span class="op">:</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1196,12 +1196,12 @@ Name: x, dtype: float64</code></pre>
 <pre><code>5×1 DataFrame
  Row │ x
      │ Float64
-─────┼───────────
-   1 │ 0.665261
-   2 │ 0.0259017
-   3 │ 0.775183
-   4 │ 0.357088
-   5 │ 0.699338</code></pre>
+─────┼──────────
+   1 │ 0.171555
+   2 │ 0.569575
+   3 │ 0.987339
+   4 │ 0.791704
+   5 │ 0.370515</code></pre>
 </div>
 </div>
 <ul>
@@ -1212,27 +1212,27 @@ Name: x, dtype: float64</code></pre>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>df[!, [<span class="op">:</span>x, <span class="op">:</span>y]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5×2 DataFrame
- Row │ x          y
-     │ Float64    Float64
-─────┼───────────────────────
-   1 │ 0.665261    1.82069
-   2 │ 0.0259017  -0.0226677
-   3 │ 0.775183   -0.301979
-   4 │ 0.357088    0.735415
-   5 │ 0.699338   -0.616357</code></pre>
+ Row │ x         y
+     │ Float64   Float64
+─────┼─────────────────────
+   1 │ 0.171555  -0.468751
+   2 │ 0.569575  -0.734772
+   3 │ 0.987339  -1.71398
+   4 │ 0.791704  -0.454047
+   5 │ 0.370515  -2.44531</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a dataframe</span></span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@pipe</span> df <span class="op">|&gt;</span> <span class="fu">select</span>(_, [<span class="op">:</span>x, <span class="op">:</span>y])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5×2 DataFrame
- Row │ x          y
-     │ Float64    Float64
-─────┼───────────────────────
-   1 │ 0.665261    1.82069
-   2 │ 0.0259017  -0.0226677
-   3 │ 0.775183   -0.301979
-   4 │ 0.357088    0.735415
-   5 │ 0.699338   -0.616357</code></pre>
+ Row │ x         y
+     │ Float64   Float64
+─────┼─────────────────────
+   1 │ 0.171555  -0.468751
+   2 │ 0.569575  -0.734772
+   3 │ 0.987339  -1.71398
+   4 │ 0.791704  -0.454047
+   5 │ 0.370515  -2.44531</code></pre>
 </div>
 </div>
 </div>
@@ -1252,7 +1252,7 @@ Name: x, dtype: float64</code></pre>
 <pre><code># A tibble: 1 × 2
       x     y
   &lt;dbl&gt; &lt;dbl&gt;
-1 0.599  1.50</code></pre>
+1 0.108 -1.46</code></pre>
 </div>
 </div>
 </div>
@@ -1261,8 +1261,8 @@ Name: x, dtype: float64</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>x    0.109129
-y    0.754829
+<pre><code>x    0.103438
+y   -0.412540
 Name: 0, dtype: float64</code></pre>
 </div>
 </div>
@@ -1275,8 +1275,8 @@ Name: 0, dtype: float64</code></pre>
 <pre><code>DataFrameRow
  Row │ x         y
      │ Float64   Float64
-─────┼───────────────────
-   1 │ 0.665261  1.82069</code></pre>
+─────┼─────────────────────
+   1 │ 0.171555  -0.468751</code></pre>
 </div>
 </div>
 </div>
@@ -2559,6 +2559,10 @@ RTFM
 <ul>
 <li>Example table1 is tidy.</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a>table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2573,11 +2577,60 @@ RTFM
 6 China        2000 213766 1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb228-1"><a href="#cb228-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb228-2"><a href="#cb228-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>],</span>
+<span id="cb228-3"><a href="#cb228-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>: [<span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">2000</span>],</span>
+<span id="cb228-4"><a href="#cb228-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cases'</span>: [<span class="dv">745</span>, <span class="dv">2666</span>, <span class="dv">37737</span>, <span class="dv">80488</span>, <span class="dv">212258</span>, <span class="dv">213766</span>],</span>
+<span id="cb228-5"><a href="#cb228-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'population'</span>: [<span class="dv">19987071</span>, <span class="dv">20595360</span>, <span class="dv">172006362</span>, <span class="dv">174504898</span>, <span class="dv">1272915272</span>, <span class="dv">1280428583</span>]</span>
+<span id="cb228-6"><a href="#cb228-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb228-7"><a href="#cb228-7" aria-hidden="true" tabindex="-1"></a>table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country  year   cases  population
+0  Afghanistan  1999     745    19987071
+1  Afghanistan  2000    2666    20595360
+2       Brazil  1999   37737   172006362
+3       Brazil  2000   80488   174504898
+4        China  1999  212258  1272915272
+5        China  2000  213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb230-1"><a href="#cb230-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb230-2"><a href="#cb230-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>],</span>
+<span id="cb230-3"><a href="#cb230-3" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> [<span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">2000</span>],</span>
+<span id="cb230-4"><a href="#cb230-4" aria-hidden="true" tabindex="-1"></a>    cases <span class="op">=</span> [<span class="fl">745</span>, <span class="fl">2666</span>, <span class="fl">37737</span>, <span class="fl">80488</span>, <span class="fl">212258</span>, <span class="fl">213766</span>],</span>
+<span id="cb230-5"><a href="#cb230-5" aria-hidden="true" tabindex="-1"></a>    population <span class="op">=</span> [<span class="fl">19987071</span>, <span class="fl">20595360</span>, <span class="fl">172006362</span>, <span class="fl">174504898</span>, <span class="fl">1272915272</span>, <span class="fl">1280428583</span>]</span>
+<span id="cb230-6"><a href="#cb230-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×4 DataFrame
+ Row │ country      year   cases   population
+     │ String       Int64  Int64   Int64
+─────┼────────────────────────────────────────
+   1 │ Afghanistan   1999     745    19987071
+   2 │ Afghanistan   2000    2666    20595360
+   3 │ Brazil        1999   37737   172006362
+   4 │ Brazil        2000   80488   174504898
+   5 │ China         1999  212258  1272915272
+   6 │ China         2000  213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <ul>
 <li>Example table2 is not tidy.</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" aria-hidden="true" tabindex="-1"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
    country      year type            count
@@ -2596,11 +2649,72 @@ RTFM
 12 China        2000 population 1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb234-2"><a href="#cb234-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>],</span>
+<span id="cb234-3"><a href="#cb234-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>: [<span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">2000</span>,],</span>
+<span id="cb234-4"><a href="#cb234-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'type'</span>: [<span class="st">'cases'</span>, <span class="st">'population'</span>, <span class="st">'cases'</span>, <span class="st">'population'</span>, <span class="st">'cases'</span>, <span class="st">'population'</span>, <span class="st">'cases'</span>, <span class="st">'population'</span>, <span class="st">'cases'</span>, <span class="st">'population'</span>, <span class="st">'cases'</span>, <span class="st">'population'</span>],</span>
+<span id="cb234-5"><a href="#cb234-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'count'</span>: [<span class="dv">745</span>, <span class="dv">19987071</span>, <span class="dv">2666</span>, <span class="dv">20595360</span>, <span class="dv">37737</span>, <span class="dv">172006362</span>, <span class="dv">80488</span>, <span class="dv">174504898</span>, <span class="dv">212258</span>, <span class="dv">1272915272</span>, <span class="dv">213766</span>, <span class="dv">1280428583</span>]</span>
+<span id="cb234-6"><a href="#cb234-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb234-7"><a href="#cb234-7" aria-hidden="true" tabindex="-1"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        country  year        type       count
+0   Afghanistan  1999       cases         745
+1   Afghanistan  1999  population    19987071
+2   Afghanistan  2000       cases        2666
+3   Afghanistan  2000  population    20595360
+4        Brazil  1999       cases       37737
+5        Brazil  1999  population   172006362
+6        Brazil  2000       cases       80488
+7        Brazil  2000  population   174504898
+8         China  1999       cases      212258
+9         China  1999  population  1272915272
+10        China  2000       cases      213766
+11        China  2000  population  1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb236-1"><a href="#cb236-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb236-2"><a href="#cb236-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>],</span>
+<span id="cb236-3"><a href="#cb236-3" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> [<span class="fl">1999</span>, <span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">2000</span>,],</span>
+<span id="cb236-4"><a href="#cb236-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> <span class="op">=</span> [<span class="st">"cases"</span>, <span class="st">"population"</span>, <span class="st">"cases"</span>, <span class="st">"population"</span>, <span class="st">"cases"</span>, <span class="st">"population"</span>, <span class="st">"cases"</span>, <span class="st">"population"</span>, <span class="st">"cases"</span>, <span class="st">"population"</span>, <span class="st">"cases"</span>, <span class="st">"population"</span>],</span>
+<span id="cb236-5"><a href="#cb236-5" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> [<span class="fl">745</span>, <span class="fl">19987071</span>, <span class="fl">2666</span>, <span class="fl">20595360</span>, <span class="fl">37737</span>, <span class="fl">172006362</span>, <span class="fl">80488</span>, <span class="fl">174504898</span>, <span class="fl">212258</span>, <span class="fl">1272915272</span>, <span class="fl">213766</span>, <span class="fl">1280428583</span>]</span>
+<span id="cb236-6"><a href="#cb236-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>12×4 DataFrame
+ Row │ country      year   type        count
+     │ String       Int64  String      Int64
+─────┼────────────────────────────────────────────
+   1 │ Afghanistan   1999  cases              745
+   2 │ Afghanistan   1999  population    19987071
+   3 │ Afghanistan   2000  cases             2666
+   4 │ Afghanistan   2000  population    20595360
+   5 │ Brazil        1999  cases            37737
+   6 │ Brazil        1999  population   172006362
+   7 │ Brazil        2000  cases            80488
+   8 │ Brazil        2000  population   174504898
+   9 │ China         1999  cases           212258
+  10 │ China         1999  population  1272915272
+  11 │ China         2000  cases           213766
+  12 │ China         2000  population  1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <ul>
 <li>Example table3 is not tidy.</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-3" role="tab" aria-controls="tabset-13-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" aria-hidden="true" tabindex="-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country      year rate             
@@ -2613,11 +2727,58 @@ RTFM
 6 China        2000 213766/1280428583</code></pre>
 </div>
 </div>
-<ul>
-<li>Example table4a is not tidy.</li>
-</ul>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>],</span>
+<span id="cb240-3"><a href="#cb240-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>: [<span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">2000</span>, <span class="dv">1999</span>, <span class="dv">2000</span>],</span>
+<span id="cb240-4"><a href="#cb240-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'rate'</span>: [<span class="st">'745/19987071'</span>, <span class="st">'2666/20595360'</span>, <span class="st">'37737/172006362'</span>, <span class="st">'80488/174504898'</span>, <span class="st">'212258/1272915272'</span>, <span class="st">'213766/1280428583'</span>]</span>
+<span id="cb240-5"><a href="#cb240-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb240-6"><a href="#cb240-6" aria-hidden="true" tabindex="-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country  year               rate
+0  Afghanistan  1999       745/19987071
+1  Afghanistan  2000      2666/20595360
+2       Brazil  1999    37737/172006362
+3       Brazil  2000    80488/174504898
+4        China  1999  212258/1272915272
+5        China  2000  213766/1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-13-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb242-1"><a href="#cb242-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb242-2"><a href="#cb242-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>],</span>
+<span id="cb242-3"><a href="#cb242-3" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> [<span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">2000</span>, <span class="fl">1999</span>, <span class="fl">2000</span>],</span>
+<span id="cb242-4"><a href="#cb242-4" aria-hidden="true" tabindex="-1"></a>    rate <span class="op">=</span> [<span class="st">"745/19987071"</span>, <span class="st">"2666/20595360"</span>, <span class="st">"37737/172006362"</span>, <span class="st">"80488/174504898"</span>, <span class="st">"212258/1272915272"</span>, <span class="st">"213766/1280428583"</span>]</span>
+<span id="cb242-5"><a href="#cb242-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×3 DataFrame
+ Row │ country      year   rate
+     │ String       Int64  String
+─────┼───────────────────────────────────────
+   1 │ Afghanistan   1999  745/19987071
+   2 │ Afghanistan   2000  2666/20595360
+   3 │ Brazil        1999  37737/172006362
+   4 │ Brazil        2000  80488/174504898
+   5 │ China         1999  212258/1272915272
+   6 │ China         2000  213766/1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>table4a and table4b are not tidy.</li>
+</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-3" role="tab" aria-controls="tabset-14-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1" aria-hidden="true" tabindex="-1"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   country     `1999` `2000`
@@ -2626,12 +2787,7 @@ RTFM
 2 Brazil       37737  80488
 3 China       212258 213766</code></pre>
 </div>
-</div>
-<ul>
-<li>Example table4b is not tidy.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1" aria-hidden="true" tabindex="-1"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   country         `1999`     `2000`
@@ -2639,6 +2795,72 @@ RTFM
 1 Afghanistan   19987071   20595360
 2 Brazil       172006362  174504898
 3 China       1272915272 1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb248-1"><a href="#cb248-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb248-2"><a href="#cb248-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>],</span>
+<span id="cb248-3"><a href="#cb248-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'1999'</span>: [<span class="dv">745</span>, <span class="dv">37737</span>, <span class="dv">212258</span>],</span>
+<span id="cb248-4"><a href="#cb248-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'2000'</span>: [<span class="dv">2666</span>, <span class="dv">80488</span>, <span class="dv">213766</span>]</span>
+<span id="cb248-5"><a href="#cb248-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb248-6"><a href="#cb248-6" aria-hidden="true" tabindex="-1"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country    1999    2000
+0  Afghanistan     745    2666
+1       Brazil   37737   80488
+2        China  212258  213766</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb250-1"><a href="#cb250-1" aria-hidden="true" tabindex="-1"></a>table4b <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb250-2"><a href="#cb250-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>],</span>
+<span id="cb250-3"><a href="#cb250-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'1999'</span>: [<span class="dv">19987071</span>, <span class="dv">172006362</span>, <span class="dv">1272915272</span>],</span>
+<span id="cb250-4"><a href="#cb250-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'2000'</span>: [<span class="dv">20595360</span>, <span class="dv">174504898</span>, <span class="dv">1280428583</span>]</span>
+<span id="cb250-5"><a href="#cb250-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb250-6"><a href="#cb250-6" aria-hidden="true" tabindex="-1"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country        1999        2000
+0  Afghanistan    19987071    20595360
+1       Brazil   172006362   174504898
+2        China  1272915272  1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb252"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb252-1"><a href="#cb252-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb252-2"><a href="#cb252-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>],</span>
+<span id="cb252-3"><a href="#cb252-3" aria-hidden="true" tabindex="-1"></a>    y1999 <span class="op">=</span> [<span class="fl">745</span>, <span class="fl">37737</span>, <span class="fl">212258</span>],</span>
+<span id="cb252-4"><a href="#cb252-4" aria-hidden="true" tabindex="-1"></a>    y2000 <span class="op">=</span> [<span class="fl">2666</span>, <span class="fl">80488</span>, <span class="fl">213766</span>]</span>
+<span id="cb252-5"><a href="#cb252-5" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb252-6"><a href="#cb252-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rename!</span>(table4a, <span class="fu">Dict</span>(<span class="op">:</span>y1999 <span class="op">=&gt;</span> <span class="fu">Symbol</span>(<span class="st">"1999"</span>), <span class="op">:</span>y2000 <span class="op">=&gt;</span> <span class="fu">Symbol</span>(<span class="st">"2000"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3×3 DataFrame
+ Row │ country      1999    2000
+     │ String       Int64   Int64
+─────┼─────────────────────────────
+   1 │ Afghanistan     745    2666
+   2 │ Brazil        37737   80488
+   3 │ China        212258  213766</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb254-1"><a href="#cb254-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-2"><a href="#cb254-2" aria-hidden="true" tabindex="-1"></a>table4b <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb254-3"><a href="#cb254-3" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>],</span>
+<span id="cb254-4"><a href="#cb254-4" aria-hidden="true" tabindex="-1"></a>    y1999 <span class="op">=</span> [<span class="fl">19987071</span>, <span class="fl">172006362</span>, <span class="fl">1272915272</span>],</span>
+<span id="cb254-5"><a href="#cb254-5" aria-hidden="true" tabindex="-1"></a>    y2000 <span class="op">=</span> [<span class="fl">20595360</span>, <span class="fl">174504898</span>, <span class="fl">1280428583</span>]</span>
+<span id="cb254-6"><a href="#cb254-6" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb254-7"><a href="#cb254-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rename!</span>(table4b, <span class="fu">Dict</span>(<span class="op">:</span>y1999 <span class="op">=&gt;</span> <span class="fu">Symbol</span>(<span class="st">"1999"</span>), <span class="op">:</span>y2000 <span class="op">=&gt;</span> <span class="fu">Symbol</span>(<span class="st">"2000"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3×3 DataFrame
+ Row │ country      1999        2000
+     │ String       Int64       Int64
+─────┼─────────────────────────────────────
+   1 │ Afghanistan    19987071    20595360
+   2 │ Brazil        172006362   174504898
+   3 │ China        1272915272  1280428583</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -2651,8 +2873,8 @@ RTFM
 <li><code>gather</code> columns into a new pair of variables.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="sc">%&gt;%</span></span>
-<span id="cb236-2"><a href="#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>, <span class="at">key =</span> <span class="st">"year"</span>, <span class="at">value =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="sc">%&gt;%</span></span>
+<span id="cb256-2"><a href="#cb256-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>, <span class="at">key =</span> <span class="st">"year"</span>, <span class="at">value =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country     year   cases
@@ -2668,9 +2890,13 @@ RTFM
 <ul>
 <li><code>gather</code> function has been superseded by <code>pivot_longer</code></li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-3" role="tab" aria-controls="tabset-15-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="sc">%&gt;%</span></span>
-<span id="cb238-2"><a href="#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb258"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb258-1"><a href="#cb258-1" aria-hidden="true" tabindex="-1"></a>table4a <span class="sc">%&gt;%</span></span>
+<span id="cb258-2"><a href="#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country     year   cases
@@ -2683,17 +2909,61 @@ RTFM
 6 China       2000  213766</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb260"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb260-1"><a href="#cb260-1" aria-hidden="true" tabindex="-1"></a>tidy4a <span class="op">=</span> table4a.melt(</span>
+<span id="cb260-2"><a href="#cb260-2" aria-hidden="true" tabindex="-1"></a>  id_vars <span class="op">=</span> [<span class="st">'country'</span>],</span>
+<span id="cb260-3"><a href="#cb260-3" aria-hidden="true" tabindex="-1"></a>  value_vars <span class="op">=</span> [<span class="st">'1999'</span>, <span class="st">'2000'</span>],</span>
+<span id="cb260-4"><a href="#cb260-4" aria-hidden="true" tabindex="-1"></a>  var_name <span class="op">=</span> <span class="st">'year'</span>,</span>
+<span id="cb260-5"><a href="#cb260-5" aria-hidden="true" tabindex="-1"></a>  value_name <span class="op">=</span> <span class="st">'cases'</span></span>
+<span id="cb260-6"><a href="#cb260-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb260-7"><a href="#cb260-7" aria-hidden="true" tabindex="-1"></a>tidy4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country  year   cases
+0  Afghanistan  1999     745
+1       Brazil  1999   37737
+2        China  1999  212258
+3  Afghanistan  2000    2666
+4       Brazil  2000   80488
+5        China  2000  213766</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-15-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb262"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb262-1"><a href="#cb262-1" aria-hidden="true" tabindex="-1"></a>tidy4a <span class="op">=</span> <span class="pp">@pipe</span> <span class="fu">stack</span>(table4a, [<span class="st">"1999"</span>, <span class="st">"2000"</span>]) <span class="op">|&gt;</span> <span class="fu">rename!</span>(_, <span class="fu">Dict</span>(<span class="op">:</span>variable <span class="op">=&gt;</span> <span class="op">:</span>year, <span class="op">:</span>value <span class="op">=&gt;</span> <span class="op">:</span>cases))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×3 DataFrame
+ Row │ country      year    cases
+     │ String       String  Int64
+─────┼─────────────────────────────
+   1 │ Afghanistan  1999       745
+   2 │ Brazil       1999     37737
+   3 │ China        1999    212258
+   4 │ Afghanistan  2000      2666
+   5 │ Brazil       2000     80488
+   6 │ China        2000    213766</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <ul>
 <li>We can gather table4b too and then join them</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-3" role="tab" aria-controls="tabset-16-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a>tidy4a <span class="ot">&lt;-</span> table4a <span class="sc">%&gt;%</span> </span>
-<span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span>
-<span id="cb240-3"><a href="#cb240-3" aria-hidden="true" tabindex="-1"></a><span class="co"># gather(`1999`, `2000`, key = "year", value = "cases")</span></span>
-<span id="cb240-4"><a href="#cb240-4" aria-hidden="true" tabindex="-1"></a>tidy4b <span class="ot">&lt;-</span> table4b <span class="sc">%&gt;%</span> </span>
-<span id="cb240-5"><a href="#cb240-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"population"</span>)</span>
-<span id="cb240-6"><a href="#cb240-6" aria-hidden="true" tabindex="-1"></a><span class="co"># gather(`1999`, `2000`, key = "year", value = "population")</span></span>
-<span id="cb240-7"><a href="#cb240-7" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(tidy4a, tidy4b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb264"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1" aria-hidden="true" tabindex="-1"></a>tidy4a <span class="ot">&lt;-</span> table4a <span class="sc">%&gt;%</span> </span>
+<span id="cb264-2"><a href="#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span>
+<span id="cb264-3"><a href="#cb264-3" aria-hidden="true" tabindex="-1"></a><span class="co"># gather(`1999`, `2000`, key = "year", value = "cases")</span></span>
+<span id="cb264-4"><a href="#cb264-4" aria-hidden="true" tabindex="-1"></a>tidy4b <span class="ot">&lt;-</span> table4b <span class="sc">%&gt;%</span> </span>
+<span id="cb264-5"><a href="#cb264-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"population"</span>)</span>
+<span id="cb264-6"><a href="#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="co"># gather(`1999`, `2000`, key = "year", value = "population")</span></span>
+<span id="cb264-7"><a href="#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(tidy4a, tidy4b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining, by = c("country", "year")</code></pre>
 </div>
@@ -2709,6 +2979,75 @@ RTFM
 6 China       2000  213766 1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb267"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a>tidy4b <span class="op">=</span> table4b.melt(</span>
+<span id="cb267-2"><a href="#cb267-2" aria-hidden="true" tabindex="-1"></a>    id_vars <span class="op">=</span> [<span class="st">'country'</span>],</span>
+<span id="cb267-3"><a href="#cb267-3" aria-hidden="true" tabindex="-1"></a>    value_vars <span class="op">=</span> [<span class="st">'1999'</span>, <span class="st">'2000'</span>],</span>
+<span id="cb267-4"><a href="#cb267-4" aria-hidden="true" tabindex="-1"></a>    var_name <span class="op">=</span> <span class="st">'year'</span>,</span>
+<span id="cb267-5"><a href="#cb267-5" aria-hidden="true" tabindex="-1"></a>    value_name <span class="op">=</span> <span class="st">'population'</span></span>
+<span id="cb267-6"><a href="#cb267-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb267-7"><a href="#cb267-7" aria-hidden="true" tabindex="-1"></a>tidy4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country  year  population
+0  Afghanistan  1999    19987071
+1       Brazil  1999   172006362
+2        China  1999  1272915272
+3  Afghanistan  2000    20595360
+4       Brazil  2000   174504898
+5        China  2000  1280428583</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb269"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb269-1"><a href="#cb269-1" aria-hidden="true" tabindex="-1"></a>tidy4a.merge(</span>
+<span id="cb269-2"><a href="#cb269-2" aria-hidden="true" tabindex="-1"></a>    tidy4b,</span>
+<span id="cb269-3"><a href="#cb269-3" aria-hidden="true" tabindex="-1"></a>    on <span class="op">=</span> [<span class="st">'country'</span>, <span class="st">'year'</span>],</span>
+<span id="cb269-4"><a href="#cb269-4" aria-hidden="true" tabindex="-1"></a>    how <span class="op">=</span> <span class="st">'left'</span></span>
+<span id="cb269-5"><a href="#cb269-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country  year   cases  population
+0  Afghanistan  1999     745    19987071
+1       Brazil  1999   37737   172006362
+2        China  1999  212258  1272915272
+3  Afghanistan  2000    2666    20595360
+4       Brazil  2000   80488   174504898
+5        China  2000  213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-16-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb271"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb271-1"><a href="#cb271-1" aria-hidden="true" tabindex="-1"></a>tidy4b <span class="op">=</span> <span class="pp">@pipe</span> <span class="fu">stack</span>(table4b, [<span class="st">"1999"</span>, <span class="st">"2000"</span>]) <span class="op">|&gt;</span> <span class="fu">rename!</span>(_, <span class="fu">Dict</span>(<span class="op">:</span>variable <span class="op">=&gt;</span> <span class="op">:</span>year, <span class="op">:</span>value <span class="op">=&gt;</span> <span class="op">:</span>population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×3 DataFrame
+ Row │ country      year    population
+     │ String       String  Int64
+─────┼─────────────────────────────────
+   1 │ Afghanistan  1999      19987071
+   2 │ Brazil       1999     172006362
+   3 │ China        1999    1272915272
+   4 │ Afghanistan  2000      20595360
+   5 │ Brazil       2000     174504898
+   6 │ China        2000    1280428583</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb273"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb273-1"><a href="#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leftjoin!</span>(tidy4a, tidy4b, on <span class="op">=</span> [<span class="op">:</span>country, <span class="op">:</span>year])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×4 DataFrame
+ Row │ country      year    cases   population
+     │ String       String  Int64   Int64?
+─────┼─────────────────────────────────────────
+   1 │ Afghanistan  1999       745    19987071
+   2 │ Brazil       1999     37737   172006362
+   3 │ China        1999    212258  1272915272
+   4 │ Afghanistan  2000      2666    20595360
+   5 │ Brazil       2000     80488   174504898
+   6 │ China        2000    213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="pivot_wider-spreading" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="pivot_wider-spreading"><span class="header-section-number">5.3</span> pivot_wider (spreading)</h3>
@@ -2719,8 +3058,8 @@ RTFM
 <li>Spreading is the opposite of gathering.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="sc">%&gt;%</span></span>
-<span id="cb243-2"><a href="#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> type, <span class="at">value =</span> count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb275"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="sc">%&gt;%</span></span>
+<span id="cb275-2"><a href="#cb275-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> type, <span class="at">value =</span> count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country      year  cases population
@@ -2736,9 +3075,13 @@ RTFM
 <ul>
 <li><code>spread</code> function has been superseded by <code>pivot_wider</code></li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-3" role="tab" aria-controls="tabset-17-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="sc">%&gt;%</span></span>
-<span id="cb245-2"><a href="#cb245-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="sc">%&gt;%</span></span>
+<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country      year  cases population
@@ -2751,18 +3094,58 @@ RTFM
 6 China        2000 213766 1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb279-1"><a href="#cb279-1" aria-hidden="true" tabindex="-1"></a>table2.pivot(</span>
+<span id="cb279-2"><a href="#cb279-2" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> [<span class="st">'country'</span>, <span class="st">'year'</span>],</span>
+<span id="cb279-3"><a href="#cb279-3" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> <span class="st">'type'</span>,</span>
+<span id="cb279-4"><a href="#cb279-4" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="st">'count'</span></span>
+<span id="cb279-5"><a href="#cb279-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>type               cases  population
+country     year                    
+Afghanistan 1999     745    19987071
+            2000    2666    20595360
+Brazil      1999   37737   172006362
+            2000   80488   174504898
+China       1999  212258  1272915272
+            2000  213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-17-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb281-1"><a href="#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unstack</span>(table2, <span class="op">:</span><span class="kw">type</span>, <span class="op">:</span>count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×4 DataFrame
+ Row │ country      year   cases   population
+     │ String       Int64  Int64?  Int64?
+─────┼────────────────────────────────────────
+   1 │ Afghanistan   1999     745    19987071
+   2 │ Afghanistan   2000    2666    20595360
+   3 │ Brazil        1999   37737   172006362
+   4 │ Brazil        2000   80488   174504898
+   5 │ China         1999  212258  1272915272
+   6 │ China         2000  213766  1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="separating" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="separating"><span class="header-section-number">5.4</span> Separating</h3>
 <p align="center">
 <img src="./tidy-17.png" height="200">
 </p>
-<ul>
-<li></li>
-</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-3" role="tab" aria-controls="tabset-18-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
-<span id="cb247-2"><a href="#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"population"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb283"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb283-2"><a href="#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"population"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country      year cases  population
@@ -2779,8 +3162,8 @@ RTFM
 <li>Separate into numeric values:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
-<span id="cb249-2"><a href="#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"population"</span>), <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb285"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb285-2"><a href="#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"population"</span>), <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country      year  cases population
@@ -2797,8 +3180,8 @@ RTFM
 <li>Separate at a fixed position:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
-<span id="cb251-2"><a href="#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(year, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"century"</span>, <span class="st">"year"</span>), <span class="at">sep =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb287"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb287-2"><a href="#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(year, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"century"</span>, <span class="st">"year"</span>), <span class="at">sep =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country     century year  rate             
@@ -2811,17 +3194,58 @@ RTFM
 6 China       20      00    213766/1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb289"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb289-1"><a href="#cb289-1" aria-hidden="true" tabindex="-1"></a>table3[[<span class="st">'cases'</span>, <span class="st">'population'</span>]] <span class="op">=</span> table3[<span class="st">'rate'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: pd.Series(<span class="bu">str</span>(x).split(<span class="st">"/"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-18-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb290"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb290-1"><a href="#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SplitApplyCombine</span></span>
+<span id="cb290-2"><a href="#cb290-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-3"><a href="#cb290-3" aria-hidden="true" tabindex="-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×3 DataFrame
+ Row │ country      year   rate
+     │ String       Int64  String
+─────┼───────────────────────────────────────
+   1 │ Afghanistan   1999  745/19987071
+   2 │ Afghanistan   2000  2666/20595360
+   3 │ Brazil        1999  37737/172006362
+   4 │ Brazil        2000  80488/174504898
+   5 │ China         1999  212258/1272915272
+   6 │ China         2000  213766/1280428583</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb292"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb292-1"><a href="#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">insertcols!</span>(table3, ([<span class="op">:</span>cases, <span class="op">:</span>population] <span class="op">.=&gt;</span> <span class="fu">invert</span>(<span class="fu">split</span>.(table3.rate, <span class="st">"/"</span>)))<span class="op">...</span>, makeunique <span class="op">=</span> <span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×5 DataFrame
+ Row │ country      year   rate               cases      population
+     │ String       Int64  String             SubStrin…  SubStrin…
+─────┼──────────────────────────────────────────────────────────────
+   1 │ Afghanistan   1999  745/19987071       745        19987071
+   2 │ Afghanistan   2000  2666/20595360      2666       20595360
+   3 │ Brazil        1999  37737/172006362    37737      172006362
+   4 │ Brazil        2000  80488/174504898    80488      174504898
+   5 │ China         1999  212258/1272915272  212258     1272915272
+   6 │ China         2000  213766/1280428583  213766     1280428583</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="unite" class="level3" data-number="5.5">
 <h3 data-number="5.5" class="anchored" data-anchor-id="unite"><span class="header-section-number">5.5</span> Unite</h3>
 <p align="center">
 <img src="./tidy-18.png" height="200">
 </p>
-<ul>
-<li></li>
-</ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-3" role="tab" aria-controls="tabset-19-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb294"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1" aria-hidden="true" tabindex="-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   country     century year  rate             
@@ -2838,8 +3262,8 @@ RTFM
 <li><code>unite()</code> is the inverse of <code>separate()</code>.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="sc">%&gt;%</span> </span>
-<span id="cb255-2"><a href="#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(new, century, year, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb296"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb296-1"><a href="#cb296-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="sc">%&gt;%</span> </span>
+<span id="cb296-2"><a href="#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(new, century, year, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   country     new   rate             
@@ -2852,18 +3276,95 @@ RTFM
 6 China       2000  213766/1280428583</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb298"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb298-1"><a href="#cb298-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb298-2"><a href="#cb298-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">'Afghanistan'</span>, <span class="st">'Afghanistan'</span>, <span class="st">'Brazil'</span>, <span class="st">'Brazil'</span>, <span class="st">'China'</span>, <span class="st">'China'</span>],</span>
+<span id="cb298-3"><a href="#cb298-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'century'</span>: [<span class="st">'19'</span>, <span class="st">'20'</span>, <span class="st">'19'</span>, <span class="st">'20'</span>, <span class="st">'19'</span>, <span class="st">'20'</span>],</span>
+<span id="cb298-4"><a href="#cb298-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>: [<span class="st">'99'</span>, <span class="st">'00'</span>, <span class="st">'99'</span>, <span class="st">'00'</span>, <span class="st">'99'</span>, <span class="st">'00'</span>],</span>
+<span id="cb298-5"><a href="#cb298-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'rate'</span>: [<span class="st">'745/19987071'</span>, <span class="st">'2666/20595360'</span>, <span class="st">'37737/172006362'</span>, <span class="st">'80488/174504898'</span>, <span class="st">'212258/1272915272'</span>, <span class="st">'213766/1280428583'</span>]</span>
+<span id="cb298-6"><a href="#cb298-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb298-7"><a href="#cb298-7" aria-hidden="true" tabindex="-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country century year               rate
+0  Afghanistan      19   99       745/19987071
+1  Afghanistan      20   00      2666/20595360
+2       Brazil      19   99    37737/172006362
+3       Brazil      20   00    80488/174504898
+4        China      19   99  212258/1272915272
+5        China      20   00  213766/1280428583</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb300"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb300-1"><a href="#cb300-1" aria-hidden="true" tabindex="-1"></a>table5[<span class="st">'new'</span>] <span class="op">=</span> table5[<span class="st">'century'</span>] <span class="op">+</span> table5[<span class="st">'year'</span>]</span>
+<span id="cb300-2"><a href="#cb300-2" aria-hidden="true" tabindex="-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country century year               rate   new
+0  Afghanistan      19   99       745/19987071  1999
+1  Afghanistan      20   00      2666/20595360  2000
+2       Brazil      19   99    37737/172006362  1999
+3       Brazil      20   00    80488/174504898  2000
+4        China      19   99  212258/1272915272  1999
+5        China      20   00  213766/1280428583  2000</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-19-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb302"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb302-1"><a href="#cb302-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb302-2"><a href="#cb302-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>, <span class="st">"China"</span>],</span>
+<span id="cb302-3"><a href="#cb302-3" aria-hidden="true" tabindex="-1"></a>    century <span class="op">=</span> [<span class="st">"19"</span>, <span class="st">"20"</span>, <span class="st">"19"</span>, <span class="st">"20"</span>, <span class="st">"19"</span>, <span class="st">"20"</span>],</span>
+<span id="cb302-4"><a href="#cb302-4" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> [<span class="st">"99"</span>, <span class="st">"00"</span>, <span class="st">"99"</span>, <span class="st">"00"</span>, <span class="st">"99"</span>, <span class="st">"00"</span>],</span>
+<span id="cb302-5"><a href="#cb302-5" aria-hidden="true" tabindex="-1"></a>    rate <span class="op">=</span> [<span class="st">"745/19987071"</span>, <span class="st">"2666/20595360"</span>, <span class="st">"37737/172006362"</span>, <span class="st">"80488/174504898"</span>, <span class="st">"212258/1272915272"</span>, <span class="st">"213766/1280428583"</span>]</span>
+<span id="cb302-6"><a href="#cb302-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×4 DataFrame
+ Row │ country      century  year    rate
+     │ String       String   String  String
+─────┼─────────────────────────────────────────────────
+   1 │ Afghanistan  19       99      745/19987071
+   2 │ Afghanistan  20       00      2666/20595360
+   3 │ Brazil       19       99      37737/172006362
+   4 │ Brazil       20       00      80488/174504898
+   5 │ China        19       99      212258/1272915272
+   6 │ China        20       00      213766/1280428583</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb304"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb304-1"><a href="#cb304-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-2"><a href="#cb304-2" aria-hidden="true" tabindex="-1"></a>table5[!, <span class="op">:</span><span class="kw">new</span>] <span class="op">=</span> <span class="fu">parse</span>.(<span class="dt">Int</span>, <span class="fu">string</span>.(table5[!, <span class="op">:</span>century]) <span class="op">.*</span> <span class="fu">string</span>.(table5[!, <span class="op">:</span>year]));</span>
+<span id="cb304-3"><a href="#cb304-3" aria-hidden="true" tabindex="-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6×5 DataFrame
+ Row │ country      century  year    rate               new
+     │ String       String   String  String             Int64
+─────┼────────────────────────────────────────────────────────
+   1 │ Afghanistan  19       99      745/19987071        1999
+   2 │ Afghanistan  20       00      2666/20595360       2000
+   3 │ Brazil       19       99      37737/172006362     1999
+   4 │ Brazil       20       00      80488/174504898     2000
+   5 │ China        19       99      212258/1272915272   1999
+   6 │ China        20       00      213766/1280428583   2000</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="drop-missing-values-andor-duplicate-rows" class="level3" data-number="5.6">
 <h3 data-number="5.6" class="anchored" data-anchor-id="drop-missing-values-andor-duplicate-rows"><span class="header-section-number">5.6</span> Drop missing values and/or duplicate rows</h3>
 <ul>
 <li>Here’s a tibble with some missing values and duplicated rows:</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-3" role="tab" aria-controls="tabset-20-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb257-2"><a href="#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>),</span>
-<span id="cb257-3"><a href="#cb257-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">1999</span>, <span class="cn">NA</span>),</span>
-<span id="cb257-4"><a href="#cb257-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cases =</span> <span class="fu">c</span>(<span class="dv">745</span>, <span class="dv">745</span>, <span class="cn">NA</span>, <span class="dv">212258</span>)</span>
-<span id="cb257-5"><a href="#cb257-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb306"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb306-1"><a href="#cb306-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb306-2"><a href="#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>),</span>
+<span id="cb306-3"><a href="#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">1999</span>, <span class="cn">NA</span>),</span>
+<span id="cb306-4"><a href="#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cases =</span> <span class="fu">c</span>(<span class="dv">745</span>, <span class="dv">745</span>, <span class="cn">NA</span>, <span class="dv">212258</span>)</span>
+<span id="cb306-5"><a href="#cb306-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   country      year  cases
@@ -2874,11 +3375,54 @@ RTFM
 4 China          NA 212258</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb308"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb308-1"><a href="#cb308-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb308-2"><a href="#cb308-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country'</span>: [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>],</span>
+<span id="cb308-3"><a href="#cb308-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>: [<span class="dv">1999</span>, <span class="dv">1999</span>, <span class="dv">1999</span>, <span class="va">None</span>],</span>
+<span id="cb308-4"><a href="#cb308-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cases'</span>: [<span class="dv">745</span>, <span class="dv">745</span>, <span class="va">None</span>, <span class="dv">212258</span>]</span>
+<span id="cb308-5"><a href="#cb308-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb308-6"><a href="#cb308-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country    year     cases
+0  Afghanistan  1999.0     745.0
+1  Afghanistan  1999.0     745.0
+2       Brazil  1999.0       NaN
+3        China     NaN  212258.0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-20-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb310"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb310-1"><a href="#cb310-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb310-2"><a href="#cb310-2" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> [<span class="st">"Afghanistan"</span>, <span class="st">"Afghanistan"</span>, <span class="st">"Brazil"</span>, <span class="st">"China"</span>],</span>
+<span id="cb310-3"><a href="#cb310-3" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> [<span class="fl">1999</span>, <span class="fl">1999</span>, <span class="fl">1999</span>, <span class="cn">missing</span>],</span>
+<span id="cb310-4"><a href="#cb310-4" aria-hidden="true" tabindex="-1"></a>    cases <span class="op">=</span> [<span class="fl">745</span>, <span class="fl">745</span>, <span class="cn">missing</span>, <span class="fl">212258</span>]</span>
+<span id="cb310-5"><a href="#cb310-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4×3 DataFrame
+ Row │ country      year     cases
+     │ String       Int64?   Int64?
+─────┼───────────────────────────────
+   1 │ Afghanistan     1999      745
+   2 │ Afghanistan     1999      745
+   3 │ Brazil          1999  missing
+   4 │ China        missing   212258</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <ul>
 <li>To drop all rows with missing values</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-21-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-1" role="tab" aria-controls="tabset-21-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-2" role="tab" aria-controls="tabset-21-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-3" role="tab" aria-controls="tabset-21-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-21-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-21-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb312"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb312-1"><a href="#cb312-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   country      year cases
@@ -2887,12 +3431,42 @@ RTFM
 2 Afghanistan  1999   745</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-21-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb314"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb314-1"><a href="#cb314-1" aria-hidden="true" tabindex="-1"></a>df.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country    year  cases
+0  Afghanistan  1999.0  745.0
+1  Afghanistan  1999.0  745.0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-21-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb316"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb316-1"><a href="#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dropmissing</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2×3 DataFrame
+ Row │ country      year   cases
+     │ String       Int64  Int64
+─────┼───────────────────────────
+   1 │ Afghanistan   1999    745
+   2 │ Afghanistan   1999    745</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <ul>
 <li>To remove duplicate rows</li>
 </ul>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-22-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-1" role="tab" aria-controls="tabset-22-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-2" role="tab" aria-controls="tabset-22-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-3" role="tab" aria-controls="tabset-22-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-22-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-22-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb261"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb261-1"><a href="#cb261-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb261-2"><a href="#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb318"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb318-2"><a href="#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   country      year  cases
@@ -2900,6 +3474,34 @@ RTFM
 1 Afghanistan  1999    745
 2 Brazil       1999     NA
 3 China          NA 212258</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-22-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb320"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb320-1"><a href="#cb320-1" aria-hidden="true" tabindex="-1"></a>df.drop_duplicates()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country    year     cases
+0  Afghanistan  1999.0     745.0
+2       Brazil  1999.0       NaN
+3        China     NaN  212258.0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-22-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-3-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb322"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb322-1"><a href="#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3×3 DataFrame
+ Row │ country      year     cases
+     │ String       Int64?   Int64?
+─────┼───────────────────────────────
+   1 │ Afghanistan     1999      745
+   2 │ Brazil          1999  missing
+   3 │ China        missing   212258</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
