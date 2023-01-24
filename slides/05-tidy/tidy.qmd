@@ -55,11 +55,11 @@ We will spend the next few weeks studying some R packages for typical data scien
 
 * Interactive data visualization by Shiny.
 
-* Interface with databases, eg., SQL and Apache Spark.
+* Interface with databases, e.g., SQL, Google BigQuery, and Apache Spark.
 
 * String and text data manipulation. 
 
-* Webscraping.
+* Web scraping.
 
 A typical data science project:
 
@@ -104,7 +104,7 @@ library("tidyverse")
 
 The [pandas](https://pandas.pydata.org/) package is the Python analog of tidyverse.
 
-![pandas](https://pandas.pydata.org/static/img/pandas.svg){width=200}
+![](https://pandas.pydata.org/static/img/pandas.svg){width=200}
 
 Follow the [installation instructions](https://pandas.pydata.org/getting_started.html) to install pandas package in Python.
 
@@ -112,12 +112,16 @@ Follow the [installation instructions](https://pandas.pydata.org/getting_started
 
 The [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) package and the [JuliaData ecosystem](https://github.com/JuliaData) is the Julia analog of tidyverse.
 
+![](https://dataframes.juliadata.org/stable/assets/logo.png){width=200}
+
 Install DataFrames.jl by:
-```{{ julia }}
+```{julia}
+#| eval: false
 add DataFrames
 ```
 in the package mode or
-```{{ julia }}
+```{julia}
+#| eval: false
 using Pkg
 Pkg.add("DatamFrames")
 ```
@@ -159,12 +163,13 @@ as.data.frame(tb)
 
 #### Construct tibbles by columns
 
-- Create tibble/dataframe from individual vectors. Note values for `y` are recycled:
+- Create tibble/dataframe from individual vectors.
 
 ::: {.panel-tabset}
 
 #### R
 
+Note values for `y` are recycled:
 ```{r}
 tibble(
   x = 1:5, 
@@ -182,7 +187,10 @@ import pandas as pd
 import numpy as np
 
 # Create DataFrame from a dictionary
-df = pd.DataFrame({'x': np.linspace(1, 5, 5), 'y': np.ones(5)})
+df = pd.DataFrame({
+  'x': np.linspace(1, 5, 5), 
+  'y': np.ones(5)
+  })
 df['z'] = df['x']**2 + df['y']
 df
 ```
@@ -204,7 +212,7 @@ df
 
 #### Construct tibbles by rows
 
-- Transposed tibbles, or constracut dataframe by rows:
+- Transposed tibbles, or construct dataframe by rows:
 
 ::: {.panel-tabset}
 
@@ -269,7 +277,7 @@ nycflights13::flights %>%
 ```
 Here we see the **pipe operator** `%>%` pipes the output from previous command to the (first) argument of the next command.
 
-- To change the default print setting:
+- To change the default print setting globally:
     - `options(tibble.print_max = n, tibble.print_min = m)`: if more than `m` rows, print only `n` rows.
     - `options(dplyr.print_min = Inf)`: print all row.
     - `options(tibble.width = Inf)`: print all columns.
@@ -355,23 +363,30 @@ df %>% .[c("x", "y")]
 
 - Create a tibble with two columns.
 ```{python}
-df = pd.DataFrame({'x': np.random.rand(5), 'y': np.random.randn(5)});
+df = pd.DataFrame({
+  'x': np.random.rand(5), 
+  'y': np.random.randn(5)
+  });
 df
 ```
 
 - Extract a column by name (`loc`):
 ```{python}
+# Return a vector
 df.loc[:, "x"]
 ```
 
 - Extract a column by position (`iloc`). Remember Python indexing starts from 0!.
 ```{python}
+# Return a vector
 df.iloc[:, 0]
 ```
 
 - Access multiple columns at once.
 ```{python}
+# Return a DataFrame
 df.loc[:, ['x', 'y']]
+# Return a DataFrame
 df.iloc[:, [0, 1]]
 ```
 
@@ -386,6 +401,7 @@ df = DataFrame(x = rand(5), y = randn(5))
 ```{julia}
 # Return a vector
 df.x
+# Return a vector
 df."x"
 # Return a vector
 df[!, :x]  # does not make a copy
@@ -430,21 +446,42 @@ df[!, [:x, :y]]
 
 Access row(s) by index(es).
 ```{r}
+# Return a dataframe
 df[1,]
+```
+
+Multiple rows.
+```{r}
+# Return a dataframe
+df[1:3,]
 ```
 
 #### Python
 
 Access row(s) by index(es).
 ```{python}
+# Return a vector
 df.iloc[0]
+```
+
+Multiple rows.
+```{python}
+# Return a dataframe
+df.iloc[[0, 1, 2]]
 ```
 
 #### Julia
 
 Access row(s) by index(es).
 ```{julia}
+# Return a DataFrameRow
 df[1, :]
+```
+
+Multiple rows.
+```{julia}
+# Return a dataframe
+df[1:3, :]
 ```
 
 :::
@@ -538,7 +575,7 @@ heights
 import io
 import requests
 
-url = "https://raw.githubusercontent.com/ucla-econ-425t/2023winter/master/slides/data/Boston.csv"
+url = "https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/05-tidy/heights.csv"
 s = requests.get(url).content
 heights = pd.read_csv(io.StringIO(s.decode('utf-8')), index_col = 0)
 heights
@@ -548,10 +585,11 @@ heights
 ```{python}
 from io import StringIO
 
-pd.read_csv(
-  StringIO("""a,b,c
-  1,2,3
-  4,5,6""")
+pd.read_csv(StringIO(
+    """a,b,c
+    1,2,3
+    4,5,6"""
+    )
   )
 ```
 
@@ -699,7 +737,7 @@ CSV.File(
 ::: {.callout-tip}
 ## RTFM
 
-Modern text file parsers (`read_csv` in tidyverse and Pandas, `CSV.File` in CSV.jl) have rich functionalities. It's a good idea to browse the documentation before ingesting text data files. It can save tons of data cleaning time.
+Modern text file parsers (`read_csv` in tidyverse, `data.table` in R, Pandas in Python, `CSV.File` in CSV.jl) have extremely rich functionalities. It's a good idea to browse the documentation before ingesting text data files. It can save tons of data cleaning time.
 :::
 
 ### Writing to a file
@@ -982,7 +1020,7 @@ table1 = DataFrame(
 :::
 
 
-- Example table2 is not tidy.
+- Example table2 is not tidy (?). Actually this long format can be useful for plotting in ggplot2.
 
 ::: {.panel-tabset}
 
@@ -1103,16 +1141,19 @@ rename!(table4b, Dict(:y1999 => Symbol("1999"), :y2000 => Symbol("2000")))
 ### pivot_longer (gathering)
 
 <p align="center">
-<img src="./tidy-9.png" height="200">
+<img src="./tidy-9.png" height="300">
 </p>
 
-- `gather` columns into a new pair of variables.
+- `gather` (deprecated command) columns into a new pair of variables.
 ```{r}
+# Deprecated command
 table4a %>%
   gather(`1999`, `2000`, key = "year", value = "cases")
 ```
     
-- `gather` function has been superseded by `pivot_longer`    
+- `gather` function has been superseded by `pivot_longer`.
+
+- In Python, it's called `melt`. In Julia, it's called `stack`.
 
 ::: {.panel-tabset}
 
@@ -1138,7 +1179,8 @@ tidy4a
 #### Julia
 
 ```{julia}
-tidy4a = @pipe stack(table4a, ["1999", "2000"]) |> rename!(_, Dict(:variable => :year, :value => :cases))
+tidy4a = @pipe stack(table4a, ["1999", "2000"]) |> 
+  rename!(_, Dict(:variable => :year, :value => :cases))
 ```
 
 :::
@@ -1193,7 +1235,7 @@ leftjoin!(tidy4a, tidy4b, on = [:country, :year])
 ### pivot_wider (spreading)
 
 <p align="center">
-<img src="./tidy-8.png" height="200">
+<img src="./tidy-8.png" height="300">
 </p>
 
 - Spreading is the opposite of gathering.
@@ -1202,7 +1244,9 @@ table2 %>%
   spread(key = type, value = count)
 ```
 
-- `spread` function has been superseded by `pivot_wider`
+- `spread` function has been superseded by `pivot_wider`.
+
+- In Python, it's called `pivot`. In Julia, it's called `unstack`.
 
 ::: {.panel-tabset}
 
@@ -1234,7 +1278,7 @@ unstack(table2, :type, :count)
 ### Separating
 
 <p align="center">
-<img src="./tidy-17.png" height="200">
+<img src="./tidy-17.png" height="300">
 </p>
 
 ::: {.panel-tabset}
@@ -1242,6 +1286,9 @@ unstack(table2, :type, :count)
 #### R
 
 ```{r}
+# Before separation
+table3
+# After separation
 table3 %>% 
   separate(rate, into = c("cases", "population"))
 ```
@@ -1261,7 +1308,11 @@ table3 %>%
 #### Python
 
 ```{python}
+# Before separation
+table3
+# After separation
 table3[['cases', 'population']] = table3['rate'].apply(lambda x: pd.Series(str(x).split("/")))
+table3
 ```
 
 #### Julia
@@ -1269,7 +1320,9 @@ table3[['cases', 'population']] = table3['rate'].apply(lambda x: pd.Series(str(x
 ```{julia}
 using SplitApplyCombine
 
+# Before separation
 table3
+# After separation
 insertcols!(table3, ([:cases, :population] .=> invert(split.(table3.rate, "/")))..., makeunique = true)
 ```
 
@@ -1278,7 +1331,7 @@ insertcols!(table3, ([:cases, :population] .=> invert(split.(table3.rate, "/")))
 ### Unite
 
 <p align="center">
-<img src="./tidy-18.png" height="200">
+<img src="./tidy-18.png" height="300">
 </p>
 
 ::: {.panel-tabset}
@@ -1286,11 +1339,13 @@ insertcols!(table3, ([:cases, :population] .=> invert(split.(table3.rate, "/")))
 #### R
 
 ```{r}
+# Before unite
 table5
 ```
 
 - `unite()` is the inverse of `separate()`. 
 ```{r}
+# After unite
 table5 %>% 
   unite(new, century, year, sep = "")
 ```
@@ -1298,6 +1353,7 @@ table5 %>%
 #### Python
 
 ```{python}
+# Before unite
 table5 = pd.DataFrame({
     'country': ['Afghanistan', 'Afghanistan', 'Brazil', 'Brazil', 'China', 'China'],
     'century': ['19', '20', '19', '20', '19', '20'],
@@ -1308,6 +1364,7 @@ table5
 ```
 
 ```{python}
+# After unite
 table5['new'] = table5['century'] + table5['year']
 table5
 ```
@@ -1315,13 +1372,14 @@ table5
 #### Julia
 
 ```{julia}
+# Before unite
 table5 = DataFrame(
     country = ["Afghanistan", "Afghanistan", "Brazil", "Brazil", "China", "China"],
     century = ["19", "20", "19", "20", "19", "20"],
     year = ["99", "00", "99", "00", "99", "00"],
     rate = ["745/19987071", "2666/20595360", "37737/172006362", "80488/174504898", "212258/1272915272", "213766/1280428583"]
 )
-
+# After unite
 table5[!, :new] = parse.(Int, string.(table5[!, :century]) .* string.(table5[!, :year]));
 table5
 ```
