@@ -23,13 +23,57 @@ knitr:
 ---
 
 Display machine information for reproducibility.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 sessionInfo()
 ```
-Load tidyverse
+
+#### Python
+
+```{python}
+import IPython
+print(IPython.sys_info())
+```
+
+#### Julia
+
+```{julia}
+using InteractiveUtils
+versioninfo()
+```
+
+:::
+
+Load tidyverse (R), Pandas (Python), and DataFrames.jl (Julia).
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 library(tidyverse)
 ```
+
+#### Python
+
+```{python}
+# Load the pandas library
+import pandas as pd
+# Load numpy for array manipulation
+import numpy as np
+```
+
+#### Julia
+
+```{julia}
+using DataFrames, Pipe, StatsBase
+```
+
+:::
 
 A typical data science project:
 
@@ -37,35 +81,98 @@ A typical data science project:
 <img src="./data-science.png" height="275">
 </p>
 
-
 ## nycflights13 data
 
 - Available from the nycflights13 package. 
 
 - 336,776 flights that departed from New York City in 2013:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 library("nycflights13")
 flights
 ```
 
-- To display more rows:
-```{r}
-flights %>% print(n = 20)
-```
-Note `%>%` is the pipe in tidyverse. Above command is equivalent to `print(flights, n = 20)`.
+#### Python
 
-- To display all rows:
+The nycflights13 data is available from the nycflights13 package in Python.
+```{python}
+from nycflights13 import flights
+
+flights
+```
+
+Note there are some differences of this `flights` data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so `dep_time` , `arr_time` are `float64` instead of `int64`. The `time_hour` data seems to be very different from tidyverse.
+```{python}
+flights.info()
+```
+
+To be more consistent with `nycflights13` in tidyverse, we cast `time_hour` to `datetime` type.
+```{python}
+flights['time_hour'] = pd.to_datetime(flights['time_hour'])
+```
+
+#### Julia
+
+Let's use RCall.jl to retrieve the nycflights13 data from R.
+```{julia}
+using RCall
+
+R"""
+library(nycflights13)
+"""
+
+flights = rcopy(R"flights")
+```
+
+:::
+
+To display more rows or columns: 
+
+::: {.panel-tabset}
+
+#### R
+
+- By default, tibble prints the first 10 rows and all columns _that fit on screen_.
 ```{r}
+flights
+```
+
+- To change number of rows and columns to display:
+```{r}
+nycflights13::flights %>% 
+  print(n = 10, width = Inf)
+```
+Here we see the **pipe operator** `%>%` pipes the output from previous command to the (first) argument of the next command.
+
+- To change the default print setting globally:
+    - `options(tibble.print_max = n, tibble.print_min = m)`: if more than `m` rows, print only `n` rows.
+    - `options(dplyr.print_min = Inf)`: print all row.
+    - `options(tibble.width = Inf)`: print all columns.
+
+#### Python
+
+Pandas by default displays 10 rows and limits the number of columns to the display area.
+```{python}
+from nycflights13 import flights
+flights
+```
+We can override this behavior by
+```{python}
 #| eval: false
-flights %>% print(n = nrow(.))
+pd.set_option("display.max_rows", 500)
+pd.set_option("display.max_columns", 20)
 ```
-Do **not** try this on the `flights` data, which has too many rows.
-    
-- To display more columns (variables):
-```{r}
-flights %>% print(width = Inf)
-```
-The `width` argument controls the screen width.
+
+
+#### Julia
+
+By default DataFrames.jl limits the number of rows and columns when displaying a data frame in a Jupyter Notebook to 25 and 100, respectively. You can override this behavior by changing the values of the `ENV["DATAFRAMES_COLUMNS"]` and `ENV["DATAFRAMES_ROWS"]` variables to hold the maximum number of columns and rows of the output. All columns or rows will be printed if those numbers are equal or lower than 0.
+
+:::
 
 ## dplyr basics
 
@@ -79,26 +186,81 @@ The `width` argument controls the screen width.
 
 * Collapse many values down to a single summary: `summarise()`.
 
+```
+verb          meaning
+--------------------------------------------
+filter()      subset observations (or rows)
+arrange()     re-order the observations
+distinct()    remove duplicate entries
+select()      select variables (or columns)
+mutate()      add new variables (or columns)
+group_by()    aggregate
+summarise()   reduce to a single row
+left_join()   merge two data objects
+collect()     force computation and bring data back into R
+```
+
 ## Manipulate rows (cases)
 
 ### Filter rows with `filter()`
 
 - Flights on Jan 1st:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 # same as filter(flights, month == 1 & day == 1)
 filter(flights, month == 1, day == 1)
 ```
 
-----
+#### Python
+
+```{python}
+flights[(flights['month'] == 1) & (flights['day'] == 1)]
+```
+
+#### Julia
+
+```{julia}
+filter(row -> (row.month == 1) & (row.day == 1), flights)
+```
+
+:::
+
 
 - Flights in Nov or Dec:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 filter(flights, month == 11 | month == 12)
 ```
 
+#### Python
+
+```{python}
+flights[(flights['month'] == 11) | (flights['month'] == 12)]
+```
+
+#### Julia
+
+```{julia}
+filter(row -> (row.month == 11) | (row.month == 12), flights)
+```
+:::
+
 ### Remove rows with duplicate values
 
 - One row from each month:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 distinct(flights, month, .keep_all = TRUE)
 ```
@@ -108,21 +270,74 @@ distinct(flights, month, .keep_all = TRUE)
 distinct(flights, month)
 ```
 
+#### Python
+
+```{python}
+flights.drop_duplicates(subset = ['month'])
+```
+
+#### Julia
+
+```{julia}
+unique(flights, :month)
+```
+
+:::
+
 ### Sample rows
+
+::: {.panel-tabset}
+
+#### R
 
 - Randomly select `n` rows:
 ```{r}
 sample_n(flights, 10, replace = TRUE)
 ```
 
-----
-
 - Randomly select fraction of rows:
 ```{r}
 sample_frac(flights, 0.1, replace = TRUE)
 ```
 
+#### Python
+
+Sample `n=10` rows.
+```{python}
+flights.sample(n = 10, axis = 0)
+```
+
+Sample 10\% rows:
+```{python}
+flights.sample(frac = 0.1)
+```
+
+#### Julia
+
+I'm not sure whether there's a native function in DataFrames.jl for sampling.
+
+Sample 5 rows:
+```{julia}
+rowidx = StatsBase.sample(1:nrow(flights), 5, replace = false);
+flights[rowidx, :]
+```
+Sample 10\% rows:
+```{julia}
+rowidx = StatsBase.sample(
+  1:nrow(flights), 
+  round(Int, nrow(flights) * 0.1), 
+  replace = false);
+flights[rowidx, :]
+```
+
+:::
+
+
 ### Select rows by position
+
+::: {.panel-tabset}
+
+#### R
 
 - Select rows by position:
 ```{r}
@@ -139,8 +354,6 @@ slice_head(flights, n = 5)
 slice_tail(flights, n = 5)
 ```
 
-----
-
 - Top `n` rows with the highest values:
 ```{r}
 # deprecated: top_n(flights, 5, wt = time_hour)
@@ -150,16 +363,70 @@ slice_max(flights, n = 5, order_by = time_hour)
 
 - Bottom `n` rows with lowest values:
 ```{r}
-#| eval: false
 # deprecated: top_n(flights, -5, wt = time_hour)
 # Why it takes REALLY long???
-# slice_max(flights, n = 5, order_by = desc(time_hour)) # is fast
-slice_min(flights, n = 5, order_by = time_hour)
+slice_max(flights, n = 5, order_by = desc(time_hour)) # is fast
+# slice_min(flights, n = 5, order_by = time_hour) # very slow
 ```
 
-----
-
 - `slice_*` verbs apply to groups for grouped tibbles.
+
+#### Python
+
+- Select rows by position:
+```{python}
+flights.iloc[range(0, 5)]
+```
+
+- First rows:
+```{python}
+flights.head(5)
+```
+
+- Last rows:
+```{python}
+flights.tail(5)
+```
+
+- Top `n` rows with the highest values:
+```{python}
+flights.nlargest(n = 5, columns = 'time_hour')
+```
+
+- Bottom `n` rows with lowest values:
+```{python}
+flights.nsmallest(n = 5, columns = 'time_hour')
+```
+I don't think `nlargest` and `nsmallest` apply to grouped DataFrame. But I may be wrong.
+
+#### Julia
+
+- Select rows by position:
+```{julia}
+flights[1:5, :]
+```
+
+- First rows:
+```{julia}
+first(flights, 5)
+```
+
+- Last rows:
+```{julia}
+last(flights, 5)
+```
+
+- Top `n` rows with the highest values:
+```{julia}
+last(sort(flights, [:time_hour]), 5)
+```
+
+- Bottom `n` rows with lowest values:
+```{julia}
+first(sort(flights, [:time_hour]), 5)
+```
+
+:::
 
 ### Arrange rows with `arrange()`
 
