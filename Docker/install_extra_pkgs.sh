@@ -25,10 +25,22 @@ apt_install \
 
 # install extra R packages
 install2.r --error --skipmissing --skipinstalled -n "$NCPUS" \
+    ggmap \
     ggrepel \
     htmlwidgets \
+    JuliaCall \
     mapproj \
     quantmod
+
+python3 -m pip --no-cache-dir install --upgrade --ignore-installed \
+    cartopy \
+    IPython \
+    matplotlib \
+    numpy \
+    pandas \
+    plotnine \
+    seaborn 
+    
 
 # Clean up
 rm -rf /var/lib/apt/lists/*

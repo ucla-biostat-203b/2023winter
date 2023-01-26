@@ -10,3 +10,4 @@ services:
     volumes:
       - "/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter:/home/rstudio/203b-lecture"
       - "/Users/huazhou/Documents/Box\ Sync/MIMIC/mimic-iv-1.0:/home/rstudio/mimic"
+      - "/Users/huazhou/Desktop/203b-hw:/home/rstudio/203b-hw"
