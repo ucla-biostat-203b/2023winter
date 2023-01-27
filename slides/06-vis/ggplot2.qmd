@@ -783,7 +783,8 @@ plt.figure()
 sns.histplot(
   data = diamonds,
   x = "cut",
-  hue = "clarity"
+  hue = "clarity",
+  multiple = "stack"
 )
 plt.show()
 ```
