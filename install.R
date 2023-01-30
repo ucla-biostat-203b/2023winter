@@ -4,6 +4,7 @@ install.packages(
   "maps",
   "markdown", 
   "nycflights13",
+  "reticulate",
   "rmarkdown", 
   "tidyverse"
 )
