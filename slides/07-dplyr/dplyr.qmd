@@ -137,9 +137,6 @@ To display more rows or columns:
 #### R
 
 - By default, tibble prints the first 10 rows and all columns _that fit on screen_.
-```{r}
-flights
-```
 
 - To change number of rows and columns to display:
 ```{r}
@@ -155,12 +152,9 @@ Here we see the **pipe operator** `%>%` pipes the output from previous command t
 
 #### Python
 
-Pandas by default displays 10 rows and limits the number of columns to the display area.
-```{python}
-from nycflights13 import flights
-flights
-```
-We can override this behavior by
+- Pandas by default displays 10 rows and limits the number of columns to the display area.
+
+- We can override this behavior by
 ```{python}
 #| eval: true
 pd.set_option("display.max_rows", 500)
@@ -304,21 +298,21 @@ sample_frac(flights, 0.1, replace = TRUE)
 
 Sample `n=10` rows.
 ```{python}
-flights.sample(n = 10, axis = 0)
+flights.sample(n = 10, axis = 0, replace = True)
 ```
 
 Sample 10\% rows:
 ```{python}
-flights.sample(frac = 0.1)
+flights.sample(frac = 0.1, replace = True)
 ```
 
 #### Julia
 
 I'm not sure whether there's a native function in DataFrames.jl for sampling.
 
-Sample 5 rows:
+Sample 10 rows:
 ```{julia}
-rowidx = StatsBase.sample(1:nrow(flights), 5, replace = false);
+rowidx = StatsBase.sample(1:nrow(flights), 10, replace = true);
 flights[rowidx, :]
 ```
 Sample 10\% rows:
@@ -326,7 +320,7 @@ Sample 10\% rows:
 rowidx = StatsBase.sample(
   1:nrow(flights), 
   round(Int, nrow(flights) * 0.1), 
-  replace = false);
+  replace = true);
 flights[rowidx, :]
 ```
 
@@ -438,6 +432,10 @@ first(sort(flights, [:time_hour]), 5)
 ```{r}
 arrange(flights, year, month, day)
 ```
+Note input order matters!
+```{r}
+arrange(flights, day, month, year)
+```
 
 - Sort in descending order:
 ```{r}
@@ -448,9 +446,11 @@ arrange(flights, desc(arr_delay)) %>%
 - By default, `arrange` ignores grouping in grouped tibbles. Set `.by_group = TRUE` to arrange within each group.
 
 ```{r}
+# What are the worst delays in each month?
 flights %>%
   group_by(month) %>%
-  arrange(desc(arr_delay), .by_group = TRUE)
+  arrange(desc(arr_delay), .by_group = TRUE) %>%
+  print(width = Inf)
 ```
 
 #### Python
@@ -529,6 +529,7 @@ select(flights, [:year, :month, :day])
 
 #### R
 
+Not displayed because the vector is long.
 ```{r}
 #| eval: false
 pull(flights, year)
@@ -537,6 +538,7 @@ pull(flights, year)
 #### Python
 
 ```{python}
+#| eval: false
 # Following are same
 flights.year
 flights.loc[:, 'year']
@@ -544,6 +546,7 @@ flights.loc[:, 'year']
 #### Julia
 
 ```{julia}
+#| eval: false
 # Return a vector
 flights.year
 # Return a vector
@@ -557,6 +560,8 @@ flights[:, :year] # make a copy!
 # Return a vector
 flights[:, "year"] # make a copy!
 ```
+
+:::
 
 - Select columns between two variables:
 
@@ -718,9 +723,10 @@ flights_sml
 #### R
 
 ```{r}
-mutate(flights_sml,
-       gain = arr_delay - dep_delay,
-       speed = distance / air_time * 60
+mutate(
+  flights_sml,
+  gain = arr_delay - dep_delay,
+  speed = distance / air_time * 60
 )
 ```
 
@@ -737,8 +743,8 @@ flights_sml
 Julia analog is `transform`:
 ```{julia}
 # Following are equivalent
-transform(flights, [:arr_delay, :dep_delay] => (-) => :gain)
-insertcols!(flights, :gain => flights.arr_delay - flights.dep_delay)
+transform(flights_sml, [:arr_delay, :dep_delay] => (-) => :gain)
+insertcols!(flights_sml, :gain => flights.arr_delay - flights.dep_delay)
 ```
 
 :::
@@ -757,11 +763,11 @@ mutate(flights_sml,
 )
 ```
 
-#### Python
+#### Python (???)
 
 Not sure how to refer to columns in the same command.
 
-#### Julia
+#### Julia (???)
 
 Not sure how to do this, except using two lines.
 ```{julia}
@@ -782,10 +788,11 @@ Not sure how to do this, except using two lines.
 
 - Only keep the new variables by `transmute()`:
 ```{r}
-transmute(flights,
-          gain = arr_delay - dep_delay,
-          hours = air_time / 60,
-          gain_per_hour = gain / hours
+transmute(
+  flights,
+  gain = arr_delay - dep_delay,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
 )
 ```
 
@@ -800,7 +807,9 @@ transmute(flights,
 mutate_all(data, funs(log(.), log2(.)))
 ```
 
-#### Python
+#### Python (???)
+
+TODO
 
 #### Julia
 
@@ -846,7 +855,7 @@ flights.agg({'dep_delay': np.mean})
 #### Julia
 
 ```{julia}
-combine(flights, "dep_delay" => x -> mean(skipmissing(x)))
+combine(flights, :dep_delay => x -> mean(skipmissing(x)) => :delay)
 ```
 
 :::
@@ -866,6 +875,7 @@ by_day <- group_by(flights, year, month, day) %>%
 
 ```{python}
 by_day = flights.groupby(['year', 'month', 'day'])
+by_day
 ```
 
 #### Julia
