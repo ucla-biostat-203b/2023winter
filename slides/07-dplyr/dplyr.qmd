@@ -855,7 +855,7 @@ flights.agg({'dep_delay': np.mean})
 #### Julia
 
 ```{julia}
-combine(flights, :dep_delay => x -> mean(skipmissing(x)) => :delay)
+combine(flights, :dep_delay => (x -> mean(skipmissing(x))) => :delay)
 ```
 
 :::
@@ -1111,7 +1111,7 @@ not_cancelled %>%
   arrange(desc(carriers))
 ```
 
-Equivalently
+Similarly
 ```{r}
 # which destination has most flights from NYC?
 not_cancelled %>% 
@@ -1360,7 +1360,6 @@ popular_dests[popular_dests['arr_delay'] > 0].groupby(
   groupby(_, :dest) |>
   combine(_, :arr_delay => (x -> x ./ sum(x)) => :prop_delay)
 ```
-
 
 ## Combine tables
 
@@ -1632,8 +1631,6 @@ leftjoin(x, y, on = :key)
 ```
 
 :::
-
-    
     - A **right join** keeps all observations in `y`.
     
 ::: {.panel-tabset}    
@@ -1657,8 +1654,6 @@ rightjoin(x, y, on = :key)
 ```
 
 :::
-
-    
     - A **full join** keeps all observations in `x` or `y`.
     
 ::: {.panel-tabset}
@@ -1683,9 +1678,9 @@ outerjoin(x, y, on = :key)
 
 :::
     
-    <p align="center">
-    <img src="./join-outer.png" height="275">
-    </p>
+<p align="center">
+<img src="./join-outer.png" height="275">
+</p>
     
 ### Duplicate keys
 
@@ -1707,11 +1702,13 @@ x <- tribble(
   2, "x3",
   1, "x4"
 )
+x
 y <- tribble(
   ~key, ~val_y,
   1, "y1",
   2, "y2"
 )
+y
 left_join(x, y, by = "key")
 ```
 
