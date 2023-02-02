@@ -105,7 +105,7 @@ from nycflights13 import flights
 flights
 ```
 
-Note there are some differences of this `flights` data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so `dep_time` , `arr_time` are `float64` instead of `int64`. The `time_hour` column in tidyverse seems missing in Python.
+Note there are some differences of this `flights` data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so `dep_time` , `arr_time` are `float64` instead of `int64`. 
 ```{python}
 flights.info()
 ```

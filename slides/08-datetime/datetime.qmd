@@ -23,15 +23,60 @@ knitr:
 ---
 
 Display machine information for reproducibility.
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 sessionInfo()
 ```
-Load tidyverse and related packages.
+
+#### Python
+
+```{python}
+import IPython
+print(IPython.sys_info())
+```
+
+#### Julia
+
+```{julia}
+using InteractiveUtils
+versioninfo()
+```
+
+:::
+
+Load tidyverse and lubridate (R), Pandas (Python), and DataFrames.jl (Julia).
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
-library(tidyverse)
 library(lubridate)
 library(nycflights13)
+library(tidyverse)
 ```
+
+#### Python
+
+```{python}
+# Load the pandas library
+import pandas as pd
+# Load numpy for array manipulation
+import numpy as np
+```
+
+#### Julia
+
+```{julia}
+using DataFrames, Pipe, StatsBase
+```
+
+:::
+
 
 ## Basics
 
@@ -42,11 +87,57 @@ Three types of data/time data:
 - **date-time**. Tibbles print it as `<dttm>`.  
 
 In the `flights` tibble, the last variable `time_hour` is in the data-time format:
+
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
 flights %>% print(width = Inf)
 ```
 
+#### Python
+
+The nycflights13 data is available from the nycflights13 package in Python.
+```{python}
+from nycflights13 import flights
+
+flights
+```
+
+Note there are some differences of this `flights` data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so `dep_time` , `arr_time` are `float64` instead of `int64`.  
+```{python}
+flights.info()
+```
+
+To be more consistent with `nycflights13` in tidyverse, we cast `time_hour` to `datetime` type.
+```{python}
+flights['time_hour'] = pd.to_datetime(flights['time_hour'])
+```
+
+#### Julia
+
+Let's use RCall.jl to retrieve the nycflights13 data from R.
+```{julia}
+using RCall
+
+R"""
+library(nycflights13)
+"""
+
+flights = rcopy(R"flights")
+```
+
+:::
+
+
 ## Create date/times
+
+### `today` and `now`
+
+::: {.panel-tabset}
+
+#### R
 
 Today:
 ```{r}
@@ -56,25 +147,109 @@ today()
 now()
 ```
 
+#### Python
+
+Today:
+```{python}
+from datetime import date, datetime
+
+# Current date
+date.today()
+# Current date-time
+datetime.now()
+```
+
+
+#### Julia
+
+```{julia}
+using Dates
+# Current date
+today()
+# Current date-time
+now()
+```
+
+:::
+
 ### From strings
 
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
-ymd("2020-01-30")
-mdy("January 30th, 2020")
-dmy("30-Jan-2020")
+ymd("2023-02-02")
+mdy("Feb 2nd, 2023")
+dmy("02-Feb-2023")
 ```
 ```{r}
-ymd_hms("2020-01-30 14:57:25")
-ymd_hm("2020-01-30 14:57")
+ymd_hms("2023-02-02 14:57:25")
+ymd_hm("2023-02-02 14:57")
 ```
+
+#### Python
+
+```{python}
+from dateutil.parser import parse
+
+datetime.strptime('2023-02-02', '%Y-%m-%d').date()
+# I have to use the package python-dateutils to parse Feb 2nd
+parse('Feb 2nd, 2023').date()
+datetime.strptime('02-Feb-2023', '%d-%b-%Y').date()
+```
+
+```{python}
+datetime.strptime('2023-02-02 14:57:25', '%Y-%m-%d %H:%M:%S')
+datetime.strptime('2023-02-02 14:57', '%Y-%m-%d %H:%M')
+```
+
+#### Julia
+
+```{julia}
+Date("2023-02-02", dateformat"y-m-d")
+# Not sure how to parse "Feb 2nd, 2023" ???
+# Date("Feb 2nd, 2023", dateformat"u d, y")
+Date("02-Feb-2023", dateformat"d-u-y")
+```
+
+```{julia}
+DateTime("2023-02-02 14:57:25", dateformat"y-m-d H:M:S")
+DateTime("2023-02-02 14:57", dateformat"y-m-d H:M")
+```
+
+:::
 
 ### From unquoated numbers
 
+::: {.panel-tabset}
+
+#### R
+
 ```{r}
-ymd(20200130)
+ymd(20200202)
 ```
 
+#### Python
+
+```{python}
+datetime(2022, 2, 2).date()
+```
+
+#### Julia
+
+```{julia}
+Date(2020, 2, 2)
+```
+
+:::
+
+
 ### From variables/columns in a tibble
+
+::: {.panel-tabset}
+
+#### R
 
 ```{r}
 flights %>% 
@@ -102,7 +277,11 @@ Now we can visualize the distribution of departure times across the year
 ```{r}
 flights_dt %>% 
   ggplot(aes(x= dep_time)) + 
-  geom_freqpoly(binwidth = 86400) # 86400 seconds = 1 day
+  geom_freqpoly(binwidth = 86400) + # 86400 seconds = 1 day
+  labs(
+    x = "Departure Time",
+    y = "Number of Flights"
+  )
 ```
 or within a single day:
 ```{r}
@@ -112,10 +291,16 @@ flights_dt %>%
   geom_freqpoly(binwidth = 600) # 600 s = 10 minutes
 ```
 
+#### Python
+
+#### Julia
+
+:::
+
 ## Getting components
 
 ```{r}
-datetime <- ymd_hms("2020-01-30 15:34:56")
+datetime <- ymd_hms("2023-02-02 15:34:56")
 year(datetime)
 month(datetime)
 mday(datetime)
@@ -209,7 +394,8 @@ flights_dt <- flights_dt %>%
     overnight = arr_time < dep_time,
     arr_time = arr_time + days(overnight * 1),
     sched_arr_time = sched_arr_time + days(overnight * 1)
-  )
+  ) %>%
+  print(width = Inf)
 ```
 
 ### Intervals

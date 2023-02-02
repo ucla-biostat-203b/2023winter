@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-01-31">
+<meta name="dcterms.date" content="2023-02-01">
 
 <title>Data Transformation With dplyr</title>
 <style>
@@ -184,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 31, 2023</p>
+      <p class="date">February 1, 2023</p>
     </div>
   </div>
   
@@ -352,7 +352,7 @@ Environment:
 [336776 rows x 19 columns]</code></pre>
 </div>
 </div>
-<p>Note there are some differences of this <code>flights</code> data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so <code>dep_time</code> , <code>arr_time</code> are <code>float64</code> instead of <code>int64</code>. The <code>time_hour</code> column in tidyverse seems missing in Python.</p>
+<p>Note there are some differences of this <code>flights</code> data from that in tidyverse. The data types for some variables are different. There are no natural ways in Pandas to hold integer column with missing values; so <code>dep_time</code> , <code>arr_time</code> are <code>float64</code> instead of <code>int64</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>flights.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -896,16 +896,16 @@ collect()     force computation and bring data back into R</code></pre>
 <pre><code># A tibble: 10 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013     1    23     2124       2130      -6      10      25     -15 B6     
- 2  2013     1    13     1149       1200     -11    1338    1400     -22 US     
- 3  2013     6     5      601        600       1     655     655       0 US     
- 4  2013     8     7      823        830      -7    1024    1028      -4 EV     
- 5  2013     5    10     1512       1515      -3    1801    1806      -5 DL     
- 6  2013    10    26      651        659      -8     903     921     -18 UA     
- 7  2013     9     1     1355       1359      -4    1712    1719      -7 DL     
- 8  2013     4     5     2008       2005       3    2210    2213      -3 EV     
- 9  2013     9    13     1451       1455      -4    1625    1630      -5 MQ     
-10  2013     9    10     1028       1030      -2    1254    1314     -20 B6     
+ 1  2013     4     5      651        700      -9     755     805     -10 US     
+ 2  2013     3     3     1945       1935      10    2318    2316       2 B6     
+ 3  2013     9    20     1729       1725       4    2041    2015      26 UA     
+ 4  2013     4     5     1532       1539      -7    1728    1735      -7 UA     
+ 5  2013     6     1     1657       1700      -3    1823    1832      -9 B6     
+ 6  2013     7     1     2142       2045      57    2241    2159      42 B6     
+ 7  2013    12    31     1851       1855      -4    2027    2040     -13 MQ     
+ 8  2013     1    26     1342       1129     133    1639    1438     121 B6     
+ 9  2013     7    17      852        853      -1    1105    1115     -10 UA     
+10  2013     4    22      658        700      -2     957     931      26 DL     
 # … with 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
 #   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
 #   time_hour &lt;dttm&gt;, and abbreviated variable names ¹​sched_dep_time,
@@ -921,16 +921,16 @@ collect()     force computation and bring data back into R</code></pre>
 <pre><code># A tibble: 33,678 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013     9    25     2007       1859      68    2239    2126      73 FL     
- 2  2013    10    27     1453       1500      -7    1744    1815     -31 AA     
- 3  2013     8     8     1459       1500      -1    1728    1653      35 US     
- 4  2013     9    30      659        700      -1     819     825      -6 WN     
- 5  2013     1    31     1811       1745      26    2134    2055      39 AA     
- 6  2013     4     5     1221       1225      -4    1357    1405      -8 AA     
- 7  2013    11    22     1652       1640      12    1807    1820     -13 MQ     
- 8  2013    12    26     1315       1320      -5    1438    1455     -17 AA     
- 9  2013    12    29     1734       1700      34    1904    1840      24 WN     
-10  2013     2    10      758        800      -2    1028    1030      -2 WN     
+ 1  2013    10    16     1859       1810      49    2053    1955      58 MQ     
+ 2  2013     7    14     1427       1430      -3    1533    1554     -21 EV     
+ 3  2013     4    13     1154       1200      -6    1458    1508     -10 DL     
+ 4  2013     8    21     1050       1055      -5    1344    1411     -27 DL     
+ 5  2013     8     2     1847       1815      32    2104    2047      17 DL     
+ 6  2013     4     5     1105       1115     -10    1252    1305     -13 MQ     
+ 7  2013    11     6     2115       2111       4    2308    2303       5 EV     
+ 8  2013     7    14     1537       1545      -8    1653    1710     -17 MQ     
+ 9  2013     6    26     2037       2007      30    2339    2259      40 B6     
+10  2013    11    27     1624       1515      69    1924    1804      80 UA     
 # … with 33,668 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
 #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
@@ -944,40 +944,40 @@ collect()     force computation and bring data back into R</code></pre>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>flights.sample(n <span class="op">=</span> <span class="dv">10</span>, axis <span class="op">=</span> <span class="dv">0</span>, replace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        year  month  day  dep_time  sched_dep_time  dep_delay  arr_time  \
-154539  2013      3   20    1613.0            1523       50.0    1720.0   
-108730  2013     12   29     702.0             705       -3.0     959.0   
-95498   2013     12   14     757.0             800       -3.0     956.0   
-83930   2013     12    1    1830.0            1725       65.0    1936.0   
-187419  2013      4   24    1521.0            1530       -9.0    1851.0   
-134428  2013      2   27     658.0             700       -2.0    1040.0   
-114120  2013      2    4    1252.0            1259       -7.0    1546.0   
-274971  2013      7   26    1925.0            1910       15.0    2220.0   
-149072  2013      3   14    1754.0            1745        9.0    2039.0   
-93752   2013     12   12    1023.0            1024       -1.0    1233.0   
+146742  2013      3   12    1058.0            1100       -2.0    1302.0   
+243083  2013      6   23    1027.0            1015       12.0    1255.0   
+292966  2013      8   14    1604.0            1600        4.0    1859.0   
+180363  2013      4   17     709.0             710       -1.0    1051.0   
+220690  2013      5   30    1317.0            1255       22.0    1557.0   
+264210  2013      7   15    1849.0            1819       30.0    2127.0   
+274107  2013      7   25    2327.0            2220       67.0      30.0   
+165446  2013      4    1    1144.0            1125       19.0    1458.0   
+50128   2013     10   25    1643.0            1645       -2.0    1935.0   
+282244  2013      8    3    1316.0            1325       -9.0    1519.0   
 
         sched_arr_time  arr_delay carrier  flight tailnum origin dest  \
-154539            1636       44.0      EV    4583  N16919    EWR  PWM   
-108730            1032      -33.0      DL    2003  N967DL    LGA  MIA   
-95498              938       18.0      UA     544  N835UA    LGA  ORD   
-83930             1845       51.0      AA     256  N3FVAA    JFK  BOS   
-187419            1839       12.0      9E    3325  N600LR    JFK  DFW   
-134428            1034        6.0      DL     763  N705TW    JFK  LAX   
-114120            1555       -9.0      B6     991  N324JB    JFK  PBI   
-274971            2238      -18.0      DL    1091  N348NB    JFK  SAT   
-149072            2020       19.0      MQ    4413  N720MQ    LGA  XNA   
-93752             1246      -13.0      EV    4495  N13970    EWR  SAV   
+146742            1345      -43.0      UA     109  N45440    EWR  LAS   
+243083            1320      -25.0      UA    1463  N35204    EWR  LAX   
+292966            1844       15.0      DL     847  N998DL    LGA  ATL   
+180363            1033       18.0      B6     671  N661JB    JFK  LAX   
+220690            1542       15.0      B6     141  N632JB    JFK  PBI   
+264210            2118        9.0      B6     153  N821JB    JFK  PBI   
+274107            2335       55.0      EV    5169  N744EV    LGA  BTV   
+165446            1421       37.0      B6       1  N646JB    JFK  FLL   
+50128             1944       -9.0      B6     283  N779JB    JFK  MCO   
+282244            1536      -17.0      EV    4419  N41104    EWR  MSY   
 
         air_time  distance  hour  minute                 time_hour  
-154539      50.0       284    15      23 2013-03-20 19:00:00+00:00  
-108730     158.0      1096     7       5 2013-12-29 12:00:00+00:00  
-95498      133.0       733     8       0 2013-12-14 13:00:00+00:00  
-83930       38.0       187    17      25 2013-12-01 22:00:00+00:00  
-187419     236.0      1391    15      30 2013-04-24 19:00:00+00:00  
-134428     323.0      2475     7       0 2013-02-27 12:00:00+00:00  
-114120     159.0      1028    12      59 2013-02-04 17:00:00+00:00  
-274971     211.0      1587    19      10 2013-07-26 23:00:00+00:00  
-149072     164.0      1147    17      45 2013-03-14 21:00:00+00:00  
-93752      113.0       708    10      24 2013-12-12 15:00:00+00:00  </code></pre>
+146742     289.0      2227    11       0 2013-03-12 15:00:00+00:00  
+243083     309.0      2454    10      15 2013-06-23 14:00:00+00:00  
+292966     112.0       762    16       0 2013-08-14 20:00:00+00:00  
+180363     361.0      2475     7      10 2013-04-17 11:00:00+00:00  
+220690     134.0      1028    12      55 2013-05-30 16:00:00+00:00  
+264210     131.0      1028    18      19 2013-07-15 22:00:00+00:00  
+274107      40.0       258    22      20 2013-07-26 02:00:00+00:00  
+165446     171.0      1069    11      25 2013-04-01 15:00:00+00:00  
+50128      137.0       944    16      45 2013-10-25 20:00:00+00:00  
+282244     165.0      1167    13      25 2013-08-03 17:00:00+00:00  </code></pre>
 </div>
 </div>
 <p>Sample 10% rows:</p>
@@ -985,43 +985,43 @@ collect()     force computation and bring data back into R</code></pre>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>flights.sample(frac <span class="op">=</span> <span class="fl">0.1</span>, replace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        year  month  day  dep_time  sched_dep_time  dep_delay  arr_time  \
-182886  2013      4   19    1720.0            1709       11.0    2018.0   
-304117  2013      8   26    1318.0            1310        8.0    1531.0   
-61804   2013     11    7    1254.0            1249        5.0    1608.0   
-144483  2013      3    9    2118.0            2115        3.0    2341.0   
-235800  2013      6   15    1454.0            1455       -1.0    1701.0   
+283698  2013      8    5     653.0             700       -7.0     803.0   
+330741  2013      9   24    1350.0            1400      -10.0    1533.0   
+304636  2013      8   26       NaN            1245        NaN       NaN   
+177497  2013      4   14     814.0             815       -1.0    1112.0   
+229313  2013      6    8    1712.0            1719       -7.0    1816.0   
 ...      ...    ...  ...       ...             ...        ...       ...   
-298359  2013      8   20    1044.0            1044        0.0    1310.0   
-303859  2013      8   26     819.0             825       -6.0    1020.0   
-145888  2013      3   11    1337.0            1329        8.0    1544.0   
-238077  2013      6   18     552.0             600       -8.0     657.0   
-68922   2013     11   15     601.0             600        1.0     926.0   
+2790    2013      1    4     703.0             700        3.0     844.0   
+221870  2013      5   31    1644.0            1645       -1.0    1823.0   
+306420  2013      8   28    2036.0            1925       71.0    2216.0   
+219082  2013      5   28    1859.0            1900       -1.0    2218.0   
+24060   2013      1   28    1835.0            1840       -5.0    2028.0   
 
         sched_arr_time  arr_delay carrier  flight tailnum origin dest  \
-182886            2010        8.0      UA    1627  N37437    EWR  PBI   
-304117            1536       -5.0      FL     348  N951AT    LGA  ATL   
-61804             1610       -2.0      UA     394  N579UA    EWR  SFO   
-144483            2358      -17.0      B6     927  N580JB    EWR  MCO   
-235800            1710       -9.0      DL     127  N346NB    JFK  DTW   
+283698             806       -3.0      US    2136  N948UW    LGA  BOS   
+330741            1547      -14.0      EV    4100  N14920    EWR  MEM   
+304636            1404        NaN      EV    4905  N717EV    LGA  SYR   
+177497            1115       -3.0      DL    1167  N302DQ    JFK  TPA   
+229313            1848      -32.0      EV    5827  N12922    EWR  BUF   
 ...                ...        ...     ...     ...     ...    ...  ...   
-298359            1319       -9.0      UA     775  N572UA    EWR  MCO   
-303859            1104      -44.0      DL     857   N3753    JFK  SAN   
-145888            1542        2.0      EV    3837  N15574    EWR  IND   
-238077             655        2.0      US    1629  N963UW    LGA  PHL   
-68922              933       -7.0      UA    1668  N78501    EWR  SFO   
+2790               836        8.0      UA    1162  N13248    EWR  ORD   
+221870            1851      -28.0      DL    1473  N321NB    LGA  MEM   
+306420            2048       88.0      EV    4131  N11165    EWR  RIC   
+219082            2238      -20.0      DL      87  N624AG    JFK  LAX   
+24060             2049      -21.0      DL    2131  N332NW    LGA  DTW   
 
         air_time  distance  hour  minute                 time_hour  
-182886     153.0      1023    17       9 2013-04-19 21:00:00+00:00  
-304117     101.0       762    13      10 2013-08-26 17:00:00+00:00  
-61804      349.0      2565    12      49 2013-11-07 17:00:00+00:00  
-144483     123.0       937    21      15 2013-03-10 02:00:00+00:00  
-235800      86.0       509    14      55 2013-06-15 18:00:00+00:00  
+283698      35.0       184     7       0 2013-08-05 11:00:00+00:00  
+330741     143.0       946    14       0 2013-09-24 18:00:00+00:00  
+304636       NaN       198    12      45 2013-08-26 16:00:00+00:00  
+177497     149.0      1005     8      15 2013-04-14 12:00:00+00:00  
+229313      50.0       282    17      19 2013-06-08 21:00:00+00:00  
 ...          ...       ...   ...     ...                       ...  
-298359     127.0       937    10      44 2013-08-20 14:00:00+00:00  
-303859     282.0      2446     8      25 2013-08-26 12:00:00+00:00  
-145888     102.0       645    13      29 2013-03-11 17:00:00+00:00  
-238077      34.0        96     6       0 2013-06-18 10:00:00+00:00  
-68922      356.0      2565     6       0 2013-11-15 11:00:00+00:00  
+2790       114.0       719     7       0 2013-01-04 12:00:00+00:00  
+221870     125.0       963    16      45 2013-05-31 20:00:00+00:00  
+306420      73.0       277    19      25 2013-08-28 23:00:00+00:00  
+219082     334.0      2475    19       0 2013-05-28 23:00:00+00:00  
+24060       85.0       502    18      40 2013-01-28 23:00:00+00:00  
 
 [33678 rows x 19 columns]</code></pre>
 </div>
@@ -1038,16 +1038,16 @@ collect()     force computation and bring data back into R</code></pre>
  Row │ year   month  day    dep_time  sched_dep_time  dep_delay  arr_time  sch ⋯
      │ Int64  Int64  Int64  Int64?    Int64           Float64?   Int64?    Int ⋯
 ─────┼──────────────────────────────────────────────────────────────────────────
-   1 │  2013     10      3       827             840      -13.0      1032      ⋯
-   2 │  2013     10     29       936             927        9.0      1152
-   3 │  2013      6      5      1357            1359       -2.0      1652
-   4 │  2013     10     15      1155            1110       45.0      1445
-   5 │  2013      2      5      1715            1705       10.0      2041      ⋯
-   6 │  2013     10     27      2024            2025       -1.0      2309
-   7 │  2013      9     11      2334            1830      304.0       132
-   8 │  2013      8      4      1856            1900       -4.0      2039
-   9 │  2013      7     14      1450            1455       -5.0      1639      ⋯
-  10 │  2013     12      3      1325            1329       -4.0      1541
+   1 │  2013     11     14       750             759       -9.0      1022      ⋯
+   2 │  2013      4     16      1713            1715       -2.0      1934
+   3 │  2013      6     12      1640            1645       -5.0      1756
+   4 │  2013     11     21       946             945        1.0      1246
+   5 │  2013      4     15      1545            1545        0.0      1818      ⋯
+   6 │  2013      1     28      1519            1520       -1.0      1653
+   7 │  2013      1      3       604             600        4.0       852
+   8 │  2013      6     12      1042            1043       -1.0      1206
+   9 │  2013      3     20       608             610       -2.0       908      ⋯
+  10 │  2013      3     20      2034            2000       34.0      2211
                                                               12 columns omitted</code></pre>
 </div>
 </div>
@@ -1063,22 +1063,22 @@ collect()     force computation and bring data back into R</code></pre>
    Row │ year   month  day    dep_time  sched_dep_time  dep_delay  arr_time  s ⋯
        │ Int64  Int64  Int64  Int64?    Int64           Float64?   Int64?    I ⋯
 ───────┼────────────────────────────────────────────────────────────────────────
-     1 │  2013     11      4      1522            1525       -3.0      1738    ⋯
-     2 │  2013     10     17      1615            1615        0.0      1810
-     3 │  2013      4      1      2213            2045       88.0       105
-     4 │  2013      2     17      1811            1815       -4.0      2100
-     5 │  2013     11     23      1553            1600       -7.0      1856    ⋯
-     6 │  2013      7     19       715             716       -1.0       928
-     7 │  2013      7     12      1849            1820       29.0      2134
-     8 │  2013      4     29      1952            2000       -8.0      2231
+     1 │  2013      5     21      1817            1821       -4.0      2011    ⋯
+     2 │  2013      7      8      1608            1610       -2.0      1826
+     3 │  2013      8      4      1126            1030       56.0      1509
+     4 │  2013      1     14      1932            1940       -8.0      2100
+     5 │  2013      3     21      1457            1459       -2.0      1750    ⋯
+     6 │  2013      1     11      1325            1250       35.0      1600
+     7 │  2013      2     26      1313            1320       -7.0      1632
+     8 │  2013      8     23       608             610       -2.0       925
    ⋮   │   ⋮      ⋮      ⋮       ⋮            ⋮             ⋮         ⋮        ⋱
- 33672 │  2013      4      6      1636            1650      -14.0      1827    ⋯
- 33673 │  2013      1     18      2059            2020       39.0      2315
- 33674 │  2013      5      3      1853            1859       -6.0      2028
- 33675 │  2013      2      2      2016            2030      -14.0      2135
- 33676 │  2013     12      2      1719            1659       20.0      2111    ⋯
- 33677 │  2013     11     10      1649            1610       39.0      1931
- 33678 │  2013      2     27       604             600        4.0       727
+ 33672 │  2013      7      1       801             745       16.0      1005    ⋯
+ 33673 │  2013      6     27       554             600       -6.0       735
+ 33674 │  2013      7     31      1904            1900        4.0      2154
+ 33675 │  2013      8     25      1927            1855       32.0      2153
+ 33676 │  2013      7     29      1450            1441        9.0      1828    ⋯
+ 33677 │  2013     10     16      2104            2110       -6.0      2318
+ 33678 │  2013     11     24      2103            2105       -2.0      2349
                                                12 columns and 33663 rows omitted</code></pre>
 </div>
 </div>
@@ -2812,7 +2812,7 @@ dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb175"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>by_day <span class="op">=</span> flights.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>])</span>
 <span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>by_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x135a7c1c0&gt;</code></pre>
+<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x12808c1c0&gt;</code></pre>
 </div>
 </div>
 </div>
