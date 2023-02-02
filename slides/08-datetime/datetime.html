@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-02-01">
+<meta name="dcterms.date" content="2023-02-02">
 
 <title>Dates and Times | r4ds Chapter 16</title>
 <style>
@@ -153,7 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 1, 2023</p>
+      <p class="date">February 2, 2023</p>
     </div>
   </div>
   
@@ -979,6 +979,26 @@ memory usage: 48.8+ MB</code></pre>
 </section>
 <section id="intervals" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="intervals"><span class="header-section-number">5.3</span> Intervals</h3>
+<p>Intervals are time spans bound by two real date-times. Intervals can be accurately converted to periods and durations.</p>
+<div class="cell" data-layout-align="center" data-hash="datetime_cache/html/unnamed-chunk-40_8efcbd42db36b247192224cc90b7b6eb">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interval</span>(<span class="fu">ymd_hms</span>(<span class="st">"2009-08-09 13:01:30"</span>), <span class="fu">ymd_hms</span>(<span class="st">"2009-08-09 12:00:00"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2009-08-09 13:01:30 UTC--2009-08-09 12:00:00 UTC</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center" data-hash="datetime_cache/html/unnamed-chunk-41_f0d0efb11bf6c7d73513154d5cf6f068">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2009-03-08 01:59:59"</span>) <span class="co"># DST boundary</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>date2 <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2000-02-29 12:00:00"</span>)</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>span <span class="ot">&lt;-</span> date2 <span class="sc">%--%</span> date</span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">as.duration</span>(span)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "284651999s (~9.02 years)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.period</span>(span)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "9y 0m 7d 13H 59M 59S"</code></pre>
+</div>
+</div>
 </section>
 </section>
 
