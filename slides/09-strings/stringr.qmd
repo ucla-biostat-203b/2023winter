@@ -44,7 +44,7 @@ library("tidyverse")
 library(htmlwidgets)
 ```
 
-- Main functions:    
+- Main functions in stringr:    
     - `str_detect(string, pattern)`: Detect the presence or absence of a pattern in a string.  
     - `str_locate(string, pattern)`: Locate the first position of a pattern and return a matrix with start and end.  
     - `str_extract(string, pattern)`: Extract text corresponding to the first match.  
@@ -201,68 +201,56 @@ x
 
 ## Matching patterns with regular expressions
 
-- `str_view()` shows the first match;  
-`str_view_all()` shows all matches.
+- `str_view_all()` shows all matches.
 
 - Match exact strings:
 ```{r}
 x <- c("apple", "banana", "pear")
-str_view(x, "an")
 str_view_all(x, "an")
 ```
 
-----
-
 - `.` matches any character apart from a newline:
-```{r}
-str_view(x, ".a.")
-```
-
 ```{r}
 str_view_all(x, ".a.")
 ```
-
 
 - **Regex escapes live on top of regular string escapes, so there needs to be two levels of escapes.**  
     To match a literal `.`:
 ```{r}
 #| error: true
 # doesn't work because "a\.c" is treated as a regular expression
-str_view(c("abc", "a.c", "bef"), "a\.c")
+str_view_all(c("abc", "a.c", "bef"), "a\.c")
 ```
 ```{r}
 # regular expression needs double escape
-str_view(c("abc", "a.c", "bef"), "a\\.c")
+str_view_all(c("abc", "a.c", "bef"), "a\\.c")
 ```
 To match a literal `\`:
 ```{r}
-str_view("a\\b", "\\\\")
+str_view_all("a\\b", "\\\\")
 ```
 
 <p align="center">
-<img src="./escape.png" height="75">
+<img src="./escape.png" height="125">
 </p>
-
 
 ## Anchors
 
 - `^` matches the start of the string:
 ```{r}
 x <- c("apple", "banana", "pear")
-str_view(x, "^a")
+str_view_all(x, "^a")
 ```
 
 - `$` matches the end of the string:
 ```{r}
-str_view(x, "a$")
+str_view_all(x, "a$")
 ```
-
-----
 
 - To force a regular expression to only match a complete string:
 ```{r}
 x <- c("apple pie", "apple", "apple cake")
-str_view(x, "^apple$")
+str_view_all(x, "^apple$")
 ```
 
 ## Alternation  
@@ -271,10 +259,10 @@ str_view(x, "^apple$")
 
 - `[^abc]`: matches anything except a, b, or c.
 ```{r}
-str_view(c("grey", "gray"), "gr(e|a)y")
+str_view_all(c("grey", "gray"), "gr(e|a)y")
 ```
 ```{r}
-str_view(c("grey", "gray"), "gr[ea]y")
+str_view_all(c("grey", "gray"), "gr[ea]y")
 ```
 
 ## Repetition
@@ -284,20 +272,16 @@ str_view(c("grey", "gray"), "gr[ea]y")
 `+`: 1 or more  
 `*`: 0 or more
 
-- 
+- Examples:
 ```{r}
 x <- "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"
 # match either C or CC, being greedy here
-str_view(x, "CC?")
-# show all matches
 str_view_all(x, "CC?")
 # greedy matches
-str_view(x, "CC+")
+str_view_all(x, "CC+")
 # greedy matches
-str_view(x, 'C[LX]+')
+str_view_all(x, 'C[LX]+')
 ```
-
-----
 
 - Specify number of matches:  
 `{n}`: exactly n   
@@ -305,23 +289,21 @@ str_view(x, 'C[LX]+')
 `{,m}`: at most m  
 `{n,m}`: between n and m
 
--
+- Examples:
 ```{r}
-str_view(x, "C{2}")
+str_view_all(x, "C{2}")
 # greedy matches
-str_view(x, "C{2,}")
+str_view_all(x, "C{2,}")
 # greedy matches
-str_view(x, "C{2,3}")
+str_view_all(x, "C{2,3}")
 ```
-
-----
 
 - Greedy (default) vs lazy (put `?` after repetition):
 ```{r}
 # lazy matches
-str_view(x, 'C{2,3}?')
+str_view_all(x, 'C{2,3}?')
 # lazy matches
-str_view(x, 'C[LX]+?')
+str_view_all(x, 'C[LX]+?')
 ```
 
 - What went wrong here?
@@ -358,12 +340,12 @@ fruit
 - Parentheses define groups, which can be back-referenced as `\1`, `\2`, ...
 ```{r}
 # with match = TRUE, only show matched strings
-str_view(fruit, "(..)\\1", match = TRUE)
+str_view_all(fruit, "(..)\\1", match = TRUE)
 ```
 
 ## Detect matches
 
-- 
+- `str_detect` return Booleans.
 ```{r}
 x <- c("apple", "banana", "pear")
 str_detect(x, "e")
@@ -375,17 +357,13 @@ length(words)
 head(words)
 ```
 
-----
-
-- 
+- Examples:
 ```{r}
 # How many common words start with t?
 sum(str_detect(words, "^t"))
 # What proportion of common words end with a vowel?
 mean(str_detect(words, "[aeiou]$"))
 ```
-
-----
 
 - Find words that end with `x`:
 ```{r}
@@ -396,8 +374,6 @@ same as
 str_subset(words, "x$")
 ```
 
-----
-
 - Filter a data frame:
 ```{r}
 df <- tibble(
@@ -407,8 +383,6 @@ df <- tibble(
 df %>% 
   filter(str_detect(word, "x$"))
 ```
-
-----
 
 - `str_count()` tells how many matches are found:
 ```{r}
@@ -425,8 +399,6 @@ mean(str_count(words, "[aeiou]"))
 str_count("abababa", "aba")
 str_view_all("abababa", "aba")
 ```
-
-----
 
 - Mutate a data frame:
 ```{r}
@@ -447,8 +419,6 @@ head(sentences)
 
 - Suppose we want to find all sentences that contain a colour.
 
-----
-
 - Create a collection of colours:
 ```{r}
 (colours <- c("red", "orange", "yellow", "green", "blue", "purple"))
@@ -457,7 +427,6 @@ head(sentences)
 ```{r}
 (colour_match <- str_c(colours, collapse = "|"))
 ```
-
 
 - Select the sentences that contain a colour, and then extract the colour to figure out which one it is:    
 ```{r}
@@ -468,12 +437,7 @@ head(sentences)
 (matches <- str_extract(has_colour, colour_match))
 ```
 
-
-----
-
 - `str_extract()` only extracts the first match.
-
--
 ```{r}
 more <- sentences[str_count(sentences, colour_match) > 1]
 str_view_all(more, colour_match)
@@ -483,8 +447,6 @@ str_view_all(more, colour_match)
 ```{r}
 str_extract_all(more, colour_match)
 ```
-
-----
 
 - Setting `simplify = TRUE` in `str_extract_all()` will return a matrix with short matches expanded to the same length as the longest:
 ```{r}
@@ -509,15 +471,11 @@ has_noun %>%
   str_extract(noun)
 ```
 
-----
-
 - `str_match()` gives each individual component:
 ```{r}
 has_noun %>%
   str_match(noun)
 ```
-
-----
 
 - `tidyr::extract()` works with tibble:
 ```{r}
@@ -547,8 +505,6 @@ x <- c("1 house", "2 cars", "3 people")
 str_replace_all(x, c("1" = "one", "2" = "two", "3" = "three"))
 ```
 
-----
-
 - Back-reference:
 ```{r}
 # flip the order of the second and third words
@@ -565,8 +521,6 @@ sentences %>%
   head(5) %>% 
   str_split(" ")
 ```
-
-----
     
 - Use `simplify = TRUE` to return a matrix:    
 ```{r}
@@ -580,7 +534,7 @@ sentences %>%
 ## Character classes
 
 <p align="center">
-<img src="./regex_characterclass.png" height="150">
+<img src="./regex_characterclass.png" height="250">
 </p>
 
 - A number of built-in convenience classes of characters:
