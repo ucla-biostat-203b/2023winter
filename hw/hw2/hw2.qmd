@@ -74,13 +74,14 @@ system(
 1. Import `icustatys.csv.gz` as a tibble `icustays_tble`. 
 
 2. How many unique `subject_id`? Can a `subject_id` have multiple ICU stays? 
+
 3. Summarize the number of ICU stays per `subject_id` by graphs. 
 
 4. For each `subject_id`, let's only keep the first ICU stay in the tibble `icustays_tble`. (Hint: `slice_min` and `slice_max` may take long. Think alternative ways to achieve the same function.)
 
 ## Q3. `admission` data
 
-Information of the patients admitted into hospital is available in `admissions.csv.gz`. See <https://mimic.mit.edu/docs/iv/modules/core/admissions/> for details of each field in this file. The first 10 lines are
+Information of the patients admitted into hospital is available in `admissions.csv.gz`. See <https://mimic.mit.edu/docs/iv/modules/hosp/admissions/> for details of each field in this file. The first 10 lines are
 ```{r}
 system(
   str_c(
@@ -108,7 +109,7 @@ system(
     
 ## Q4. `patients` data
 
-Patient information is available in `patients.csv.gz`. See <https://mimic.mit.edu/docs/iv/modules/core/patients/> for details of each field in this file. The first 10 lines are
+Patient information is available in `patients.csv.gz`. See <https://mimic.mit.edu/docs/iv/modules/hosp/patients/> for details of each field in this file. The first 10 lines are
 ```{r}
 system(
   str_c(
@@ -120,7 +121,7 @@ system(
 )
 ```
 
-1. Import `patients.csv.gz` (<https://mimic.mit.edu/docs/iv/modules/core/patients/>) as a tibble `patients_tble` and only keep the patients who have a match in `icustays_tble` (according to `subject_id`).
+1. Import `patients.csv.gz` (<https://mimic.mit.edu/docs/iv/modules/hosp/patients/>) as a tibble `patients_tble` and only keep the patients who have a match in `icustays_tble` (according to `subject_id`).
 
 2. Summarize variables `gender` and `anchor_age`, and explain any patterns you see.
 
@@ -184,7 +185,7 @@ system(
 
 1. We are interested in the vitals for ICU patients: heart rate (220045), mean non-invasive blood pressure (220181), systolic non-invasive blood pressure (220179), body temperature in Fahrenheit (223761), and respiratory rate (220210). Retrieve a subset of `chartevents.csv.gz` only containing these items for the patients in `icustays_tble` as a tibble `chartevents_tble`.
 
-    Hint: `chartevents.csv.gz` is a data file too big to be read in by the `read_csv` function in its default setting. Utilize the `col_select` option in the `read_csv` function to reduce the memory burden. It took my computer >15 minutes to ingest this file. If your computer really has trouble importing `labevents.csv.gz`, you can import from the reduced data file `chartevents_filtered_itemid.csv.gz`.
+    Hint: `chartevents.csv.gz` is a data file too big to be read in by the `read_csv` function in its default setting. Utilize the `col_select` option in the `read_csv` function to reduce the memory burden. It took my computer >15 minutes to ingest this file. If your computer really has trouble importing `chartevents.csv.gz`, you can import from the reduced data file `chartevents_filtered_itemid.csv.gz`.
 
 2. Further restrict `chartevents_tble` to the first vital measurement during the ICU stay. 
 

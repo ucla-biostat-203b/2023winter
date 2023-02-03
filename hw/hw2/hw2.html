@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="q3.-admission-data" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="q3.-admission-data"><span class="header-section-number">3</span> Q3. <code>admission</code> data</h2>
-<p>Information of the patients admitted into hospital is available in <code>admissions.csv.gz</code>. See <a href="https://mimic.mit.edu/docs/iv/modules/core/admissions/" class="uri">https://mimic.mit.edu/docs/iv/modules/core/admissions/</a> for details of each field in this file. The first 10 lines are</p>
+<p>Information of the patients admitted into hospital is available in <code>admissions.csv.gz</code>. See <a href="https://mimic.mit.edu/docs/iv/modules/hosp/admissions/" class="uri">https://mimic.mit.edu/docs/iv/modules/hosp/admissions/</a> for details of each field in this file. The first 10 lines are</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(</span>
@@ -308,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="q4.-patients-data" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="q4.-patients-data"><span class="header-section-number">4</span> Q4. <code>patients</code> data</h2>
-<p>Patient information is available in <code>patients.csv.gz</code>. See <a href="https://mimic.mit.edu/docs/iv/modules/core/patients/" class="uri">https://mimic.mit.edu/docs/iv/modules/core/patients/</a> for details of each field in this file. The first 10 lines are</p>
+<p>Patient information is available in <code>patients.csv.gz</code>. See <a href="https://mimic.mit.edu/docs/iv/modules/hosp/patients/" class="uri">https://mimic.mit.edu/docs/iv/modules/hosp/patients/</a> for details of each field in this file. The first 10 lines are</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(</span>
@@ -332,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <ol type="1">
-<li><p>Import <code>patients.csv.gz</code> (<a href="https://mimic.mit.edu/docs/iv/modules/core/patients/" class="uri">https://mimic.mit.edu/docs/iv/modules/core/patients/</a>) as a tibble <code>patients_tble</code> and only keep the patients who have a match in <code>icustays_tble</code> (according to <code>subject_id</code>).</p></li>
+<li><p>Import <code>patients.csv.gz</code> (<a href="https://mimic.mit.edu/docs/iv/modules/hosp/patients/" class="uri">https://mimic.mit.edu/docs/iv/modules/hosp/patients/</a>) as a tibble <code>patients_tble</code> and only keep the patients who have a match in <code>icustays_tble</code> (according to <code>subject_id</code>).</p></li>
 <li><p>Summarize variables <code>gender</code> and <code>anchor_age</code>, and explain any patterns you see.</p></li>
 </ol>
 </section>
@@ -440,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <ol type="1">
 <li><p>We are interested in the vitals for ICU patients: heart rate (220045), mean non-invasive blood pressure (220181), systolic non-invasive blood pressure (220179), body temperature in Fahrenheit (223761), and respiratory rate (220210). Retrieve a subset of <code>chartevents.csv.gz</code> only containing these items for the patients in <code>icustays_tble</code> as a tibble <code>chartevents_tble</code>.</p>
-<p>Hint: <code>chartevents.csv.gz</code> is a data file too big to be read in by the <code>read_csv</code> function in its default setting. Utilize the <code>col_select</code> option in the <code>read_csv</code> function to reduce the memory burden. It took my computer &gt;15 minutes to ingest this file. If your computer really has trouble importing <code>labevents.csv.gz</code>, you can import from the reduced data file <code>chartevents_filtered_itemid.csv.gz</code>.</p></li>
+<p>Hint: <code>chartevents.csv.gz</code> is a data file too big to be read in by the <code>read_csv</code> function in its default setting. Utilize the <code>col_select</code> option in the <code>read_csv</code> function to reduce the memory burden. It took my computer &gt;15 minutes to ingest this file. If your computer really has trouble importing <code>chartevents.csv.gz</code>, you can import from the reduced data file <code>chartevents_filtered_itemid.csv.gz</code>.</p></li>
 <li><p>Further restrict <code>chartevents_tble</code> to the first vital measurement during the ICU stay.</p></li>
 <li><p>Summarize these vital measurements by appropriate numerics and graphics.</p></li>
 </ol>
