@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-02-01">
+<meta name="dcterms.date" content="2023-02-06">
 
 <title>Data Transformation With dplyr</title>
 <style>
@@ -131,12 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pipe" id="toc-pipe" class="nav-link" data-scroll-target="#pipe"><span class="toc-section-number">5.2</span>  Pipe</a></li>
   <li><a href="#other-summary-functions" id="toc-other-summary-functions" class="nav-link" data-scroll-target="#other-summary-functions"><span class="toc-section-number">5.3</span>  Other summary functions</a></li>
   </ul></li>
-  <li><a href="#grouped-mutates-and-filters" id="toc-grouped-mutates-and-filters" class="nav-link" data-scroll-target="#grouped-mutates-and-filters"><span class="toc-section-number">6</span>  Grouped mutates (and filters)</a>
-  <ul>
-  <li><a href="#r-33" id="toc-r-33" class="nav-link" data-scroll-target="#r-33"><span class="toc-section-number">6.0.1</span>  R</a></li>
-  <li><a href="#python-33" id="toc-python-33" class="nav-link" data-scroll-target="#python-33"><span class="toc-section-number">6.0.2</span>  Python</a></li>
-  <li><a href="#julia-33" id="toc-julia-33" class="nav-link" data-scroll-target="#julia-33"><span class="toc-section-number">6.0.3</span>  Julia</a></li>
-  </ul></li>
+  <li><a href="#grouped-mutates-and-filters" id="toc-grouped-mutates-and-filters" class="nav-link" data-scroll-target="#grouped-mutates-and-filters"><span class="toc-section-number">6</span>  Grouped mutates (and filters)</a></li>
   <li><a href="#combine-tables" id="toc-combine-tables" class="nav-link" data-scroll-target="#combine-tables"><span class="toc-section-number">7</span>  Combine tables</a></li>
   <li><a href="#relational-data" id="toc-relational-data" class="nav-link" data-scroll-target="#relational-data"><span class="toc-section-number">8</span>  Relational data</a>
   <ul>
@@ -184,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 1, 2023</p>
+      <p class="date">February 6, 2023</p>
     </div>
   </div>
   
@@ -896,16 +891,16 @@ collect()     force computation and bring data back into R</code></pre>
 <pre><code># A tibble: 10 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013     4     5      651        700      -9     755     805     -10 US     
- 2  2013     3     3     1945       1935      10    2318    2316       2 B6     
- 3  2013     9    20     1729       1725       4    2041    2015      26 UA     
- 4  2013     4     5     1532       1539      -7    1728    1735      -7 UA     
- 5  2013     6     1     1657       1700      -3    1823    1832      -9 B6     
- 6  2013     7     1     2142       2045      57    2241    2159      42 B6     
- 7  2013    12    31     1851       1855      -4    2027    2040     -13 MQ     
- 8  2013     1    26     1342       1129     133    1639    1438     121 B6     
- 9  2013     7    17      852        853      -1    1105    1115     -10 UA     
-10  2013     4    22      658        700      -2     957     931      26 DL     
+ 1  2013    10     9     2155       2123      32    2327    2321       6 EV     
+ 2  2013     3     3      728        729      -1    1017    1026      -9 B6     
+ 3  2013     5    11     1431       1433      -2    1531    1540      -9 EV     
+ 4  2013     7     2     1315       1315       0    1534    1607     -33 UA     
+ 5  2013     6    24      609        600       9     710     727     -17 UA     
+ 6  2013    11    26     1254       1244      10    1419    1357      22 EV     
+ 7  2013     4    15     1503       1511      -8    1723    1705      18 EV     
+ 8  2013     3    26     1155       1157      -2    1448    1450      -2 B6     
+ 9  2013     3    21     1724       1720       4    1912    1910       2 AA     
+10  2013    10    29      856        900      -4    1233    1210      23 B6     
 # … with 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
 #   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
 #   time_hour &lt;dttm&gt;, and abbreviated variable names ¹​sched_dep_time,
@@ -921,16 +916,16 @@ collect()     force computation and bring data back into R</code></pre>
 <pre><code># A tibble: 33,678 × 19
     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1  2013    10    16     1859       1810      49    2053    1955      58 MQ     
- 2  2013     7    14     1427       1430      -3    1533    1554     -21 EV     
- 3  2013     4    13     1154       1200      -6    1458    1508     -10 DL     
- 4  2013     8    21     1050       1055      -5    1344    1411     -27 DL     
- 5  2013     8     2     1847       1815      32    2104    2047      17 DL     
- 6  2013     4     5     1105       1115     -10    1252    1305     -13 MQ     
- 7  2013    11     6     2115       2111       4    2308    2303       5 EV     
- 8  2013     7    14     1537       1545      -8    1653    1710     -17 MQ     
- 9  2013     6    26     2037       2007      30    2339    2259      40 B6     
-10  2013    11    27     1624       1515      69    1924    1804      80 UA     
+ 1  2013     3    14      608        610      -2     915     918      -3 B6     
+ 2  2013     5    11       NA       1910      NA      NA    2043      NA 9E     
+ 3  2013     1     2     2041       1942      59    2151    2106      45 EV     
+ 4  2013     5    16     1638       1409     149    1756    1517     159 B6     
+ 5  2013     2     6     1421       1400      21    1609    1559      10 EV     
+ 6  2013     3     8      917        910       7    1206    1032      94 B6     
+ 7  2013    11    29      723        730      -7     904     925     -21 DL     
+ 8  2013    11    10     2354       2359      -5     422     440     -18 B6     
+ 9  2013     7     2     1456       1500      -4    1731    1750     -19 AA     
+10  2013     2    12     1459       1500      -1    1759    1837     -38 DL     
 # … with 33,668 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
 #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
@@ -944,40 +939,40 @@ collect()     force computation and bring data back into R</code></pre>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>flights.sample(n <span class="op">=</span> <span class="dv">10</span>, axis <span class="op">=</span> <span class="dv">0</span>, replace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        year  month  day  dep_time  sched_dep_time  dep_delay  arr_time  \
-146742  2013      3   12    1058.0            1100       -2.0    1302.0   
-243083  2013      6   23    1027.0            1015       12.0    1255.0   
-292966  2013      8   14    1604.0            1600        4.0    1859.0   
-180363  2013      4   17     709.0             710       -1.0    1051.0   
-220690  2013      5   30    1317.0            1255       22.0    1557.0   
-264210  2013      7   15    1849.0            1819       30.0    2127.0   
-274107  2013      7   25    2327.0            2220       67.0      30.0   
-165446  2013      4    1    1144.0            1125       19.0    1458.0   
-50128   2013     10   25    1643.0            1645       -2.0    1935.0   
-282244  2013      8    3    1316.0            1325       -9.0    1519.0   
+79035   2013     11   26     608.0             605        3.0     727.0   
+94653   2013     12   13     859.0             900       -1.0    1226.0   
+25151   2013      1   29    2156.0            2159       -3.0    2300.0   
+188962  2013      4   26     754.0             755       -1.0    1040.0   
+46606   2013     10   22     650.0             700      -10.0    1000.0   
+62032   2013     11    7    1641.0            1645       -4.0    1913.0   
+280822  2013      8    1       NaN            1545        NaN       NaN   
+56379   2013     11    1    1424.0            1335       49.0    1539.0   
+100616  2013     12   19    1903.0            1830       33.0    2126.0   
+87298   2013     12    5     848.0             850       -2.0    1225.0   
 
         sched_arr_time  arr_delay carrier  flight tailnum origin dest  \
-146742            1345      -43.0      UA     109  N45440    EWR  LAS   
-243083            1320      -25.0      UA    1463  N35204    EWR  LAX   
-292966            1844       15.0      DL     847  N998DL    LGA  ATL   
-180363            1033       18.0      B6     671  N661JB    JFK  LAX   
-220690            1542       15.0      B6     141  N632JB    JFK  PBI   
-264210            2118        9.0      B6     153  N821JB    JFK  PBI   
-274107            2335       55.0      EV    5169  N744EV    LGA  BTV   
-165446            1421       37.0      B6       1  N646JB    JFK  FLL   
-50128             1944       -9.0      B6     283  N779JB    JFK  MCO   
-282244            1536      -17.0      EV    4419  N41104    EWR  MSY   
+79035              730       -3.0      WN    1284  N266WN    EWR  MDW   
+94653             1206       20.0      B6    1701  N527JB    JFK  FLL   
+25151             2306       -6.0      EV    4322  N12175    EWR  PWM   
+188962            1007       33.0      9E    3879  N826AY    EWR  CVG   
+46606              949       11.0      B6     683  N618JB    JFK  MCO   
+62032             1916       -3.0      DL     884  N315NB    LGA  DEN   
+280822            1906        NaN      DL    1982  N918DE    LGA  MIA   
+56379             1500       39.0      WN       1  N796SW    LGA  MDW   
+100616            2107       19.0      DL     404  N3772H    JFK  ATL   
+87298             1132       53.0      UA    1643  N13138    EWR  DEN   
 
         air_time  distance  hour  minute                 time_hour  
-146742     289.0      2227    11       0 2013-03-12 15:00:00+00:00  
-243083     309.0      2454    10      15 2013-06-23 14:00:00+00:00  
-292966     112.0       762    16       0 2013-08-14 20:00:00+00:00  
-180363     361.0      2475     7      10 2013-04-17 11:00:00+00:00  
-220690     134.0      1028    12      55 2013-05-30 16:00:00+00:00  
-264210     131.0      1028    18      19 2013-07-15 22:00:00+00:00  
-274107      40.0       258    22      20 2013-07-26 02:00:00+00:00  
-165446     171.0      1069    11      25 2013-04-01 15:00:00+00:00  
-50128      137.0       944    16      45 2013-10-25 20:00:00+00:00  
-282244     165.0      1167    13      25 2013-08-03 17:00:00+00:00  </code></pre>
+79035      125.0       711     6       5 2013-11-26 11:00:00+00:00  
+94653      159.0      1069     9       0 2013-12-13 14:00:00+00:00  
+25151       48.0       284    21      59 2013-01-30 02:00:00+00:00  
+188962      94.0       569     7      55 2013-04-26 11:00:00+00:00  
+46606      147.0       944     7       0 2013-10-22 11:00:00+00:00  
+62032      234.0      1620    16      45 2013-11-07 21:00:00+00:00  
+280822       NaN      1096    15      45 2013-08-01 19:00:00+00:00  
+56379      114.0       725    13      35 2013-11-01 17:00:00+00:00  
+100616     108.0       760    18      30 2013-12-19 23:00:00+00:00  
+87298      252.0      1605     8      50 2013-12-05 13:00:00+00:00  </code></pre>
 </div>
 </div>
 <p>Sample 10% rows:</p>
@@ -985,43 +980,43 @@ collect()     force computation and bring data back into R</code></pre>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>flights.sample(frac <span class="op">=</span> <span class="fl">0.1</span>, replace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        year  month  day  dep_time  sched_dep_time  dep_delay  arr_time  \
-283698  2013      8    5     653.0             700       -7.0     803.0   
-330741  2013      9   24    1350.0            1400      -10.0    1533.0   
-304636  2013      8   26       NaN            1245        NaN       NaN   
-177497  2013      4   14     814.0             815       -1.0    1112.0   
-229313  2013      6    8    1712.0            1719       -7.0    1816.0   
+78527   2013     11   25    1352.0            1400       -8.0    1450.0   
+278201  2013      7   30    1034.0            1035       -1.0    1150.0   
+57430   2013     11    2    1725.0            1732       -7.0    1943.0   
+272771  2013      7   24    1636.0            1630        6.0    1844.0   
+29289   2013     10    3    1102.0            1110       -8.0    1410.0   
 ...      ...    ...  ...       ...             ...        ...       ...   
-2790    2013      1    4     703.0             700        3.0     844.0   
-221870  2013      5   31    1644.0            1645       -1.0    1823.0   
-306420  2013      8   28    2036.0            1925       71.0    2216.0   
-219082  2013      5   28    1859.0            1900       -1.0    2218.0   
-24060   2013      1   28    1835.0            1840       -5.0    2028.0   
+290548  2013      8   12     828.0             830       -2.0    1011.0   
+300731  2013      8   22    1837.0            1722       75.0    1953.0   
+248165  2013      6   28    1313.0            1315       -2.0    1601.0   
+192837  2013      4   30    1156.0            1200       -4.0    1318.0   
+235947  2013      6   15    1723.0            1700       23.0    1838.0   
 
         sched_arr_time  arr_delay carrier  flight tailnum origin dest  \
-283698             806       -3.0      US    2136  N948UW    LGA  BOS   
-330741            1547      -14.0      EV    4100  N14920    EWR  MEM   
-304636            1404        NaN      EV    4905  N717EV    LGA  SYR   
-177497            1115       -3.0      DL    1167  N302DQ    JFK  TPA   
-229313            1848      -32.0      EV    5827  N12922    EWR  BUF   
+78527             1515      -25.0      US    2183  N756US    LGA  DCA   
+278201            1154       -4.0      B6    2602  N184JB    JFK  BUF   
+57430             1959      -16.0      FL     623  N603AT    LGA  ATL   
+272771            1839        5.0      DL    2231  N381DN    LGA  DTW   
+29289             1431      -21.0      9E    3493  N926XJ    LGA  SRQ   
 ...                ...        ...     ...     ...     ...    ...  ...   
-2790               836        8.0      UA    1162  N13248    EWR  ORD   
-221870            1851      -28.0      DL    1473  N321NB    LGA  MEM   
-306420            2048       88.0      EV    4131  N11165    EWR  RIC   
-219082            2238      -20.0      DL      87  N624AG    JFK  LAX   
-24060             2049      -21.0      DL    2131  N332NW    LGA  DTW   
+290548            1010        1.0      9E    3521  N604LR    JFK  ORD   
+300731            1858       55.0      B6      86  N216JB    JFK  ROC   
+248165            1558        3.0      B6     553  N206JB    JFK  PBI   
+192837            1310        8.0      US    2126  N959UW    LGA  BOS   
+235947            1845       -7.0      MQ    3216  N638MQ    JFK  ORF   
 
         air_time  distance  hour  minute                 time_hour  
-283698      35.0       184     7       0 2013-08-05 11:00:00+00:00  
-330741     143.0       946    14       0 2013-09-24 18:00:00+00:00  
-304636       NaN       198    12      45 2013-08-26 16:00:00+00:00  
-177497     149.0      1005     8      15 2013-04-14 12:00:00+00:00  
-229313      50.0       282    17      19 2013-06-08 21:00:00+00:00  
+78527       39.0       214    14       0 2013-11-25 19:00:00+00:00  
+278201      54.0       301    10      35 2013-07-30 14:00:00+00:00  
+57430      120.0       762    17      32 2013-11-02 21:00:00+00:00  
+272771      81.0       502    16      30 2013-07-24 20:00:00+00:00  
+29289      150.0      1047    11      10 2013-10-03 15:00:00+00:00  
 ...          ...       ...   ...     ...                       ...  
-2790       114.0       719     7       0 2013-01-04 12:00:00+00:00  
-221870     125.0       963    16      45 2013-05-31 20:00:00+00:00  
-306420      73.0       277    19      25 2013-08-28 23:00:00+00:00  
-219082     334.0      2475    19       0 2013-05-28 23:00:00+00:00  
-24060       85.0       502    18      40 2013-01-28 23:00:00+00:00  
+290548     120.0       740     8      30 2013-08-12 12:00:00+00:00  
+300731      51.0       264    17      22 2013-08-22 21:00:00+00:00  
+248165     142.0      1028    13      15 2013-06-28 17:00:00+00:00  
+192837      37.0       184    12       0 2013-04-30 16:00:00+00:00  
+235947      46.0       290    17       0 2013-06-15 21:00:00+00:00  
 
 [33678 rows x 19 columns]</code></pre>
 </div>
@@ -1038,16 +1033,16 @@ collect()     force computation and bring data back into R</code></pre>
  Row │ year   month  day    dep_time  sched_dep_time  dep_delay  arr_time  sch ⋯
      │ Int64  Int64  Int64  Int64?    Int64           Float64?   Int64?    Int ⋯
 ─────┼──────────────────────────────────────────────────────────────────────────
-   1 │  2013     11     14       750             759       -9.0      1022      ⋯
-   2 │  2013      4     16      1713            1715       -2.0      1934
-   3 │  2013      6     12      1640            1645       -5.0      1756
-   4 │  2013     11     21       946             945        1.0      1246
-   5 │  2013      4     15      1545            1545        0.0      1818      ⋯
-   6 │  2013      1     28      1519            1520       -1.0      1653
-   7 │  2013      1      3       604             600        4.0       852
-   8 │  2013      6     12      1042            1043       -1.0      1206
-   9 │  2013      3     20       608             610       -2.0       908      ⋯
-  10 │  2013      3     20      2034            2000       34.0      2211
+   1 │  2013     11     18      1426            1429       -3.0      1632      ⋯
+   2 │  2013     11     15       902             906       -4.0      1049
+   3 │  2013      6      3      1433            1435       -2.0      1557
+   4 │  2013     10     30      1527            1529       -2.0      1656
+   5 │  2013      9     16      1801            1810       -9.0      2010      ⋯
+   6 │  2013      5     10      1649            1415      154.0      1815
+   7 │  2013      3     13      1506            1512       -6.0      1808
+   8 │  2013      5     20       645             630       15.0       753
+   9 │  2013      7     26      1709            1655       14.0      1959      ⋯
+  10 │  2013      8     11      1454            1440       14.0      1624
                                                               12 columns omitted</code></pre>
 </div>
 </div>
@@ -1063,22 +1058,22 @@ collect()     force computation and bring data back into R</code></pre>
    Row │ year   month  day    dep_time  sched_dep_time  dep_delay  arr_time  s ⋯
        │ Int64  Int64  Int64  Int64?    Int64           Float64?   Int64?    I ⋯
 ───────┼────────────────────────────────────────────────────────────────────────
-     1 │  2013      5     21      1817            1821       -4.0      2011    ⋯
-     2 │  2013      7      8      1608            1610       -2.0      1826
-     3 │  2013      8      4      1126            1030       56.0      1509
-     4 │  2013      1     14      1932            1940       -8.0      2100
-     5 │  2013      3     21      1457            1459       -2.0      1750    ⋯
-     6 │  2013      1     11      1325            1250       35.0      1600
-     7 │  2013      2     26      1313            1320       -7.0      1632
-     8 │  2013      8     23       608             610       -2.0       925
+     1 │  2013      3      2       724             730       -6.0       832    ⋯
+     2 │  2013      4     29       933             930        3.0      1214
+     3 │  2013      9     18       815             815        0.0       941
+     4 │  2013      7     26       812             815       -3.0       929
+     5 │  2013     11      6      1923            1930       -7.0      2143    ⋯
+     6 │  2013      9     28      1552            1545        7.0      1712
+     7 │  2013      8     18      1646            1550       56.0      1818
+     8 │  2013     10     26       812             815       -3.0       934
    ⋮   │   ⋮      ⋮      ⋮       ⋮            ⋮             ⋮         ⋮        ⋱
- 33672 │  2013      7      1       801             745       16.0      1005    ⋯
- 33673 │  2013      6     27       554             600       -6.0       735
- 33674 │  2013      7     31      1904            1900        4.0      2154
- 33675 │  2013      8     25      1927            1855       32.0      2153
- 33676 │  2013      7     29      1450            1441        9.0      1828    ⋯
- 33677 │  2013     10     16      2104            2110       -6.0      2318
- 33678 │  2013     11     24      2103            2105       -2.0      2349
+ 33672 │  2013     12     23      1453            1326       87.0      1553    ⋯
+ 33673 │  2013     12      9      1824            1714       70.0      1938
+ 33674 │  2013      3     21      1717            1645       32.0      1933
+ 33675 │  2013      1     10      1759            1722       37.0      1929
+ 33676 │  2013      1     11      1446            1444        2.0      1743    ⋯
+ 33677 │  2013      6     21      1104            1107       -3.0      1206
+ 33678 │  2013      6     11       946             945        1.0      1102
                                                12 columns and 33663 rows omitted</code></pre>
 </div>
 </div>
@@ -2812,7 +2807,7 @@ dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb175"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>by_day <span class="op">=</span> flights.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>])</span>
 <span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>by_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x12808c1c0&gt;</code></pre>
+<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x12b5b0610&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -6152,9 +6147,10 @@ Name: arr_delay, Length: 3650, dtype: float64</code></pre>
 <ul>
 <li>Standardise to compute per group metrics:</li>
 </ul>
-<p>::: {.panel-tabset}</p>
-<section id="r-33" class="level4" data-number="6.0.1">
-<h4 data-number="6.0.1" class="anchored" data-anchor-id="r-33"><span class="header-section-number">6.0.1</span> R</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-34-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-1" role="tab" aria-controls="tabset-34-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-34-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-2" role="tab" aria-controls="tabset-34-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-34-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-3" role="tab" aria-controls="tabset-34-3" aria-selected="false" href="">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-34-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-34-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb266"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb266-1"><a href="#cb266-1" aria-hidden="true" tabindex="-1"></a>popular_dests <span class="ot">=</span> popular_dests <span class="sc">%&gt;%</span> </span>
 <span id="cb266-2"><a href="#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -6179,9 +6175,8 @@ Name: arr_delay, Length: 3650, dtype: float64</code></pre>
 # … with 131,096 more rows</code></pre>
 </div>
 </div>
-</section>
-<section id="python-33" class="level4" data-number="6.0.2">
-<h4 data-number="6.0.2" class="anchored" data-anchor-id="python-33"><span class="header-section-number">6.0.2</span> Python</h4>
+</div>
+<div id="tabset-34-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb268"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb268-1"><a href="#cb268-1" aria-hidden="true" tabindex="-1"></a>popular_dests[popular_dests[<span class="st">'arr_delay'</span>] <span class="op">&gt;</span> <span class="dv">0</span>].groupby(</span>
 <span id="cb268-2"><a href="#cb268-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'dest'</span></span>
@@ -6204,9 +6199,8 @@ XNA   325031    0.006818
 Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
-</section>
-<section id="julia-33" class="level4" data-number="6.0.3">
-<h4 data-number="6.0.3" class="anchored" data-anchor-id="julia-33"><span class="header-section-number">6.0.3</span> Julia</h4>
+</div>
+<div id="tabset-34-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb270"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb270-1"><a href="#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@pipe</span> popular_dests <span class="op">|&gt;</span> </span>
 <span id="cb270-2"><a href="#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dropmissing</span>(_, <span class="op">:</span>arr_delay) <span class="op">|&gt;</span></span>
@@ -6237,7 +6231,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
            131091 rows omitted</code></pre>
 </div>
 </div>
-</section>
+</div>
+</div>
+</div>
 </section>
 <section id="combine-tables" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="combine-tables"><span class="header-section-number">7</span> Combine tables</h2>
@@ -6246,9 +6242,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <li>We already know a lot about flights:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-34-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-1" role="tab" aria-controls="tabset-34-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-34-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-2" role="tab" aria-controls="tabset-34-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-34-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-3" role="tab" aria-controls="tabset-34-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-35-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-1" role="tab" aria-controls="tabset-35-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-35-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-2" role="tab" aria-controls="tabset-35-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-35-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-3" role="tab" aria-controls="tabset-35-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-34-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-34-1-tab">
+<div id="tabset-35-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-35-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb272"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb272-1"><a href="#cb272-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6293,7 +6289,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-34-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-2-tab">
+<div id="tabset-35-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-35-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb274"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb274-1"><a href="#cb274-1" aria-hidden="true" tabindex="-1"></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6340,7 +6336,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-34-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-3-tab">
+<div id="tabset-35-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-35-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb276"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb276-1"><a href="#cb276-1" aria-hidden="true" tabindex="-1"></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6374,9 +6370,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <li>airlines:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-35-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-1" role="tab" aria-controls="tabset-35-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-35-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-2" role="tab" aria-controls="tabset-35-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-35-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-3" role="tab" aria-controls="tabset-35-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-36-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-1" role="tab" aria-controls="tabset-36-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-36-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-2" role="tab" aria-controls="tabset-36-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-36-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-3" role="tab" aria-controls="tabset-36-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-35-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-35-1-tab">
+<div id="tabset-36-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-36-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb278"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" aria-hidden="true" tabindex="-1"></a>airlines</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6402,7 +6398,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-35-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-35-2-tab">
+<div id="tabset-36-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-36-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb280"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb280-1"><a href="#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycflights13 <span class="im">import</span> airlines</span>
 <span id="cb280-2"><a href="#cb280-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -6428,7 +6424,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-35-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-35-3-tab">
+<div id="tabset-36-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-36-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb282"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb282-1"><a href="#cb282-1" aria-hidden="true" tabindex="-1"></a>airlines <span class="op">=</span> <span class="fu">rcopy</span>(R<span class="st">"airlines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6461,9 +6457,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <li>airports:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-36-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-1" role="tab" aria-controls="tabset-36-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-36-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-2" role="tab" aria-controls="tabset-36-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-36-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-3" role="tab" aria-controls="tabset-36-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-37-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-1" role="tab" aria-controls="tabset-37-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-37-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-2" role="tab" aria-controls="tabset-37-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-37-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-3" role="tab" aria-controls="tabset-37-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-36-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-36-1-tab">
+<div id="tabset-37-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-37-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb284"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb284-1"><a href="#cb284-1" aria-hidden="true" tabindex="-1"></a>airports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6484,7 +6480,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-36-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-36-2-tab">
+<div id="tabset-37-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-37-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb286"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb286-1"><a href="#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycflights13 <span class="im">import</span> airports</span>
 <span id="cb286-2"><a href="#cb286-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -6520,7 +6516,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-36-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-36-3-tab">
+<div id="tabset-37-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-37-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb288"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb288-1"><a href="#cb288-1" aria-hidden="true" tabindex="-1"></a>airports <span class="op">=</span> <span class="fu">rcopy</span>(R<span class="st">"airports"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6554,9 +6550,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <li>planes:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-37-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-1" role="tab" aria-controls="tabset-37-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-37-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-2" role="tab" aria-controls="tabset-37-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-37-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-3" role="tab" aria-controls="tabset-37-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-38-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-1" role="tab" aria-controls="tabset-38-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-38-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-2" role="tab" aria-controls="tabset-38-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-38-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-3" role="tab" aria-controls="tabset-38-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-37-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-37-1-tab">
+<div id="tabset-38-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-38-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb290"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1" aria-hidden="true" tabindex="-1"></a>planes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6577,7 +6573,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-37-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-37-2-tab">
+<div id="tabset-38-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-38-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb292"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb292-1"><a href="#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycflights13 <span class="im">import</span> planes</span>
 <span id="cb292-2"><a href="#cb292-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -6613,7 +6609,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-37-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-37-3-tab">
+<div id="tabset-38-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-38-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb294"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb294-1"><a href="#cb294-1" aria-hidden="true" tabindex="-1"></a>planes <span class="op">=</span> <span class="fu">rcopy</span>(R<span class="st">"planes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6647,9 +6643,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <li>Weather:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-38-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-1" role="tab" aria-controls="tabset-38-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-38-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-2" role="tab" aria-controls="tabset-38-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-38-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-38-3" role="tab" aria-controls="tabset-38-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-39-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-1" role="tab" aria-controls="tabset-39-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-39-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-2" role="tab" aria-controls="tabset-39-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-39-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-3" role="tab" aria-controls="tabset-39-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-38-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-38-1-tab">
+<div id="tabset-39-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-39-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb296"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb296-1"><a href="#cb296-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span></span>
 <span id="cb296-2"><a href="#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -6683,7 +6679,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-38-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-38-2-tab">
+<div id="tabset-39-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-39-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb298"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb298-1"><a href="#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycflights13 <span class="im">import</span> weather</span>
 <span id="cb298-2"><a href="#cb298-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -6719,7 +6715,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-38-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-38-3-tab">
+<div id="tabset-39-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-39-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb300"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb300-1"><a href="#cb300-1" aria-hidden="true" tabindex="-1"></a>weather <span class="op">=</span> <span class="fu">rcopy</span>(R<span class="st">"weather"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6769,9 +6765,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <section id="demo-tables" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="demo-tables"><span class="header-section-number">9.1</span> Demo tables</h3>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-39-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-1" role="tab" aria-controls="tabset-39-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-39-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-2" role="tab" aria-controls="tabset-39-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-39-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-39-3" role="tab" aria-controls="tabset-39-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-40-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-1" role="tab" aria-controls="tabset-40-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-40-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-2" role="tab" aria-controls="tabset-40-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-40-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-3" role="tab" aria-controls="tabset-40-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-39-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-39-1-tab">
+<div id="tabset-40-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-40-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb302"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" aria-hidden="true" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb302-2"><a href="#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
@@ -6805,7 +6801,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-39-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-39-2-tab">
+<div id="tabset-40-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-40-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb306"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb306-1"><a href="#cb306-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb306-2"><a href="#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'key'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>],</span>
@@ -6833,7 +6829,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-39-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-39-3-tab">
+<div id="tabset-40-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-40-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb310"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb310-1"><a href="#cb310-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
 <span id="cb310-2"><a href="#cb310-2" aria-hidden="true" tabindex="-1"></a>  key <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
@@ -6875,9 +6871,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <img src="./join-inner.png" height="150">
 </p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-40-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-1" role="tab" aria-controls="tabset-40-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-40-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-2" role="tab" aria-controls="tabset-40-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-40-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-3" role="tab" aria-controls="tabset-40-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-41-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-1" role="tab" aria-controls="tabset-41-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-41-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-2" role="tab" aria-controls="tabset-41-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-41-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-3" role="tab" aria-controls="tabset-41-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-40-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-40-1-tab">
+<div id="tabset-41-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-41-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb314"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6893,7 +6889,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb316"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-40-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-40-2-tab">
+<div id="tabset-41-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-41-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb317"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb317-1"><a href="#cb317-1" aria-hidden="true" tabindex="-1"></a>x.join(y.set_index(<span class="st">'key'</span>), on <span class="op">=</span> <span class="st">'key'</span>, how <span class="op">=</span> <span class="st">'inner'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6903,7 +6899,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-40-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-40-3-tab">
+<div id="tabset-41-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-41-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb319"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb319-1"><a href="#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">innerjoin</span>(x, y, on <span class="op">=</span> <span class="op">:</span>key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6929,9 +6925,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </ul></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-41-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-1" role="tab" aria-controls="tabset-41-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-41-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-2" role="tab" aria-controls="tabset-41-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-41-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-41-3" role="tab" aria-controls="tabset-41-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-42-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-1" role="tab" aria-controls="tabset-42-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-42-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-2" role="tab" aria-controls="tabset-42-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-42-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-3" role="tab" aria-controls="tabset-42-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-41-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-41-1-tab">
+<div id="tabset-42-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-42-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb321"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb321-1"><a href="#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6944,7 +6940,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-41-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-41-2-tab">
+<div id="tabset-42-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-42-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb323"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb323-1"><a href="#cb323-1" aria-hidden="true" tabindex="-1"></a>x.join(y.set_index(<span class="st">'key'</span>), on <span class="op">=</span> <span class="st">'key'</span>, how <span class="op">=</span> <span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6955,7 +6951,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-41-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-41-3-tab">
+<div id="tabset-42-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-42-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb325"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb325-1"><a href="#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leftjoin</span>(x, y, on <span class="op">=</span> <span class="op">:</span>key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6973,9 +6969,9 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 <pre><code>- A **right join** keeps all observations in `y`.</code></pre>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-42-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-1" role="tab" aria-controls="tabset-42-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-42-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-2" role="tab" aria-controls="tabset-42-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-42-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-42-3" role="tab" aria-controls="tabset-42-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-43-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-1" role="tab" aria-controls="tabset-43-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-43-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-2" role="tab" aria-controls="tabset-43-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-43-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-3" role="tab" aria-controls="tabset-43-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-42-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-42-1-tab">
+<div id="tabset-43-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-43-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb328"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb328-1"><a href="#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6988,7 +6984,7 @@ Name: arr_delay, Length: 131106, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-42-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-42-2-tab">
+<div id="tabset-43-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-43-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb330"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb330-1"><a href="#cb330-1" aria-hidden="true" tabindex="-1"></a>x.join(y.set_index(<span class="st">'key'</span>), on <span class="op">=</span> <span class="st">'key'</span>, how <span class="op">=</span> <span class="st">'right'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6999,7 +6995,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-42-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-42-3-tab">
+<div id="tabset-43-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-43-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb332"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb332-1"><a href="#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rightjoin</span>(x, y, on <span class="op">=</span> <span class="op">:</span>key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7017,9 +7013,9 @@ NaN    3   NaN    y3</code></pre>
 </div>
 <pre><code>- A **full join** keeps all observations in `x` or `y`.</code></pre>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-43-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-1" role="tab" aria-controls="tabset-43-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-43-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-2" role="tab" aria-controls="tabset-43-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-43-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-43-3" role="tab" aria-controls="tabset-43-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-44-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-1" role="tab" aria-controls="tabset-44-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-44-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-2" role="tab" aria-controls="tabset-44-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-44-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-3" role="tab" aria-controls="tabset-44-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-43-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-43-1-tab">
+<div id="tabset-44-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-44-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb335"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7033,7 +7029,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-43-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-43-2-tab">
+<div id="tabset-44-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-44-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb337"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb337-1"><a href="#cb337-1" aria-hidden="true" tabindex="-1"></a>x.join(y.set_index(<span class="st">'key'</span>), on <span class="op">=</span> <span class="st">'key'</span>, how <span class="op">=</span> <span class="st">'outer'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7045,7 +7041,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-43-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-43-3-tab">
+<div id="tabset-44-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-44-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb339"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb339-1"><a href="#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">outerjoin</span>(x, y, on <span class="op">=</span> <span class="op">:</span>key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7075,9 +7071,9 @@ NaN    3   NaN    y3</code></pre>
 <p></p></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-44-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-1" role="tab" aria-controls="tabset-44-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-44-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-2" role="tab" aria-controls="tabset-44-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-44-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-44-3" role="tab" aria-controls="tabset-44-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-45-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-1" role="tab" aria-controls="tabset-45-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-45-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-2" role="tab" aria-controls="tabset-45-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-45-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-3" role="tab" aria-controls="tabset-45-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-44-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-44-1-tab">
+<div id="tabset-45-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-45-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb341"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb341-2"><a href="#cb341-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
@@ -7121,7 +7117,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-44-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-44-2-tab">
+<div id="tabset-45-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-45-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb347"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb347-1"><a href="#cb347-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb347-2"><a href="#cb347-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'key'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>],</span>
@@ -7155,7 +7151,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-44-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-44-3-tab">
+<div id="tabset-45-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-45-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb353"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb353-1"><a href="#cb353-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
 <span id="cb353-2"><a href="#cb353-2" aria-hidden="true" tabindex="-1"></a>  key <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>],</span>
@@ -7205,9 +7201,9 @@ NaN    3   NaN    y3</code></pre>
 <p></p></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-45-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-1" role="tab" aria-controls="tabset-45-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-45-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-2" role="tab" aria-controls="tabset-45-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-45-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-45-3" role="tab" aria-controls="tabset-45-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-46-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-1" role="tab" aria-controls="tabset-46-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-46-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-2" role="tab" aria-controls="tabset-46-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-46-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-3" role="tab" aria-controls="tabset-46-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-45-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-45-1-tab">
+<div id="tabset-46-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-46-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb359"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb359-1"><a href="#cb359-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb359-2"><a href="#cb359-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
@@ -7237,7 +7233,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-45-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-45-2-tab">
+<div id="tabset-46-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-46-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb361"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb361-1"><a href="#cb361-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb361-2"><a href="#cb361-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'key'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
@@ -7275,7 +7271,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-45-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-45-3-tab">
+<div id="tabset-46-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-46-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb367"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb367-1"><a href="#cb367-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
 <span id="cb367-2"><a href="#cb367-2" aria-hidden="true" tabindex="-1"></a>  key <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>],</span>
@@ -7326,9 +7322,9 @@ NaN    3   NaN    y3</code></pre>
 <li>Let’s create a narrower table from the flights data:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-46-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-1" role="tab" aria-controls="tabset-46-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-46-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-2" role="tab" aria-controls="tabset-46-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-46-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-46-3" role="tab" aria-controls="tabset-46-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-47-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-1" role="tab" aria-controls="tabset-47-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-47-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-2" role="tab" aria-controls="tabset-47-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-47-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-3" role="tab" aria-controls="tabset-47-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-46-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-46-1-tab">
+<div id="tabset-47-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-47-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb373"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb373-1"><a href="#cb373-1" aria-hidden="true" tabindex="-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
 <span id="cb373-2"><a href="#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day, hour, origin, dest, tailnum, carrier) <span class="sc">%&gt;%</span></span>
@@ -7351,7 +7347,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-46-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-46-2-tab">
+<div id="tabset-47-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-47-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb375"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb375-1"><a href="#cb375-1" aria-hidden="true" tabindex="-1"></a>flights2 <span class="op">=</span> flights[[<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>, <span class="st">'hour'</span>, <span class="st">'origin'</span>, <span class="st">'dest'</span>, <span class="st">'tailnum'</span>, <span class="st">'carrier'</span>]]</span>
 <span id="cb375-2"><a href="#cb375-2" aria-hidden="true" tabindex="-1"></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -7373,7 +7369,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-46-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-46-3-tab">
+<div id="tabset-47-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-47-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb377"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb377-1"><a href="#cb377-1" aria-hidden="true" tabindex="-1"></a>flights2 <span class="op">=</span> <span class="fu">select</span>(</span>
 <span id="cb377-2"><a href="#cb377-2" aria-hidden="true" tabindex="-1"></a>  flights, </span>
@@ -7415,9 +7411,9 @@ NaN    3   NaN    y3</code></pre>
 <li>We want to merge with the <code>weather</code> table:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-47-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-1" role="tab" aria-controls="tabset-47-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-47-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-2" role="tab" aria-controls="tabset-47-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-47-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-47-3" role="tab" aria-controls="tabset-47-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-48-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-1" role="tab" aria-controls="tabset-48-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-48-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-2" role="tab" aria-controls="tabset-48-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-48-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-3" role="tab" aria-controls="tabset-48-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-47-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-47-1-tab">
+<div id="tabset-48-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-48-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb379"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb379-1"><a href="#cb379-1" aria-hidden="true" tabindex="-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7439,7 +7435,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-47-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-47-2-tab">
+<div id="tabset-48-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-48-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb381"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb381-1"><a href="#cb381-1" aria-hidden="true" tabindex="-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7473,7 +7469,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-47-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-47-3-tab">
+<div id="tabset-48-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-48-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb383"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb383-1"><a href="#cb383-1" aria-hidden="true" tabindex="-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7507,9 +7503,9 @@ NaN    3   NaN    y3</code></pre>
 <section id="defining-the-key-columns" class="level3" data-number="9.5">
 <h3 data-number="9.5" class="anchored" data-anchor-id="defining-the-key-columns"><span class="header-section-number">9.5</span> Defining the key columns</h3>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-48-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-1" role="tab" aria-controls="tabset-48-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-48-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-2" role="tab" aria-controls="tabset-48-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-48-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-48-3" role="tab" aria-controls="tabset-48-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-49-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-1" role="tab" aria-controls="tabset-49-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-49-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-2" role="tab" aria-controls="tabset-49-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-49-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-3" role="tab" aria-controls="tabset-49-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-48-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-48-1-tab">
+<div id="tabset-49-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-49-1-tab">
 <ul>
 <li><code>by = NULL</code> (default): use all variables that appear in both tables:</li>
 </ul>
@@ -7585,7 +7581,7 @@ NaN    3   NaN    y3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-48-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-48-2-tab">
+<div id="tabset-49-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-49-2-tab">
 <ul>
 <li>Match multiple keys using multi-index:</li>
 </ul>
@@ -7746,7 +7742,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-48-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-48-3-tab">
+<div id="tabset-49-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-49-3-tab">
 <ul>
 <li>Match multiple variables:</li>
 </ul>
@@ -7859,9 +7855,9 @@ XNA   A  America/Chicago
 <li>Top 10 most popular destinations:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-49-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-1" role="tab" aria-controls="tabset-49-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-49-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-2" role="tab" aria-controls="tabset-49-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-49-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-49-3" role="tab" aria-controls="tabset-49-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-50-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-1" role="tab" aria-controls="tabset-50-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-50-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-2" role="tab" aria-controls="tabset-50-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-50-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-3" role="tab" aria-controls="tabset-50-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-49-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-49-1-tab">
+<div id="tabset-50-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-50-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb403"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb403-1"><a href="#cb403-1" aria-hidden="true" tabindex="-1"></a>top_dest <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span></span>
 <span id="cb403-2"><a href="#cb403-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
@@ -7884,7 +7880,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-49-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-49-2-tab">
+<div id="tabset-50-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-50-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb405"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb405-1"><a href="#cb405-1" aria-hidden="true" tabindex="-1"></a>top_dest <span class="op">=</span> flights.groupby(<span class="st">'dest'</span>)[<span class="st">'dest'</span>].count(</span>
 <span id="cb405-2"><a href="#cb405-2" aria-hidden="true" tabindex="-1"></a>  ).to_frame(</span>
@@ -7910,7 +7906,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-49-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-49-3-tab">
+<div id="tabset-50-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-50-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb407"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb407-1"><a href="#cb407-1" aria-hidden="true" tabindex="-1"></a>top_dest <span class="op">=</span> <span class="pp">@pipe</span> flights <span class="op">|&gt;</span> </span>
 <span id="cb407-2"><a href="#cb407-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(_, <span class="op">:</span>dest) <span class="op">|&gt;</span></span>
@@ -7949,9 +7945,9 @@ XNA   A  America/Chicago
 <p></p></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-50-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-1" role="tab" aria-controls="tabset-50-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-50-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-2" role="tab" aria-controls="tabset-50-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-50-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-50-3" role="tab" aria-controls="tabset-50-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-51-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-1" role="tab" aria-controls="tabset-51-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-51-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-2" role="tab" aria-controls="tabset-51-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-51-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-3" role="tab" aria-controls="tabset-51-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-50-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-50-1-tab">
+<div id="tabset-51-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-51-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb409"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb409-1"><a href="#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semi_join</span>(flights, top_dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -7975,7 +7971,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-50-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-50-2-tab">
+<div id="tabset-51-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-51-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb411"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb411-1"><a href="#cb411-1" aria-hidden="true" tabindex="-1"></a>flights.loc[flights[<span class="st">'dest'</span>].isin(top_dest[<span class="st">'dest'</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8022,7 +8018,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-50-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-50-3-tab">
+<div id="tabset-51-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-51-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb413"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb413-1"><a href="#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semijoin</span>(flights, top_dest, on <span class="op">=</span> <span class="op">:</span>dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8063,9 +8059,9 @@ XNA   A  America/Chicago
 <li><p>Useful to see what will not be joined.</p></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-51-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-1" role="tab" aria-controls="tabset-51-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-51-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-2" role="tab" aria-controls="tabset-51-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-51-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-51-3" role="tab" aria-controls="tabset-51-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-52-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-1" role="tab" aria-controls="tabset-52-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-52-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-2" role="tab" aria-controls="tabset-52-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-52-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-3" role="tab" aria-controls="tabset-52-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-51-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-51-1-tab">
+<div id="tabset-52-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-52-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb415"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb415-1"><a href="#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Planes that are not in planes table</span></span>
 <span id="cb415-2"><a href="#cb415-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
@@ -8089,7 +8085,7 @@ XNA   A  America/Chicago
 </div>
 </div>
 </div>
-<div id="tabset-51-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-51-2-tab">
+<div id="tabset-52-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-52-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb417"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb417-1"><a href="#cb417-1" aria-hidden="true" tabindex="-1"></a>flights.loc[<span class="op">-</span>flights[<span class="st">'tailnum'</span>].isin(planes[<span class="st">'tailnum'</span>])].groupby(<span class="st">'tailnum'</span>)[<span class="st">'tailnum'</span>].count().sort_values(ascending <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8109,7 +8105,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-51-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-51-3-tab">
+<div id="tabset-52-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-52-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb419"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb419-1"><a href="#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@pipe</span> <span class="fu">antijoin</span>(</span>
 <span id="cb419-2"><a href="#cb419-2" aria-hidden="true" tabindex="-1"></a>  flights, </span>
@@ -8155,9 +8151,9 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 <li>Generate two tables:</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-52-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-1" role="tab" aria-controls="tabset-52-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-52-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-2" role="tab" aria-controls="tabset-52-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-52-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-52-3" role="tab" aria-controls="tabset-52-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-53-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-1" role="tab" aria-controls="tabset-53-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-53-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-2" role="tab" aria-controls="tabset-53-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-53-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-3" role="tab" aria-controls="tabset-53-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-52-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-52-1-tab">
+<div id="tabset-53-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-53-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb421"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb421-1"><a href="#cb421-1" aria-hidden="true" tabindex="-1"></a>(df1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb421-2"><a href="#cb421-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
@@ -8187,7 +8183,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-52-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-52-2-tab">
+<div id="tabset-53-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-53-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb425"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb425-1"><a href="#cb425-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb425-2"><a href="#cb425-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'x'</span>: [<span class="dv">1</span>, <span class="dv">2</span>],</span>
@@ -8211,7 +8207,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-52-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-52-3-tab">
+<div id="tabset-53-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-53-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb429"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb429-1"><a href="#cb429-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
 <span id="cb429-2"><a href="#cb429-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">2</span>],</span>
@@ -8245,9 +8241,9 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 <li><code>bind_rows(x, y)</code> stacks table <code>x</code> one on top of <code>y</code>.</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-53-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-1" role="tab" aria-controls="tabset-53-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-53-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-2" role="tab" aria-controls="tabset-53-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-53-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-53-3" role="tab" aria-controls="tabset-53-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-54-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-1" role="tab" aria-controls="tabset-54-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-54-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-2" role="tab" aria-controls="tabset-54-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-54-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-3" role="tab" aria-controls="tabset-54-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-53-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-53-1-tab">
+<div id="tabset-54-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-54-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb433"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb433-1"><a href="#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8261,7 +8257,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-53-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-53-2-tab">
+<div id="tabset-54-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-54-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb435"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb435-1"><a href="#cb435-1" aria-hidden="true" tabindex="-1"></a>pd.concat([df1, df2], axis <span class="op">=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8273,7 +8269,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-53-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-53-3-tab">
+<div id="tabset-54-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-54-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb437"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb437-1"><a href="#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vcat</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8294,9 +8290,9 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 <li><code>intersect(x, y)</code> returns rows that appear in both <code>x</code> and <code>y</code>.</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-54-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-1" role="tab" aria-controls="tabset-54-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-54-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-2" role="tab" aria-controls="tabset-54-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-54-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-54-3" role="tab" aria-controls="tabset-54-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-55-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-1" role="tab" aria-controls="tabset-55-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-55-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-2" role="tab" aria-controls="tabset-55-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-55-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-3" role="tab" aria-controls="tabset-55-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-54-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-54-1-tab">
+<div id="tabset-55-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-55-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb439"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb439-1"><a href="#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8307,7 +8303,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-54-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-54-2-tab">
+<div id="tabset-55-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-55-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb441"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb441-1"><a href="#cb441-1" aria-hidden="true" tabindex="-1"></a>pd.merge(df1, df2, how <span class="op">=</span> <span class="st">'inner'</span>, on <span class="op">=</span> [<span class="st">'x'</span>, <span class="st">'y'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8316,7 +8312,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-54-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-54-3-tab">
+<div id="tabset-55-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-55-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb443"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb443-1"><a href="#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">intersect</span>(<span class="fu">eachrow</span>(df1), <span class="fu">eachrow</span>(df2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8334,9 +8330,9 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 <li><code>union(x, y)</code> returns unique observations in <code>x</code> and <code>y</code>.</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-55-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-1" role="tab" aria-controls="tabset-55-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-55-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-2" role="tab" aria-controls="tabset-55-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-55-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-55-3" role="tab" aria-controls="tabset-55-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-56-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-1" role="tab" aria-controls="tabset-56-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-56-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-2" role="tab" aria-controls="tabset-56-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-56-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-3" role="tab" aria-controls="tabset-56-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-55-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-55-1-tab">
+<div id="tabset-56-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-56-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb445"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb445-1"><a href="#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">union</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8349,7 +8345,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-55-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-55-2-tab">
+<div id="tabset-56-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-56-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb447"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb447-1"><a href="#cb447-1" aria-hidden="true" tabindex="-1"></a>pd.merge(df1, df2, how <span class="op">=</span> <span class="st">'outer'</span>, on <span class="op">=</span> [<span class="st">'x'</span>, <span class="st">'y'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8360,7 +8356,7 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-55-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-55-3-tab">
+<div id="tabset-56-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-56-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb449"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb449-1"><a href="#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">union</span>(<span class="fu">eachrow</span>(df1), <span class="fu">eachrow</span>(df2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8380,9 +8376,9 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 <li><code>setdiff(x, y)</code> returns rows that appear in <code>x</code> but not in <code>y</code>.</li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-56-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-1" role="tab" aria-controls="tabset-56-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-56-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-2" role="tab" aria-controls="tabset-56-2" aria-selected="false" href="">Python (???)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-56-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-56-3" role="tab" aria-controls="tabset-56-3" aria-selected="false" href="">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-57-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-57-1" role="tab" aria-controls="tabset-57-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-57-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-57-2" role="tab" aria-controls="tabset-57-2" aria-selected="false" href="">Python (???)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-57-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-57-3" role="tab" aria-controls="tabset-57-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-56-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-56-1-tab">
+<div id="tabset-57-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-57-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb451"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb451-1"><a href="#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -8402,10 +8398,10 @@ Name: tailnum, Length: 721, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-56-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-56-2-tab">
+<div id="tabset-57-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-57-2-tab">
 <p>Not sure how to do this elegantly.</p>
 </div>
-<div id="tabset-56-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-56-3-tab">
+<div id="tabset-57-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-57-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb455"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb455-1"><a href="#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">setdiff</span>(<span class="fu">eachrow</span>(df1), <span class="fu">eachrow</span>(df2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

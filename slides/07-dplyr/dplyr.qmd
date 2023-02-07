@@ -1351,6 +1351,7 @@ popular_dests[popular_dests['arr_delay'] > 0].groupby(
   lambda x: x['arr_delay'] / x['arr_delay'].sum()
 )
 ```
+
 #### Julia
 
 ```{julia}
@@ -1360,6 +1361,8 @@ popular_dests[popular_dests['arr_delay'] > 0].groupby(
   groupby(_, :dest) |>
   combine(_, :arr_delay => (x -> x ./ sum(x)) => :prop_delay)
 ```
+
+:::
 
 ## Combine tables
 
