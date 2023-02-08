@@ -212,7 +212,7 @@ loaded via a namespace (and not attached):
 <ul>
 <li><p>We follow instructions in a <a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">Blog by SAURAV KAUSHIK</a> to find the most popular feature films of 2020.</p></li>
 <li><p>Install the <a href="https://selectorgadget.com/">SelectorGadget</a> extension for Chrome.</p></li>
-<li><p>The 100 most popular feature films released in 2021 can be accessed at page <a href="https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2020-01-01,2020-12-31&amp;count=100" class="uri">https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2020-01-01,2020-12-31&amp;count=100</a>.</p></li>
+<li><p>The 100 most popular feature films released in 2020 can be accessed at page <a href="https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2020-01-01,2020-12-31&amp;count=100" class="uri">https://www.imdb.com/search/title/?title_type=feature&amp;release_date=2020-01-01,2020-12-31&amp;count=100</a>.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specifying the url for desired website to be scraped</span></span>
@@ -595,16 +595,16 @@ loaded via a namespace (and not attached):
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>votes_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] 515425  38484  16669    270  91521 272130   8216 159222 197888 178164
- [11]  97419 236658 138528 130853  29385  89871 165477  56277 163595  61469
- [21] 243319  31970 164952 163391  28166 207534 335657  33276 168780  14917
- [31]  43582 120169 117063  84774  57692 150276  85413 100124  13410  31586
- [41]  51283  82654  56597 142831  33620  15439 232274  64133  22518  81963
- [51]  61108  77053  95939  10145  70496  14083  41011 180338 135051  14452
- [61]  70218  70392  76910  90833  45666  17712   7130  90552  23467    913
- [71]  34872  43281  51124  42567  10111  83844  60356 153004  21930  32238
- [81]  66085  10624  52399  24390   6262  52919  88678  33393 143285   9983
- [91]   5014  53974  19400    765  70129   9729  41606   4742   4803  43294</code></pre>
+<pre><code>  [1] 515489  38498  16675    270  91529 272157   8263 159260 197916 178206
+ [11]  97436 236703 138538 130874  29406  89879 165513  56282 163610  61483
+ [21] 243352  31985 164982 163411  28171 207560 335694  33277 168794  14942
+ [31]  43590 120188 117075  84778  57701 150284  85425 100136  13420  31591
+ [41]  51289  82674  56616 142842  33628  15440 232283  64139  22520  81971
+ [51]  61116  77062  95946  10150  70509  14094  41019 180349 135068  14453
+ [61]  70237  70399  76914  90844  45677  17716   7133  90566  23480    918
+ [71]  34879  43284  51128  42569  10117  83854  60368 153020  21933  32248
+ [81]  66091  10625  52405  24394   6264  52929  88692  33399 143296   9987
+ [91]   5019  53978  19403    766  70136   9729  41618   4742   4809  43296</code></pre>
 </div>
 </div>
 </section>
@@ -912,16 +912,16 @@ loaded via a namespace (and not attached):
 10 A young woman, traumatized by a tragic event in her past, seeks out vengeanc…
    Runtime Genre    Rating Metascore  Votes Gross_Earning_in_Mil
      &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;int&gt;  &lt;dbl&gt;                &lt;dbl&gt;
- 1     150 Action      7.3        69 515425                 58.5
- 2     103 Horror      6.5        72  38484                 NA  
- 3     111 Drama       5.5        31  16669                 NA  
+ 1     150 Action      7.3        69 515489                 58.5
+ 2     103 Horror      6.5        72  38498                 NA  
+ 3     111 Drama       5.5        31  16675                 NA  
  4      89 Thriller    4          NA    270                 NA  
- 5     114 Drama       3.3        NA  91521                 NA  
- 6     151 Action      5.4        60 272130                 46.4
- 7     100 Drama       6.5        52   8216                 NA  
- 8      97 Drama       8.2        88 159222                 NA  
- 9     123 Action      6.6        68 197888                 NA  
-10     113 Crime       7.5        73 178164                 NA  
+ 5     114 Drama       3.3        NA  91529                 NA  
+ 6     151 Action      5.4        60 272157                 46.4
+ 7     100 Drama       6.5        52   8263                 NA  
+ 8      97 Drama       8.2        88 159260                 NA  
+ 9     123 Action      6.6        68 197916                 NA  
+10     113 Crime       7.5        73 178206                 NA  
    Director           Actor                
    &lt;chr&gt;              &lt;chr&gt;                
  1 Christopher Nolan  John David Washington
@@ -1016,11 +1016,11 @@ loaded via a namespace (and not attached):
 5 When the owner and operator of a luxurious island invites a collection of gue…
   Runtime Genre     Rating Metascore  Votes Gross_Earning_in_Mil Director      
     &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;     &lt;int&gt;  &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;         
-1      97 Drama        7.2        71 236658                160.  John Krasinski
-2     124 Action       6.5        59 163595                206.  Adil El Arbi  
-3     102 Animation    7.4        61 153004                 61.6 Dan Scanlon   
-4     101 Adventure    5.6        26  66085                 77.0 Stephen Gaghan
-5     109 Fantasy      4.9        22  53974                 27.3 Jeff Wadlow   
+1      97 Drama        7.2        71 236703                160.  John Krasinski
+2     124 Action       6.5        59 163610                206.  Adil El Arbi  
+3     102 Animation    7.4        61 153020                 61.6 Dan Scanlon   
+4     101 Adventure    5.6        26  66091                 77.0 Stephen Gaghan
+5     109 Fantasy      4.9        22  53978                 27.3 Jeff Wadlow   
   Actor            
   &lt;chr&gt;            
 1 Emily Blunt      

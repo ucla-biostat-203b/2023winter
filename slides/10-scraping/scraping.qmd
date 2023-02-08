@@ -47,7 +47,7 @@ There is a wealth of data on internet. How to scrape them and analyze them?
 
 - Install the [SelectorGadget](https://selectorgadget.com/) extension for Chrome.
 
-- The 100 most popular feature films released in 2021 can be accessed at page <https://www.imdb.com/search/title/?title_type=feature&release_date=2020-01-01,2020-12-31&count=100>.
+- The 100 most popular feature films released in 2020 can be accessed at page <https://www.imdb.com/search/title/?title_type=feature&release_date=2020-01-01,2020-12-31&count=100>.
 
 ```{r}
 # Specifying the url for desired website to be scraped
