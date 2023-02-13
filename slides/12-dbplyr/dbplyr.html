@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-29">
+<meta name="dcterms.date" content="2023-02-13">
 
 <title>Working with Databases - Part II</title>
 <style>
@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 29, 2022</p>
+      <p class="date">February 13, 2023</p>
     </div>
   </div>
   
@@ -178,28 +178,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 22.04.1 LTS
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] digest_0.6.31     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
- [5] evaluate_0.19     rlang_1.0.6       stringi_1.7.8     cli_3.5.0        
- [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.19    tools_4.2.2      
+ [1] digest_0.6.30     lifecycle_1.0.3   jsonlite_1.8.4    magrittr_2.0.3   
+ [5] evaluate_0.18     rlang_1.0.6       stringi_1.7.8     cli_3.4.1        
+ [9] rstudioapi_0.14   vctrs_0.5.1       rmarkdown_2.18    tools_4.2.2      
 [13] stringr_1.5.0     glue_1.6.2        htmlwidgets_1.6.0 xfun_0.35        
 [17] yaml_2.3.6        fastmap_1.1.0     compiler_4.2.2    htmltools_0.5.4  
 [21] knitr_1.41       </code></pre>
@@ -216,37 +211,63 @@ loaded via a namespace (and not attached):
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display version of SQLite</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlite3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>3.37.2 2022-01-06 13:25:41 872ba256cbf61d9290b571c0e6d82a20c224ca3ad82971edc46b29818d5dalt1</code></pre>
+<pre><code>3.37.0 2021-12-09 01:34:53 9ff244ce0739f8ee52a3e9671adb4ee54c83c640b02e3f9d185fd2f9a179aapl</code></pre>
 </div>
 </div>
 </section>
 <section id="csv-file" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="csv-file"><span class="header-section-number">3</span> CSV file</h2>
 <p>The <code>/mnt/mimiciv/1.0</code> folder on the teaching server contains the MIMIC-IV data. On my Mac, it’s at <code>/Users/huazhou/Documents/Box Sync/MIMIC/mimic-iv-1.0</code>.</p>
+<p>Code in this lecture assumes that the MIMIC-IV data is available at <code>~/mimic</code>.</p>
 <p>Display content of MIMIC-IV data files:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>os <span class="ot">&lt;-</span> <span class="fu">sessionInfo</span>()<span class="sc">$</span>running</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">str_detect</span>(os, <span class="st">"Ubuntu"</span>)) {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  mimic_path <span class="ot">&lt;-</span> <span class="st">"~/mimic"</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">str_detect</span>(os, <span class="st">"macOS"</span>)) {</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  mimic_path <span class="ot">&lt;-</span> <span class="st">"/Users/huazhou/Documents/Box Sync/MIMIC/mimic-iv-1.0"</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>mimic_path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mimic_path <span class="ot">&lt;-</span> <span class="st">"~/mimic"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="fu">str_c</span>(<span class="st">"tree -s -L 2 "</span>, mimic_path), <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "~/mimic"</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="fu">str_c</span>(<span class="st">"tree -s -L 2 "</span>, <span class="fu">shQuote</span>(mimic_path)), <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in system(str_c("tree -s -L 2 ", shQuote(mimic_path)), intern = TRUE):
-running command 'tree -s -L 2 '~/mimic'' had status 2</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "~/mimic  [error opening dir]" ""                            
-[3] "0 directories, 0 files"      
-attr(,"status")
-[1] 2</code></pre>
+<pre><code> [1] "\033[01;36m/Users/huazhou/mimic\033[00m"                                     
+ [2] "├── [       2518]  LICENSE.txt"                                              
+ [3] "├── [        224]  \033[01;34mMIMIC-reduce-chartevents\033[00m"              
+ [4] "│&nbsp;&nbsp; ├── [   40348871]  \033[01;31mchartevents_filtered_itemid.csv.gz\033[00m"
+ [5] "│&nbsp;&nbsp; └── [        243]  \033[01;32mreduce_chartevents.sh\033[00m"             
+ [6] "├── [       2459]  SHA256SUMS.txt"                                           
+ [7] "├── [        192]  \033[01;34mcore\033[00m"                                  
+ [8] "│&nbsp;&nbsp; ├── [   17208966]  \033[01;31madmissions.csv.gz\033[00m"                 
+ [9] "│&nbsp;&nbsp; ├── [        606]  index.html"                                           
+[10] "│&nbsp;&nbsp; ├── [    2955582]  \033[01;31mpatients.csv.gz\033[00m"                   
+[11] "│&nbsp;&nbsp; └── [   53014503]  \033[01;31mtransfers.csv.gz\033[00m"                  
+[12] "├── [        672]  \033[01;34mhosp\033[00m"                                  
+[13] "│&nbsp;&nbsp; ├── [     430049]  \033[01;31md_hcpcs.csv.gz\033[00m"                    
+[14] "│&nbsp;&nbsp; ├── [     863239]  \033[01;31md_icd_diagnoses.csv.gz\033[00m"            
+[15] "│&nbsp;&nbsp; ├── [     579998]  \033[01;31md_icd_procedures.csv.gz\033[00m"           
+[16] "│&nbsp;&nbsp; ├── [      14898]  \033[01;31md_labitems.csv.gz\033[00m"                 
+[17] "│&nbsp;&nbsp; ├── [   29531152]  \033[01;31mdiagnoses_icd.csv.gz\033[00m"              
+[18] "│&nbsp;&nbsp; ├── [   11684062]  \033[01;31mdrgcodes.csv.gz\033[00m"                   
+[19] "│&nbsp;&nbsp; ├── [  515763427]  \033[01;31memar.csv.gz\033[00m"                       
+[20] "│&nbsp;&nbsp; ├── [  476252563]  \033[01;31memar_detail.csv.gz\033[00m"                
+[21] "│&nbsp;&nbsp; ├── [    2098831]  \033[01;31mhcpcsevents.csv.gz\033[00m"                
+[22] "│&nbsp;&nbsp; ├── [       2325]  index.html"                                           
+[23] "│&nbsp;&nbsp; ├── [ 2091865786]  \033[01;31mlabevents.csv.gz\033[00m"                  
+[24] "│&nbsp;&nbsp; ├── [  171624288]  \033[01;31mlabevents_filtered_itemid.csv.gz\033[00m"  
+[25] "│&nbsp;&nbsp; ├── [   99133381]  \033[01;31mmicrobiologyevents.csv.gz\033[00m"         
+[26] "│&nbsp;&nbsp; ├── [  422874088]  \033[01;31mpharmacy.csv.gz\033[00m"                   
+[27] "│&nbsp;&nbsp; ├── [  501381155]  \033[01;31mpoe.csv.gz\033[00m"                        
+[28] "│&nbsp;&nbsp; ├── [   24020923]  \033[01;31mpoe_detail.csv.gz\033[00m"                 
+[29] "│&nbsp;&nbsp; ├── [  367041717]  \033[01;31mprescriptions.csv.gz\033[00m"              
+[30] "│&nbsp;&nbsp; ├── [    7750325]  \033[01;31mprocedures_icd.csv.gz\033[00m"             
+[31] "│&nbsp;&nbsp; └── [    9565293]  \033[01;31mservices.csv.gz\033[00m"                   
+[32] "├── [        352]  \033[01;34micu\033[00m"                                   
+[33] "│&nbsp;&nbsp; ├── [ 2350783547]  \033[01;31mchartevents.csv.gz\033[00m"                
+[34] "│&nbsp;&nbsp; ├── [  110272408]  \033[01;31mchartevents_filtered_itemid.csv.gz\033[00m"
+[35] "│&nbsp;&nbsp; ├── [      55917]  \033[01;31md_items.csv.gz\033[00m"                    
+[36] "│&nbsp;&nbsp; ├── [   43296273]  \033[01;31mdatetimeevents.csv.gz\033[00m"             
+[37] "│&nbsp;&nbsp; ├── [    2848628]  \033[01;31micustays.csv.gz\033[00m"                   
+[38] "│&nbsp;&nbsp; ├── [       1103]  index.html"                                           
+[39] "│&nbsp;&nbsp; ├── [  352443512]  \033[01;31minputevents.csv.gz\033[00m"                
+[40] "│&nbsp;&nbsp; ├── [   37095672]  \033[01;31moutputevents.csv.gz\033[00m"               
+[41] "│&nbsp;&nbsp; └── [   20567368]  \033[01;31mprocedureevents.csv.gz\033[00m"            
+[42] "└── [        797]  index.html"                                               
+[43] ""                                                                            
+[44] "4 directories, 37 files"                                                     </code></pre>
 </div>
 </div>
 </section>
@@ -255,46 +276,46 @@ attr(,"status")
 <p>Here, we will import only one csv file <code>icustays.csv.gz</code> for demonstration purpose. Motivated students can write a bash script for loading all MIMIC-IV data files into a SQLite database and contribute to <a href="https://github.com/MIT-LCP/mimic-code" class="uri">https://github.com/MIT-LCP/mimic-code</a>.</p>
 <p>Create an empty database file <code>mimiciv.sqlite</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">'touch mimiciv.sqlite'</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">'touch mimiciv.sqlite'</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>character(0)</code></pre>
 </div>
 </div>
 <p>Deposit the <code>icu/icustatys.csv.gz</code> file:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># delete icustays table if exists</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">"sqlite3 mimiciv.sqlite 'DROP TABLE IF EXISTS icustays;'"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># delete icustays table if exists</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">"sqlite3 mimiciv.sqlite 'DROP TABLE IF EXISTS icustays;'"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>character(0)</code></pre>
 </div>
 </div>
 <p>Create an empty <code>icustays</code> table with data types. Because SQLite does not support date-time data type (<a href="https://www.sqlite.org/datatype3.html" class="uri">https://www.sqlite.org/datatype3.html</a>), we store <code>intime</code> and <code>outtime</code> as TEXT.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">"sqlite3 mimiciv.sqlite 'CREATE TABLE icustays (subject_id INTEGER, hadm_id INTEGER, stay_id INTEGER, first_careunit TEXT, last_careunit TEXT, intime TEXT, outtime TEXT, los REAL)'"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="st">"sqlite3 mimiciv.sqlite 'CREATE TABLE icustays (subject_id INTEGER, hadm_id INTEGER, stay_id INTEGER, first_careunit TEXT, last_careunit TEXT, intime TEXT, outtime TEXT, los REAL)'"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>character(0)</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>csvfile <span class="ot">&lt;-</span> <span class="fu">str_c</span>(mimic_path, <span class="st">"/icu/icustays.csv.gz"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="fu">str_c</span>(</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zcat &lt; "</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shQuote</span>(csvfile),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">" | tail -n +2 | "</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sqlite3 mimiciv.sqlite -csv "</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"'.import /dev/stdin icustays'"</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>cmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>csvfile <span class="ot">&lt;-</span> <span class="fu">str_c</span>(mimic_path, <span class="st">"/icu/icustays.csv.gz"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cmd <span class="ot">&lt;-</span> <span class="fu">str_c</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zcat &lt; "</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  csvfile,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">" | tail -n +2 | "</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sqlite3 mimiciv.sqlite -csv "</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"'.import /dev/stdin icustays'"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>cmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "zcat &lt; '~/mimic/icu/icustays.csv.gz' | tail -n +2 | sqlite3 mimiciv.sqlite -csv '.import /dev/stdin icustays'"</code></pre>
+<pre><code>[1] "zcat &lt; ~/mimic/icu/icustays.csv.gz | tail -n +2 | sqlite3 mimiciv.sqlite -csv '.import /dev/stdin icustays'"</code></pre>
 </div>
 </div>
 <p>Execute the bash command:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>character(0)</code></pre>
 </div>
@@ -304,29 +325,53 @@ attr(,"status")
 <h2 data-number="5" class="anchored" data-anchor-id="read-data-from-database"><span class="header-section-number">5</span> Read data from database</h2>
 <p>Connect to the database <code>mimiciii.sqlite</code> and list the tables:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dbname =</span> <span class="st">"./mimiciv.sqlite"</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dbname =</span> <span class="st">"./mimiciv.sqlite"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "icustays"</code></pre>
 </div>
 </div>
 <p>Read the table <code>icustays</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"icustays"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"icustays"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;icustays&gt; [0 x 8]
-# Database: sqlite 3.39.4 [/home/rstudio/203b-lecture/slides/12-dbplyr/mimiciv.sqlite]
-# … with 8 variables: subject_id &lt;int&gt;, hadm_id &lt;int&gt;, stay_id &lt;int&gt;, first_careunit &lt;chr&gt;, last_careunit &lt;chr&gt;, intime &lt;chr&gt;, outtime &lt;chr&gt;, los &lt;dbl&gt;</code></pre>
+<pre><code># Source:   table&lt;icustays&gt; [?? x 8]
+# Database: sqlite 3.40.0 [/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/mimiciv.sqlite]
+   subject_id  hadm_id  stay_id first_careunit          
+        &lt;int&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;                   
+ 1   17867402 24528534 31793211 Trauma SICU (TSICU)     
+ 2   14435996 28960964 31983544 Trauma SICU (TSICU)     
+ 3   17609946 27385897 33183475 Trauma SICU (TSICU)     
+ 4   18966770 23483021 34131444 Trauma SICU (TSICU)     
+ 5   12776735 20817525 34547665 Neuro Stepdown          
+ 6   10215159 24283593 34569476 Trauma SICU (TSICU)     
+ 7   14489052 26516390 35056286 Trauma SICU (TSICU)     
+ 8   15914763 28906020 36909804 Trauma SICU (TSICU)     
+ 9   16256226 20013290 39289362 Neuro Stepdown          
+10   19194449 21641999 39387567 Coronary Care Unit (CCU)
+   last_careunit            intime              outtime               los
+   &lt;chr&gt;                    &lt;chr&gt;               &lt;chr&gt;               &lt;dbl&gt;
+ 1 Trauma SICU (TSICU)      2154-03-03 04:11:00 2154-03-04 18:16:56 1.59 
+ 2 Trauma SICU (TSICU)      2150-06-19 17:57:00 2150-06-22 18:33:54 3.03 
+ 3 Trauma SICU (TSICU)      2138-02-05 18:54:00 2138-02-15 12:42:05 9.74 
+ 4 Trauma SICU (TSICU)      2123-10-25 10:35:00 2123-10-25 18:59:47 0.351
+ 5 Neuro Stepdown           2200-07-12 00:33:00 2200-07-13 16:44:40 1.67 
+ 6 Trauma SICU (TSICU)      2124-09-20 15:05:29 2124-09-21 22:06:58 1.29 
+ 7 Trauma SICU (TSICU)      2118-10-26 10:33:56 2118-10-26 20:28:10 0.413
+ 8 Trauma SICU (TSICU)      2176-12-14 12:00:00 2176-12-17 11:47:01 2.99 
+ 9 Neuro Stepdown           2150-12-20 16:09:08 2150-12-21 14:58:40 0.951
+10 Coronary Care Unit (CCU) 2123-11-12 02:53:35 2123-11-12 13:52:03 0.457
+# … with more rows</code></pre>
 </div>
 </div>
 <p>How many rows?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
@@ -334,10 +379,10 @@ FROM `icustays`</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 1]
-# Database: sqlite 3.39.4 [/home/rstudio/203b-lecture/slides/12-dbplyr/mimiciv.sqlite]
+# Database: sqlite 3.40.0 [/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/mimiciv.sqlite]
       n
   &lt;int&gt;
-1     0</code></pre>
+1 76540</code></pre>
 </div>
 </div>
 </section>
@@ -345,16 +390,16 @@ FROM `icustays`</code></pre>
 <h2 data-number="6" class="anchored" data-anchor-id="use-dplyr-with-sqlite"><span class="header-section-number">6</span> Use dplyr with SQLite</h2>
 <p>Keep the first ICU stay for each patient:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>icustays_subset <span class="ot">&lt;-</span> icustays_tble <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first ICU stay of each unique `subject_id`</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(intime) <span class="sc">%&gt;%</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arrange(intime, .by_group = TRUE) %&gt;%</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># slice_head(n = 1) %&gt;%</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># left_join(icustays_tble, by = c("subject_id", "intime")) %&gt;%</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>icustays_subset <span class="ot">&lt;-</span> icustays_tble <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first ICU stay of each unique `subject_id`</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(intime) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arrange(intime, .by_group = TRUE) %&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># slice_head(n = 1) %&gt;%</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># left_join(icustays_tble, by = c("subject_id", "intime")) %&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
@@ -371,16 +416,52 @@ FROM (
   FROM `icustays`
 )
 WHERE (`q01` &lt;= 1)
-# Source:   SQL [0 x 8]
-# Database: sqlite 3.39.4 [/home/rstudio/203b-lecture/slides/12-dbplyr/mimiciv.sqlite]
-# … with 8 variables: subject_id &lt;int&gt;, hadm_id &lt;int&gt;, stay_id &lt;int&gt;, first_careunit &lt;chr&gt;, last_careunit &lt;chr&gt;, intime &lt;chr&gt;, outtime &lt;chr&gt;, los &lt;dbl&gt;</code></pre>
+# Source:   SQL [?? x 8]
+# Database: sqlite 3.40.0 [/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/mimiciv.sqlite]
+   subject_id  hadm_id  stay_id first_careunit                                  
+        &lt;int&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;                                           
+ 1   10000032 29079034 39553978 Medical Intensive Care Unit (MICU)              
+ 2   10000980 26913865 39765666 Medical Intensive Care Unit (MICU)              
+ 3   10001217 24597018 37067082 Surgical Intensive Care Unit (SICU)             
+ 4   10001725 25563031 31205490 Medical/Surgical Intensive Care Unit (MICU/SICU)
+ 5   10001884 26184834 37510196 Medical Intensive Care Unit (MICU)              
+ 6   10002013 23581541 39060235 Cardiac Vascular Intensive Care Unit (CVICU)    
+ 7   10002155 23822395 33685454 Coronary Care Unit (CCU)                        
+ 8   10002223 22494570 39638202 Trauma SICU (TSICU)                             
+ 9   10002348 22725460 32610785 Neuro Intermediate                              
+10   10002428 28662225 33987268 Medical Intensive Care Unit (MICU)              
+   last_careunit                                    intime             
+   &lt;chr&gt;                                            &lt;chr&gt;              
+ 1 Medical Intensive Care Unit (MICU)               2180-07-23 14:00:00
+ 2 Medical Intensive Care Unit (MICU)               2189-06-27 08:42:00
+ 3 Surgical Intensive Care Unit (SICU)              2157-11-20 19:18:02
+ 4 Medical/Surgical Intensive Care Unit (MICU/SICU) 2110-04-11 15:52:22
+ 5 Medical Intensive Care Unit (MICU)               2131-01-11 04:20:05
+ 6 Cardiac Vascular Intensive Care Unit (CVICU)     2160-05-18 10:00:53
+ 7 Coronary Care Unit (CCU)                         2129-08-04 12:45:00
+ 8 Trauma SICU (TSICU)                              2158-01-15 08:01:49
+ 9 Neuro Intermediate                               2112-11-30 23:24:00
+10 Medical Intensive Care Unit (MICU)               2156-04-12 16:24:18
+   outtime               los
+   &lt;chr&gt;               &lt;dbl&gt;
+ 1 2180-07-23 23:50:47 0.410
+ 2 2189-06-27 20:38:27 0.498
+ 3 2157-11-21 22:08:00 1.12 
+ 4 2110-04-12 23:59:56 1.34 
+ 5 2131-01-20 08:27:30 9.17 
+ 6 2160-05-19 17:33:33 1.31 
+ 7 2129-08-10 17:02:38 6.18 
+ 8 2158-01-16 15:19:24 1.30 
+ 9 2112-12-10 18:25:13 9.79 
+10 2156-04-17 15:57:08 4.98 
+# … with more rows</code></pre>
 </div>
 </div>
 <p>How many rows in <code>icustays_subset</code>?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>icustays_subset <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>icustays_subset <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
@@ -400,10 +481,10 @@ WHERE (`q01` &lt;= 1)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 1]
-# Database: sqlite 3.39.4 [/home/rstudio/203b-lecture/slides/12-dbplyr/mimiciv.sqlite]
+# Database: sqlite 3.40.0 [/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/mimiciv.sqlite]
       n
   &lt;int&gt;
-1     0</code></pre>
+1 53150</code></pre>
 </div>
 </div>
 </section>
@@ -411,12 +492,12 @@ WHERE (`q01` &lt;= 1)</code></pre>
 <h2 data-number="7" class="anchored" data-anchor-id="sql-query"><span class="header-section-number">7</span> SQL query</h2>
 <p><code>show_query</code> usefully shows the SQL query translated from dplyr query.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(icustays_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(icustays_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_SQLiteConnection" "tbl_dbi"              "tbl_sql"             
 [4] "tbl_lazy"             "tbl"                 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(icustays_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(icustays_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
@@ -439,16 +520,16 @@ WHERE (`q01` &lt;= 1)</code></pre>
 <section id="transform-in-database-plot-in-r" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="transform-in-database-plot-in-r"><span class="header-section-number">8</span> Transform in database, plot in R</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> n)) <span class="sc">+</span> </span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"# ICU stays of a patient"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>icustays_tble <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> n)) <span class="sc">+</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"# ICU stays of a patient"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="dbplyr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="dbplyr_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -458,23 +539,23 @@ WHERE (`q01` &lt;= 1)</code></pre>
 <h2 data-number="9" class="anchored" data-anchor-id="sql-translation"><span class="header-section-number">9</span> SQL translation</h2>
 <p>dbplyr package (a dplyr backend for databases) has a function, <code>translate_sql</code>, that lets you experiment with how R functions are translated to SQL:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> (y <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">|</span> z <span class="sc">&gt;</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> (y <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">|</span> z <span class="sc">&gt;</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; `x` = 1.0 AND (`y` &lt; 2.0 OR `z` &gt; 3.0)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; (POWER(`x`, 2.0)) &lt; 10.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; (`x` % 2.0) = 10.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">paste</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">paste</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; CONCAT_WS(' ', `x`, `y`)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Missing values are always removed in SQL aggregation functions.
 Use `na.rm = TRUE` to silence this warning
@@ -483,7 +564,7 @@ This warning is displayed once every 8 hours.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; AVG(`x`) OVER ()</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt; AVG(`x`) OVER ()</code></pre>
 </div>
@@ -496,36 +577,36 @@ This warning is displayed once every 8 hours.</code></pre>
 <li>dplyr using tibble:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>csvfile <span class="ot">&lt;-</span> <span class="fu">str_c</span>(mimic_path, <span class="st">"/icu/icustays.csv.gz"</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>icustays_tibble <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvfile)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>timing_tibble <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  icustays_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>timing_tibble</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>csvfile <span class="ot">&lt;-</span> <span class="fu">str_c</span>(mimic_path, <span class="st">"/icu/icustays.csv.gz"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>icustays_tibble <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvfile)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>timing_tibble <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  icustays_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>timing_tibble</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.879   0.020   0.899 </code></pre>
+  0.580   0.018   0.599 </code></pre>
 </div>
 </div>
 <ul>
 <li>dbplyr using SQLite:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"icustays"</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>timing_sql <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  icustays_sql <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>timing_sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"icustays"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>timing_sql <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  icustays_sql <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>timing_sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.006   0.000   0.005 </code></pre>
+  0.004   0.000   0.004 </code></pre>
 </div>
 </div>
-<p>SQLite (0.005 seconds) was much faster than tibble (0.899 seconds). But SQLite is disk-based, while the tibble is in memory. Why is the discrepancy?</p>
+<p>SQLite (0.004 seconds) was much faster than tibble (0.599 seconds). But SQLite is disk-based, while the tibble is in memory. Why is the discrepancy?</p>
 </section>
 <section id="laziness" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="laziness"><span class="header-section-number">11</span> Laziness</h2>
@@ -540,13 +621,25 @@ This warning is displayed once every 8 hours.</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   SQL [0 x 2]
-# Database: sqlite 3.39.4 [/home/rstudio/203b-lecture/slides/12-dbplyr/mimiciv.sqlite]
-# … with 2 variables: subject_id &lt;int&gt;, n &lt;lgl&gt;</code></pre>
+<pre><code># Source:   SQL [?? x 2]
+# Database: sqlite 3.40.0 [/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/mimiciv.sqlite]
+   subject_id     n
+        &lt;int&gt; &lt;int&gt;
+ 1   10000032     1
+ 2   10000980     1
+ 3   10001217     2
+ 4   10001725     1
+ 5   10001884     1
+ 6   10002013     1
+ 7   10002155     3
+ 8   10002223     1
+ 9   10002348     1
+10   10002428     4
+# … with more rows</code></pre>
 </div>
 </div>
 </section>
@@ -554,15 +647,15 @@ This warning is displayed once every 8 hours.</code></pre>
 <h2 data-number="12" class="anchored" data-anchor-id="full-query"><span class="header-section-number">12</span> Full query</h2>
 <p>To force a full query and return a complete table it is necessary to use the <code>collect</code> function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  icustays_sql <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect</span>()</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  icustays_sql <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect</span>()</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.021   0.000   0.023 </code></pre>
+  0.083   0.005   0.087 </code></pre>
 </div>
 </div>
 </section>
@@ -570,10 +663,25 @@ This warning is displayed once every 8 hours.</code></pre>
 <h2 data-number="13" class="anchored" data-anchor-id="old-ggplot2-doesnt-do-transform-in-database-plot-in-r"><span class="header-section-number">13</span> Old ggplot2 doesn’t do ``Transform in database, plot in R”</h2>
 <p>Earlier we see dbplyr connects with ggplot2 (v3.3.5) seamlessly. Remember ggplot2 needs to <code>collect</code> the query results for plotting.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="dbplyr_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Older version of ggplot2, e.g., v2.2.1, will output error. This is because ggplot2 needed to compute the count per bin by going through all the rows. But here <code>icustays_sql</code> is just a pointer to the SQLite table. We had to use the <strong>transform in database, plot in R</strong> strategy.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(subject_id) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -582,26 +690,11 @@ This warning is displayed once every 8 hours.</code></pre>
 </div>
 </div>
 </div>
-<p>Older version of ggplot2, e.g., v2.2.1, will output error. This is because ggplot2 needed to compute the count per bin by going through all the rows. But here <code>icustays_sql</code> is just a pointer to the SQLite table. We had to use the <strong>transform in database, plot in R</strong> strategy.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>icustays_sql <span class="sc">%&gt;%</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(subject_id) <span class="sc">%&gt;%</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="dbplyr_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="576"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="close-connection-to-database" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="close-connection-to-database"><span class="header-section-number">14</span> Close connection to database</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 

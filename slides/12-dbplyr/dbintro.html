@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2022-12-29">
+<meta name="dcterms.date" content="2023-02-13">
 
 <title>Working with Databases - Part I</title>
 <style>
@@ -184,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 29, 2022</p>
+      <p class="date">February 13, 2023</p>
     </div>
   </div>
   
@@ -207,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </p>
 <section id="acknowledgement" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="acknowledgement"><span class="header-section-number">2.1</span> Acknowledgement</h2>
-<p>Much material in this lecture is adpated from <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html</a> and <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html</a>.</p>
+<p>Much material in this lecture is adapted from <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html</a> and <a href="http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html" class="uri">http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html</a>.</p>
 </section>
 </section>
 <section id="why-databases" class="level1" data-number="3">
@@ -325,7 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage (SQL) is a special purpose language for interacting with (querying and modifying) these indexed tabular data structures.</p>
 <ul>
 <li><p>ANSI Standard but with some dialect divergence.</p></li>
-<li><p>SQL functionality maps very closely (but not exactly) with the data manipulation verbs present in dplyr.</p></li>
+<li><p>SQL functionality maps very closely (but not exactly) with the data manipulation verbs in dplyr.</p></li>
 <li><p>We will see this mapping in more detail in a bit.</p></li>
 </ul>
 </section>
@@ -355,17 +355,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"DBI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"RSQLite"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>con <span class="ot">=</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">"employee.sqlite"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># con = dbConnect(RSQLite::SQLite(), ":memory:")</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>con <span class="ot">=</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">"employee.sqlite"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># con = dbConnect(RSQLite::SQLite(), ":memory:")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Formal class 'SQLiteConnection' [package "RSQLite"] with 8 slots
   ..@ ptr                :&lt;externalptr&gt; 
-  ..@ dbname             : chr "/home/rstudio/203b-lecture/slides/12-dbplyr/employee.sqlite"
+  ..@ dbname             : chr "/Users/huazhou/Documents/github.com/ucla-biostat-203b/2023winter/slides/12-dbplyr/employee.sqlite"
   ..@ loadable.extensions: logi TRUE
   ..@ flags              : int 70
   ..@ vfs                : chr ""
-  ..@ ref                :&lt;environment: 0x560ee2945ea0&gt; 
+  ..@ ref                :&lt;environment: 0x7f8e8a0364b8&gt; 
   ..@ bigint             : chr "integer64"
   ..@ extended_types     : logi FALSE</code></pre>
 </div>
@@ -376,13 +377,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First table:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name   =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Carol"</span>, <span class="st">"Dave"</span>, <span class="st">"Eve"</span>, <span class="st">"Frank"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">email  =</span> <span class="fu">c</span>(<span class="st">"alice@company.com"</span>, <span class="st">"bob@company.com"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"carol@company.com"</span>, <span class="st">"dave@company.com"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"eve@company.com"</span>,   <span class="st">"frank@comany.com"</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">salary =</span> <span class="fu">c</span>(<span class="dv">52000</span>, <span class="dv">40000</span>, <span class="dv">30000</span>, <span class="dv">33000</span>, <span class="dv">44000</span>, <span class="dv">37000</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dept   =</span> <span class="fu">c</span>(<span class="st">"Accounting"</span>, <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>, <span class="st">"Sales"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>(employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name   =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Carol"</span>, <span class="st">"Dave"</span>, <span class="st">"Eve"</span>, <span class="st">"Frank"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">email  =</span> <span class="fu">c</span>(<span class="st">"alice@company.com"</span>, <span class="st">"bob@company.com"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"carol@company.com"</span>, <span class="st">"dave@company.com"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"eve@company.com"</span>,   <span class="st">"frank@comany.com"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">salary =</span> <span class="fu">c</span>(<span class="dv">52000</span>, <span class="dv">40000</span>, <span class="dv">30000</span>, <span class="dv">33000</span>, <span class="dv">44000</span>, <span class="dv">37000</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dept   =</span> <span class="fu">c</span>(<span class="st">"Accounting"</span>, <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Accounting"</span>, <span class="st">"Sales"</span>, <span class="st">"Sales"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   name  email             salary dept      

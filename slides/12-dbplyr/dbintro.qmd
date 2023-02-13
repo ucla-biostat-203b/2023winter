@@ -37,7 +37,7 @@ knitr:
 
 ## Acknowledgement
 
-Much material in this lecture is adpated from <http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html> and <http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html>.
+Much material in this lecture is adapted from <http://www2.stat.duke.edu/~cr173/Sta523_Fa17/sql.html> and <http://www2.stat.duke.edu/~cr173/Sta523_Fa17/bigish_data.html>.
 
 # Why databases?
 
@@ -143,7 +143,7 @@ We can do much better if we are careful about how we structure our data, specifi
 
 * ANSI Standard but with some dialect divergence.
 
-* SQL functionality maps very closely (but not exactly) with the data manipulation verbs present in dplyr.
+* SQL functionality maps very closely (but not exactly) with the data manipulation verbs in dplyr.
 
 * We will see this mapping in more detail in a bit.
 
@@ -172,6 +172,7 @@ Create an SQLite database `employee.sqlite` on disk (or _in memory_) for learnin
 ```{r}
 library("DBI")
 library("RSQLite")
+
 con = dbConnect(RSQLite::SQLite(), "employee.sqlite")
 # con = dbConnect(RSQLite::SQLite(), ":memory:")
 str(con)
@@ -182,6 +183,7 @@ str(con)
 First table:
 ```{r}
 library("tidyverse")
+
 (employees <- tibble(name   = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
                      email  = c("alice@company.com", "bob@company.com",
                                 "carol@company.com", "dave@company.com",

@@ -57,19 +57,12 @@ sqlite3 --version
 
 The `/mnt/mimiciv/1.0` folder on the teaching server contains the MIMIC-IV data. On my Mac, it's at `/Users/huazhou/Documents/Box Sync/MIMIC/mimic-iv-1.0`.
 
+Code in this lecture assumes that the MIMIC-IV data is available at `~/mimic`.
+
 Display content of MIMIC-IV data files:
 ```{r}
-os <- sessionInfo()$running
-if (str_detect(os, "Ubuntu")) {
-  mimic_path <- "~/mimic"
-} else if (str_detect(os, "macOS")) {
-  mimic_path <- "/Users/huazhou/Documents/Box Sync/MIMIC/mimic-iv-1.0"
-}
-mimic_path
-```
-
-```{r}
-system(str_c("tree -s -L 2 ", shQuote(mimic_path)), intern = TRUE)
+mimic_path <- "~/mimic"
+system(str_c("tree -s -L 2 ", mimic_path), intern = TRUE)
 ```
 
 ## Read CSVs and deposit to an SQLite database
@@ -99,7 +92,7 @@ system(cmd, intern = TRUE)
 csvfile <- str_c(mimic_path, "/icu/icustays.csv.gz")
 cmd <- str_c(
   "zcat < ",
-  shQuote(csvfile),
+  csvfile,
   " | tail -n +2 | ",
   "sqlite3 mimiciv.sqlite -csv ",
   "'.import /dev/stdin icustays'"
