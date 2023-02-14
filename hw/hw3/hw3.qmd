@@ -1,6 +1,6 @@
 ---
 title: "Biostat 203B Homework 3"
-subtitle: Due Feb 29 @ 11:59PM
+subtitle: Due Mar 1 @ 11:59PM
 author: YOUR NAME and UID
 format:
   html:
