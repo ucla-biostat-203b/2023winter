@@ -1,0 +1,155 @@
+---
+title: "Biostat 203B Homework 3"
+subtitle: Due Feb 29 @ 11:59PM
+author: YOUR NAME and UID
+format:
+  html:
+    theme: cosmo
+    number-sections: true
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+---
+
+Display machine information:
+```{r}
+sessionInfo()
+```
+
+Load database libraries and the tidyverse frontend:
+```{r}
+library(bigrquery)
+library(dbplyr)
+library(DBI)
+library(lubridate)
+library(tidyverse)
+```
+
+I found the current versions of bigrquery (v1.4.1) and dbplyr (v2.3.0) don't work well together on my computer ([Issue](https://github.com/r-dbi/bigrquery/issues/509)). If you encounter similar issues, you can install older versions of the these two packages.
+```{r}
+#| eval: false
+library(devtools)
+install_version("bigrquery", version = "1.4.0")
+install_version("dbplyr", version = "2.1.1")
+```
+
+## Q1. Compile the ICU cohort in HW2 from the Google BigQuery database 
+
+Below is an outline of steps.
+
+1. Load the GCP BigQuery service account token. Please place the service account token (available at BruinLearn) at your MIMIC data folder: `~/mimic/biostat-203b-2022winter-3fdc2392ac39.json`.
+```{r}
+# path to the service account token 
+satoken <- "~/mimic/biostat-203b-2023winter-3fdc2392ac39.json"
+# BigQuery authentication using service account
+bq_auth(
+  path = satoken,
+  # email = "mimiciv-bigquery@biostat-203b-2023winter.iam.gserviceaccount.com",
+  # scopes = c("https://www.googleapis.com/auth/bigquery",
+  #   "https://www.googleapis.com/auth/cloud-platform")
+)
+```
+
+1. Connect to BigQuery database `mimic4_v1_0_203b` in GCP (Google Cloud Platform), using the billing account `biostat-203b-2022winter`.
+```{r}
+# Connect to the BigQuery database `biostat-203b-2022winter.mimic4_v1_0_203b`
+con <- dbConnect(
+    bigrquery::bigquery(),
+    project = "biostat-203b-2022winter",
+    dataset = "mimic4_v1_0_203b",
+    billing = "biostat-203b-2022winter"
+)
+con
+```
+
+2. List all tables in the `mimic4_v1_0_203b` database.
+```{r}
+dbListTables(con)
+```
+
+3. Connect to the `icustays` table.
+```{r}
+# full ICU stays table
+icustays_tble <- tbl(con, "icustays") %>%
+  show_query() %>%
+  print(width = Inf)
+```
+We only keep the first ICU stay. Following code is kind of a hack, using the `summarise_all(min)` function. It seems that `slice_min()`, `slice_head()`, `distinct(, .keep_all = TRUE)` don't work with `dbplyr`+`bigrquery` at the moment.
+```{r}
+icustays_tble <- icustays_tble %>% 
+  select(subject_id, intime) %>% 
+  group_by(subject_id) %>% 
+  summarise_all(min) %>%
+  left_join(icustays_tble, by = c("subject_id", "intime")) %>%
+  show_query() %>%
+  print(width = Inf)
+```
+
+
+4. Connect to the `admissions` table and only keep the patients who have a match in `icustays_tble` (according to `subject_id` and `hadm_id`).
+```{r}
+# # TODO
+# admissions_tble <- 
+```
+
+5. Connect to the `patients` table and only keep the patients who have a match in `icustays_tble` (according to `subject_id`).
+```{r}
+# # TODO
+# patients_tble <-
+```
+
+6. Connect to the `labevents` table and retrieve a subset that only contain subjects who appear in `icustays_tble` and the lab items listed in HW2. 
+```{r}
+# # TODO
+# labevents_tble <- 
+```
+Only keep the first lab measurements during ICU stay and pivot lab items to become variables/columns.
+```{r}
+# # TODO
+# labevents_tble <- labevents_tble %>% ...
+```
+
+7. Connect to `chartevents` table and retrieve a subset that only contain subjects who appear in `icustays_tble` and the chart events listed in HW2.
+```{r}
+# # TODO
+# chartevents_tble <- 
+```
+Only keep the first chart events during ICU stay and pivot chart events to become variables/columns.
+```{r}
+# # TODO
+# chartevents_tble <- chartevents_tble %>% ...
+```
+
+8. Put things together. This step is similar to Q7 of HW2. Using one chain of pipes `%>%` to perform following data wrangling steps: (i) start with the `icustays_tble` for the first ICU stay of each unique patient, (ii) merge in admissions and patients tables, (iii) keep adults only (age at admission >= 18), (iv) merge in the labevents and chartevents tables, (v) create an indicator for 30-day mortality, (vi) save the final tibble to an `icu_cohort.rds` R data file in the `mimiciv_shiny` folder.
+
+```{r}
+# make a directory mimiciv_shiny
+if (!dir.exists("mimiciv_shiny")) {
+  dir.create("mimiciv_shiny")
+}
+```
+
+```{r}
+# # TODO
+# icu_cohort <- icustays_tble %>% ...
+```
+
+Close database connection and clear workspace.
+```{r, eval=F}
+dbDisconnect(con)
+rm(list = ls())
+```
+
+## Q2. Shiny app
+
+Develop a Shiny app for exploring the ICU cohort data created in Q1. The app should reside in the `mimiciv_shiny` folder. The app should provide easy access to the graphical and numerical summaries of variables (demographics, lab measurements, vitals) in the ICU cohort.
+
