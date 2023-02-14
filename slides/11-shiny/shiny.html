@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-02-13">
+<meta name="dcterms.date" content="2023-02-14">
 
 <title>Interactive Documents With Shiny</title>
 <style>
@@ -150,7 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 13, 2023</p>
+      <p class="date">February 14, 2023</p>
     </div>
   </div>
   
@@ -179,14 +179,13 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.9        rstudioapi_0.14   knitr_1.41        magrittr_2.0.3   
- [5] xtable_1.8-4      R6_2.5.1          rlang_1.0.6       fastmap_1.1.0    
- [9] stringr_1.5.0     tools_4.2.2       xfun_0.35         cli_3.4.1        
-[13] htmltools_0.5.4   ellipsis_0.3.2    yaml_2.3.6        digest_0.6.30    
-[17] lifecycle_1.0.3   shiny_1.7.4       later_1.3.0       vctrs_0.5.1      
-[21] htmlwidgets_1.6.0 promises_1.2.0.1  glue_1.6.2        evaluate_0.18    
-[25] mime_0.12         rmarkdown_2.18    stringi_1.7.8     compiler_4.2.2   
-[29] jsonlite_1.8.4    httpuv_1.6.7     </code></pre>
+ [1] Rcpp_1.0.10       later_1.3.0       digest_0.6.31     mime_0.12        
+ [5] R6_2.5.1          lifecycle_1.0.3   xtable_1.8-4      jsonlite_1.8.4   
+ [9] magrittr_2.0.3    evaluate_0.20     rlang_1.0.6       cli_3.6.0        
+[13] promises_1.2.0.1  rstudioapi_0.14   ellipsis_0.3.2    rmarkdown_2.20   
+[17] tools_4.2.2       htmlwidgets_1.6.1 shiny_1.7.4       httpuv_1.6.8     
+[21] xfun_0.37         yaml_2.3.7        fastmap_1.1.0     compiler_4.2.2   
+[25] htmltools_0.5.4   knitr_1.42       </code></pre>
 </div>
 </div>
 <section id="why-shiny" class="level2" data-number="1">
@@ -239,7 +238,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 <div class="cell-output-display">
-<div id="outb09be67ba6e56bca" class="shiny-html-output"></div>
+<div id="out1d1d376e63b902e7" class="shiny-html-output"></div>
 </div>
 </div>
 </section>
@@ -254,7 +253,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 <div class="cell-output-display">
-<div class="shiny-plot-output html-fill-item" id="out064c9a1961d3296d" style="width:100%;height:400px;"></div>
+<div class="shiny-plot-output html-fill-item" id="out5bfd31b7d7e33af6" style="width:100%;height:400px;"></div>
 </div>
 </div>
 <hr>
@@ -270,10 +269,7 @@ loaded via a namespace (and not attached):
 <li><p>Basic parts of a shiny app: <a href="http://shiny.rstudio.com/articles/basics.html" class="uri">http://shiny.rstudio.com/articles/basics.html</a></p></li>
 <li><p>How to build a shiny app: <a href="http://shiny.rstudio.com/articles/build.html" class="uri">http://shiny.rstudio.com/articles/build.html</a></p></li>
 <li><p>How to launch a shiny app: <a href="http://shiny.rstudio.com/articles/running.html" class="uri">http://shiny.rstudio.com/articles/running.html</a></p></li>
-</ul>
-<hr>
-<ul>
-<li>Skeleton of a Shiny app:</li>
+<li><p>Skeleton of a Shiny app:</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 
@@ -290,7 +286,7 @@ loaded via a namespace (and not attached):
 <section id="shiny-app-first-example" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="shiny-app-first-example"><span class="header-section-number">4</span> Shiny app: first example</h2>
 <ol type="1">
-<li>In RStudio, <code>File</code> -&gt; <code>New File</code> -&gt; <code>Shiny Web App...</code> creates a demo Shiny app using the <code>faithful</code> data set in base R. Recall the <code>faithful</code> data</li>
+<li><code>MyFirstShinyApp</code> folder. Recall the <code>faithful</code> data</li>
 </ol>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(faithful)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -327,7 +323,6 @@ loaded via a namespace (and not attached):
 6 alabama,bullock     10914  21.9  71.0      7.1   0.2</code></pre>
 </div>
 </div>
-<hr>
 <ul>
 <li>Use <code>maps</code> package, <code>mapproj</code> package and <code>helpers.R</code> file to plot maps:</li>
 </ul>
@@ -344,7 +339,6 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 </div>
-<hr>
 <ul>
 <li>Shiny app.</li>
 </ul>
@@ -352,29 +346,20 @@ loaded via a namespace (and not attached):
 
 </div>
 <ul>
-<li><a href="https://github.com/ucla-biostat-203b/2023winter/tree/main/slides/11-shiny/census-app">Code</a> for the Shiny app <code>census-app</code>.</li>
-</ul>
-<hr>
-<ul>
-<li>The <code>shinyApp</code> function is run once, when you launch your app.<br>
-</li>
-<li>The <code>server</code> function is run once each time a user visits your app.<br>
-</li>
-<li>The R expressions inside <code>render*</code> functions are run many times. Shiny runs them once each time a user change the value of a widget.</li>
-<li>Source scripts, load libraries, and read data sets at the beginning of <code>app.R</code> outside of the <code>server</code> function. Shiny will only run this code once, which is all you need to set your server up to run the R expressions contained in server.<br>
-</li>
-<li>Define user specific objects inside <code>server</code> function, but outside of any <code>render*</code> calls. These would be objects that you think each user will need their own personal copy of. For example, an object that records the user’s session information. This code will be run once per user.</li>
+<li><p><a href="https://github.com/ucla-biostat-203b/2023winter/tree/master/slides/11-shiny/census-app">Code</a> for the Shiny app <code>census-app</code>.</p></li>
+<li><p>The <code>shinyApp</code> function is run once, when you launch your app.</p></li>
+<li><p>The <code>server</code> function is run once each time a user visits your app.</p></li>
+<li><p>The R expressions inside <code>render*</code> functions are run many times. Shiny runs them once each time a user change the value of a widget.</p></li>
+<li><p>Source scripts, load libraries, and read data sets at the beginning of <code>app.R</code> outside of the <code>server</code> function. Shiny will only run this code once, which is all you need to set your server up to run the R expressions contained in server.</p></li>
+<li><p>Define user specific objects inside <code>server</code> function, but outside of any <code>render*</code> calls. These would be objects that you think each user will need their own personal copy of. For example, an object that records the user’s session information. This code will be run once per user.</p></li>
 </ul>
 </section>
 <section id="shiny-app-reactive-expressions" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="shiny-app-reactive-expressions"><span class="header-section-number">6</span> Shiny app: reactive expressions</h2>
 <ul>
 <li><p>This example is from tutorial: <a href="http://shiny.rstudio.com/tutorial/written-tutorial/lesson6/" class="uri">http://shiny.rstudio.com/tutorial/written-tutorial/lesson6/</a></p></li>
-<li><p><a href="https://github.com/ucla-biostat-203b/2023winter/tree/main/slides/11-shiny/stockVis">Code</a> for the Shiny app <code>stockVis</code>.</p></li>
-</ul>
-<hr>
-<ul>
-<li>Without using reactive expression:</li>
+<li><p><a href="https://github.com/ucla-biostat-203b/2023winter/tree/master/slides/11-shiny/stockVis">Code</a> for the Shiny app <code>stockVis</code>.</p></li>
+<li><p>Without using reactive expression:</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
@@ -389,7 +374,6 @@ loaded via a namespace (and not attached):
 </div>
 <p>Each time <code>renderPlot</code> re-runs:<br>
 1. it re-fetches the data from Yahoo Finance with <code>getSymbols</code>, and 2. it re-draws the chart with the correct axis.</p>
-<hr>
 <ul>
 <li>With <strong>reactive expression</strong>:</li>
 </ul>

@@ -148,7 +148,7 @@ percent_map(counties$white, "darkgreen", "% White")
 runApp("census-app")
 ```
 
-- [Code](https://github.com/ucla-biostat-203b/2023winter/tree/main/slides/11-shiny/census-app) for the Shiny app `census-app`.
+- [Code](https://github.com/ucla-biostat-203b/2023winter/tree/master/slides/11-shiny/census-app) for the Shiny app `census-app`.
 
 - The `shinyApp` function is run once, when you launch your app.  
 
@@ -164,7 +164,7 @@ runApp("census-app")
 
 - This example is from tutorial: <http://shiny.rstudio.com/tutorial/written-tutorial/lesson6/>
 
-- [Code](https://github.com/ucla-biostat-203b/2023winter/tree/main/slides/11-shiny/stockVis) for the Shiny app `stockVis`.
+- [Code](https://github.com/ucla-biostat-203b/2023winter/tree/master/slides/11-shiny/stockVis) for the Shiny app `stockVis`.
 
 - Without using reactive expression:
 ```{r}
