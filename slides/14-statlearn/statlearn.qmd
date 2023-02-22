@@ -602,4 +602,4 @@ Image source: <https://people.idsia.ch/~juergen/deep-learning-history.html>
 
 - Classification problems: logistic regression (possibly with regularization and nonlinear features), discriminant analysis (LDA, QDA, NB), KNN classifier, classification tree, random forest, SVM, boosting, neural network.
 
-- Unsupervised learning: PCA, CCA, neural network (auto encoder).
+- Unsupervised learning: PCA, CCA, ICA, neural network (auto encoder).
