@@ -598,7 +598,7 @@ Image source: <https://people.idsia.ch/~juergen/deep-learning-history.html>
 
 ## Commonly used learning methods
 
-- Regression problems: linear regression (possibly with regularization and nonlinear features), linear mixed models, generalized additive model, KNN regression, regression tree, random forest, boosting, neural network.
+- Regression problems: linear regression (possibly with regularization and nonlinear features), linear mixed models, generalized additive model, KNN regression, regression tree, random forest, boosting, BART, neural network.
 
 - Classification problems: logistic regression (possibly with regularization and nonlinear features), discriminant analysis (LDA, QDA, NB), KNN classifier, classification tree, random forest, SVM, boosting, neural network.
 
