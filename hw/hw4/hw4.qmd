@@ -1,6 +1,6 @@
 ---
-title: "Biostat 203B Homework 3"
-subtitle: Due Mar 1 @ 11:59PM
+title: "Biostat 203B Homework 4"
+subtitle: Due Mar 24 @ 11:59PM
 author: YOUR NAME and UID
 format:
   html:
@@ -38,7 +38,7 @@ suppressPackageStartupMessages(library(lubridate))
 
 ## Predicting 30-day mortality
 
-Develop at least three analytic approaches for predicting the 30-day mortality of patients admitted to ICU using demographic information (gender, age, marital status, ethnicity), first lab measurements during ICU stay, and first vital measurements during ICU stay. For example, you can use (1) logistic regression with elastic net (lasso + ridge) penalty (e.g., glmnet or keras package), (2) random forest, (3) boosting, and (4) support vector machines, or (5) MLP neural network (keras package)
+Using the ICU cohort `icu_cohort.rds` you built in Homework 3, develop at least three analytic approaches for predicting the 30-day mortality of patients admitted to ICU using demographic information (gender, age, marital status, ethnicity), first lab measurements during ICU stay, and first vital measurements during ICU stay. For example, you can use (1) logistic regression with elastic net (lasso + ridge) penalty (e.g., glmnet or keras package), (2) random forest, (3) boosting, and (4) support vector machines, or (5) MLP neural network (keras package)
 
 1. Partition data into 50% training set and 50% test set. Stratify partitioning according the 30-day mortality status.
 
