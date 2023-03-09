@@ -1,0 +1,47 @@
+---
+title: "Biostat 203B Homework 3"
+subtitle: Due Mar 1 @ 11:59PM
+author: YOUR NAME and UID
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: true
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+---
+
+Display machine information:
+```{r}
+#| eval: false
+
+sessionInfo()
+```
+Load database libraries and the tidyverse frontend:
+```{r}
+#| eval: false
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(tidymodels))
+suppressPackageStartupMessages(library(lubridate))
+```
+
+## Predicting 30-day mortality
+
+Develop at least three analytic approaches for predicting the 30-day mortality of patients admitted to ICU using demographic information (gender, age, marital status, ethnicity), first lab measurements during ICU stay, and first vital measurements during ICU stay. For example, you can use (1) logistic regression with elastic net (lasso + ridge) penalty (e.g., glmnet or keras package), (2) random forest, (3) boosting, and (4) support vector machines, or (5) MLP neural network (keras package)
+
+1. Partition data into 50% training set and 50% test set. Stratify partitioning according the 30-day mortality status.
+
+2. Train and tune the models using the training set.
+
+3. Compare model classification performance on the test set. Report both the area under ROC curve and accuracy for each model.
