@@ -43,5 +43,4 @@ knitr:
 
 ## Example: random forest workflow
 
-[qmd](https://raw.githubusercontent.com/ucla-econ-425t/2023winter/master/slides/18-tidymodels/workflow_rf_heart.qmd), [html](https://ucla-econ-425t.github.io/2023winter/slides/18-tidymodels/workflow_rf_heart.html)
-
+[qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/18-tidymodels/tidymodels.qmd), [html](https://ucla-biostat-203b.github.io/2023winter/slides/18-tidymodels/workflow_rf_heart.html)
