@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr. Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2023-03-09">
+<meta name="dcterms.date" content="2023-03-10">
 
 <title>Machine Learning Workflow: Random Forest for Classification (Heart Data)</title>
 <style>
@@ -2622,7 +2622,7 @@ vertical-align: -.125em;
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="toc-section-number">1</span>  Overview</a></li>
   <li><a href="#heart-data" id="toc-heart-data" class="nav-link" data-scroll-target="#heart-data"><span class="toc-section-number">2</span>  Heart data</a></li>
   <li><a href="#initial-split-into-test-and-non-test-sets" id="toc-initial-split-into-test-and-non-test-sets" class="nav-link" data-scroll-target="#initial-split-into-test-and-non-test-sets"><span class="toc-section-number">3</span>  Initial split into test and non-test sets</a></li>
-  <li><a href="#preprocessing-python-or-recipe-r" id="toc-preprocessing-python-or-recipe-r" class="nav-link" data-scroll-target="#preprocessing-python-or-recipe-r"><span class="toc-section-number">4</span>  Preprocessing (Python) or recipe (R)</a></li>
+  <li><a href="#recipe-r-and-preprocessing-python" id="toc-recipe-r-and-preprocessing-python" class="nav-link" data-scroll-target="#recipe-r-and-preprocessing-python"><span class="toc-section-number">4</span>  Recipe (R) and Preprocessing (Python)</a></li>
   <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model"><span class="toc-section-number">5</span>  Model</a></li>
   <li><a href="#workflow-in-r-and-pipeline-in-python" id="toc-workflow-in-r-and-pipeline-in-python" class="nav-link" data-scroll-target="#workflow-in-r-and-pipeline-in-python"><span class="toc-section-number">6</span>  Workflow in R and pipeline in Python</a></li>
   <li><a href="#tuning-grid" id="toc-tuning-grid" class="nav-link" data-scroll-target="#tuning-grid"><span class="toc-section-number">7</span>  Tuning grid</a></li>
@@ -2655,7 +2655,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 9, 2023</p>
+      <p class="date">March 10, 2023</p>
     </div>
   </div>
   
@@ -2747,7 +2747,7 @@ loaded via a namespace (and not attached):
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Heart <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Heart.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first column is patient ID, which we don&#39;t need</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RestECG is categorical with value 0, 1, 2, 3</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RestECG is categorical with value 0, 1, 2</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RestECG =</span> <span class="fu">as.factor</span>(RestECG)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2782,11 +2782,11 @@ loaded via a namespace (and not attached):
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Heart <span class="sc">%&gt;%</span> <span class="fu">tbl_summary</span>(<span class="at">by =</span> AHD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="bqthccqqej" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="blohxyaqko" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
-:where(#bqthccqqej) .gt_table {
+:where(#blohxyaqko) .gt_table {
 display: table;
 border-collapse: collapse;
 margin-left: auto;
@@ -2810,7 +2810,7 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_heading {
+:where(#blohxyaqko) .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2821,11 +2821,11 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_caption {
+:where(#blohxyaqko) .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-:where(#bqthccqqej) .gt_title {
+:where(#blohxyaqko) .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2836,7 +2836,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-:where(#bqthccqqej) .gt_subtitle {
+:where(#blohxyaqko) .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2847,12 +2847,12 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-:where(#bqthccqqej) .gt_bottom_border {
+:where(#blohxyaqko) .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_col_headings {
+:where(#blohxyaqko) .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2866,7 +2866,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_col_heading {
+:where(#blohxyaqko) .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2885,7 +2885,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-:where(#bqthccqqej) .gt_column_spanner_outer {
+:where(#blohxyaqko) .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2896,13 +2896,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-:where(#bqthccqqej) .gt_column_spanner_outer:first-child {
+:where(#blohxyaqko) .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-:where(#bqthccqqej) .gt_column_spanner_outer:last-child {
+:where(#blohxyaqko) .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-:where(#bqthccqqej) .gt_column_spanner {
+:where(#blohxyaqko) .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2913,7 +2913,7 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-:where(#bqthccqqej) .gt_group_heading {
+:where(#blohxyaqko) .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2938,7 +2938,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-:where(#bqthccqqej) .gt_empty_group_heading {
+:where(#blohxyaqko) .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2952,13 +2952,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-:where(#bqthccqqej) .gt_from_md > :first-child {
+:where(#blohxyaqko) .gt_from_md > :first-child {
 margin-top: 0;
 }
-:where(#bqthccqqej) .gt_from_md > :last-child {
+:where(#blohxyaqko) .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-:where(#bqthccqqej) .gt_row {
+:where(#blohxyaqko) .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2976,7 +2976,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-:where(#bqthccqqej) .gt_stub {
+:where(#blohxyaqko) .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2988,7 +2988,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-:where(#bqthccqqej) .gt_stub_row_group {
+:where(#blohxyaqko) .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3001,10 +3001,10 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-:where(#bqthccqqej) .gt_row_group_first td {
+:where(#blohxyaqko) .gt_row_group_first td {
 border-top-width: 2px;
 }
-:where(#bqthccqqej) .gt_summary_row {
+:where(#blohxyaqko) .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3013,14 +3013,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-:where(#bqthccqqej) .gt_first_summary_row {
+:where(#blohxyaqko) .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_first_summary_row.thick {
+:where(#blohxyaqko) .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-:where(#bqthccqqej) .gt_last_summary_row {
+:where(#blohxyaqko) .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3029,7 +3029,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_grand_summary_row {
+:where(#blohxyaqko) .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3038,7 +3038,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-:where(#bqthccqqej) .gt_first_grand_summary_row {
+:where(#blohxyaqko) .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3047,10 +3047,10 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_striped {
+:where(#blohxyaqko) .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-:where(#bqthccqqej) .gt_table_body {
+:where(#blohxyaqko) .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3058,7 +3058,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_footnotes {
+:where(#blohxyaqko) .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3071,7 +3071,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_footnote {
+:where(#blohxyaqko) .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-left: 4px;
@@ -3079,7 +3079,7 @@ padding-right: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-:where(#bqthccqqej) .gt_sourcenotes {
+:where(#blohxyaqko) .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3092,58 +3092,58 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-:where(#bqthccqqej) .gt_sourcenote {
+:where(#blohxyaqko) .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-:where(#bqthccqqej) .gt_left {
+:where(#blohxyaqko) .gt_left {
 text-align: left;
 }
-:where(#bqthccqqej) .gt_center {
+:where(#blohxyaqko) .gt_center {
 text-align: center;
 }
-:where(#bqthccqqej) .gt_right {
+:where(#blohxyaqko) .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-:where(#bqthccqqej) .gt_font_normal {
+:where(#blohxyaqko) .gt_font_normal {
 font-weight: normal;
 }
-:where(#bqthccqqej) .gt_font_bold {
+:where(#blohxyaqko) .gt_font_bold {
 font-weight: bold;
 }
-:where(#bqthccqqej) .gt_font_italic {
+:where(#blohxyaqko) .gt_font_italic {
 font-style: italic;
 }
-:where(#bqthccqqej) .gt_super {
+:where(#blohxyaqko) .gt_super {
 font-size: 65%;
 }
-:where(#bqthccqqej) .gt_footnote_marks {
+:where(#blohxyaqko) .gt_footnote_marks {
 font-style: italic;
 font-weight: normal;
 font-size: 75%;
 vertical-align: 0.4em;
 }
-:where(#bqthccqqej) .gt_asterisk {
+:where(#blohxyaqko) .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-:where(#bqthccqqej) .gt_indent_1 {
+:where(#blohxyaqko) .gt_indent_1 {
 text-indent: 5px;
 }
-:where(#bqthccqqej) .gt_indent_2 {
+:where(#blohxyaqko) .gt_indent_2 {
 text-indent: 10px;
 }
-:where(#bqthccqqej) .gt_indent_3 {
+:where(#blohxyaqko) .gt_indent_3 {
 text-indent: 15px;
 }
-:where(#bqthccqqej) .gt_indent_4 {
+:where(#blohxyaqko) .gt_indent_4 {
 text-indent: 20px;
 }
-:where(#bqthccqqej) .gt_indent_5 {
+:where(#blohxyaqko) .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -3358,7 +3358,8 @@ min       0.000000    1.000000    0.000000     NaN  NaN
 max       6.200000    3.000000    3.000000     NaN  NaN  </code></pre>
 </div>
 </div>
-<p>Graphical summary: ::: {.cell layout-align=“center”}</p>
+<p>Graphical summary:</p>
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphical summaries</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sns.pairplot(data <span class="op">=</span> Heart)<span class="op">;</span></span>
@@ -3366,7 +3367,7 @@ max       6.200000    3.000000    3.000000     NaN  NaN  </code></pre>
 </div>
 </div>
 </div>
-<p>:::</p>
+</div>
 </section>
 <section id="initial-split-into-test-and-non-test-sets" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="initial-split-into-test-and-non-test-sets"><span class="header-section-number">3</span> Initial split into test and non-test sets</h2>
@@ -3421,7 +3422,8 @@ max       6.200000    3.000000    3.000000     NaN  NaN  </code></pre>
 <pre><code>(227, 15)</code></pre>
 </div>
 </div>
-<p>Separate <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span>. We will use 13 features. ::: {.cell layout-align=“center”}</p>
+<p>Separate <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span>. We will use 13 features.</p>
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>num_features <span class="op">=</span> [<span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Sex&#39;</span>, <span class="st">&#39;RestBP&#39;</span>, <span class="st">&#39;Chol&#39;</span>, <span class="st">&#39;Fbs&#39;</span>, <span class="st">&#39;RestECG&#39;</span>, <span class="st">&#39;MaxHR&#39;</span>, <span class="st">&#39;ExAng&#39;</span>, <span class="st">&#39;Oldpeak&#39;</span>, <span class="st">&#39;Slope&#39;</span>, <span class="st">&#39;Ca&#39;</span>]</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>cat_features <span class="op">=</span> [<span class="st">&#39;ChestPain&#39;</span>, <span class="st">&#39;Thal&#39;</span>]</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> np.concatenate([num_features, cat_features])</span>
@@ -3434,10 +3436,10 @@ max       6.200000    3.000000    3.000000     NaN  NaN  </code></pre>
 </div>
 </div>
 </div>
-<p>:::</p>
+</div>
 </section>
-<section id="preprocessing-python-or-recipe-r" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="preprocessing-python-or-recipe-r"><span class="header-section-number">4</span> Preprocessing (Python) or recipe (R)</h2>
+<section id="recipe-r-and-preprocessing-python" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="recipe-r-and-preprocessing-python"><span class="header-section-number">4</span> Recipe (R) and Preprocessing (Python)</h2>
 <ul>
 <li><p>A data dictionary (roughly) is at <a href="https://keras.io/examples/structured_data/structured_data_classification_with_feature_space/" class="uri">https://keras.io/examples/structured_data/structured_data_classification_with_feature_space/</a>.</p></li>
 <li><p>We have following features:</p>
