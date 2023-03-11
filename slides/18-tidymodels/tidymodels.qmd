@@ -48,3 +48,7 @@ knitr:
 # Example: random forest workflow
 
 [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/18-tidymodels/workflow_rf_heart.qmd), [html](https://ucla-biostat-203b.github.io/2023winter/slides/18-tidymodels/workflow_rf_heart.html)
+
+# Example: boosting (XGBoost) workflow
+
+[qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/18-tidymodels/workflow_xgboost_heart.qmd), [html](https://ucla-biostat-203b.github.io/2023winter/slides/18-tidymodels/workflow_xgboost_heart.html)
