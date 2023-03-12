@@ -52,3 +52,8 @@ knitr:
 # Example: boosting (XGBoost) workflow
 
 [qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/18-tidymodels/workflow_xgboost_heart.qmd), [html](https://ucla-biostat-203b.github.io/2023winter/slides/18-tidymodels/workflow_xgboost_heart.html)
+
+# Example: SVM (with radial basis kernel) workflow
+
+[qmd](https://raw.githubusercontent.com/ucla-biostat-203b/2023winter/master/slides/18-tidymodels/workflow_svmrbf_heart.qmd), [html](https://ucla-biostat-203b.github.io/2023winter/slides/18-tidymodels/workflow_svmrbf_heart.html)
+
