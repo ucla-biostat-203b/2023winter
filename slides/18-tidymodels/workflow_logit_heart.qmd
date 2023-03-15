@@ -70,7 +70,6 @@ The goal is to predict the binary outcome `AHD` (`Yes` or `No`) of patients.
 # Load libraries
 library(GGally)
 library(gtsummary)
-library(ranger)
 library(tidyverse)
 library(tidymodels)
 
@@ -99,6 +98,7 @@ import numpy as np
 # Load seaborn plotting library
 import seaborn as sns
 import matplotlib.pyplot as plt
+import time
 
 # Set font sizes in plots
 sns.set(font_scale = 1.2)
@@ -327,7 +327,7 @@ pipe
 
 #### R
 
-Here we tune the number of trees `trees` and the number of features to use in each split `mtry`.
+Here we tune the `penalty` and `mixture` hyperparameters.
 
 ```{r}
 param_grid <- grid_regular(
@@ -371,12 +371,14 @@ folds
 
 Fit cross-validation.
 ```{r}
+system.time({
 logit_fit <- logit_wf %>%
   tune_grid(
     resamples = folds,
     grid = param_grid,
     metrics = metric_set(roc_auc, accuracy)
     )
+})
 logit_fit
 ```
 
@@ -419,14 +421,18 @@ search = GridSearchCV(
   cv = n_folds, 
   scoring = "roc_auc",
   # Refit the best model on the whole data set
-  refit = True
+  refit = True,
+  n_jobs = 8
   )
 ```
 
 Fit CV. This is typically the most time-consuming step.
 ```{python}
 # Fit CV
+tic = time.time()
 search.fit(X_other, y_other)
+toc = time.time()
+print('Execution time:', toc - tic, 'seconds')
 ```
 
 Visualize CV results.
