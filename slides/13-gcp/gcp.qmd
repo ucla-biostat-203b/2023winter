@@ -6,6 +6,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     theme: cosmo
+    embed-resources: true
     number-sections: true
     toc: true
     toc-depth: 4
@@ -83,7 +84,7 @@ for around $0.27 an hour.
 ## Vendors
 
 <p align="center">
-<img src="./cloud-market-share.png" height="350">
+<img src="./cloud-market-share.jpeg" height="350">
 </p>
 
 There are many vendors out there. Good for customers (us). They all work similarly.  
@@ -94,6 +95,8 @@ There are many vendors out there. Good for customers (us). They all work similar
 - Microsoft Azure.
 
 - IBM cloud.
+
+- Oracle Cloud Infrastructure (OCI).
 
 We will demonstrate how to start using GCP.
 
@@ -239,8 +242,8 @@ sudo yum install wget -y
 
 - Download and install the most recent [R Studio Server](https://www.rstudio.com/products/rstudio/download-server/).
 ```{bash, eval = FALSE}
-wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2021.09.2-382-x86_64.rpm
-sudo yum install rstudio-server-rhel-2021.09.2-382-x86_64.rpm
+wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2022.12.0-353-x86_64.rpm
+sudo yum install rstudio-server-rhel-2022.12.0-353-x86_64.rpm
 ```
 
 - The R Studio service starts immediately. Let's check if it is running  properly by triggering the following command.
